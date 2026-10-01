@@ -1,0 +1,69 @@
+{
+  "projeto": {
+    "nome": "Projeto exemplo",
+    "pergunta_central": "Qual pergunta este projeto precisa responder, em uma frase?",
+    "atualizado_em": ""
+  },
+  "fases": ["Base", "Frentes em paralelo", "Consolidação", "Resultado"],
+  "modulos": [
+    {
+      "id": "M0",
+      "titulo": "Preparação dos dados",
+      "fase": "Base",
+      "objetivo": "Dados de entrada auditados e com origem rastreável.",
+      "depende_de": [],
+      "contrato": {
+        "pergunta": "Os dados de entrada estão completos e corretos?",
+        "criterios_aceitacao": ["Todos os arquivos com origem registrada"],
+        "criterio_abandono": "Se a fonte original não puder ser recuperada, parar e rever escopo.",
+        "parametros": {}
+      },
+      "etapas": [
+        {
+          "id": "M0.1",
+          "titulo": "Cópia protegida dos originais",
+          "status": "executado",
+          "impacto": "medio",
+          "revisao": "completa",
+          "afirmacao": "Originais copiados sem alteração.",
+          "verificacao": "Checksums dos originais e cópias coincidem.",
+          "evidencia": ["E-001"]
+        },
+        {
+          "id": "M0.2",
+          "titulo": "Inventário e consistência",
+          "status": "em_curso",
+          "impacto": "alto",
+          "revisao": "completa",
+          "afirmacao": "",
+          "verificacao": "",
+          "evidencia": []
+        }
+      ],
+      "emendas": []
+    },
+    {
+      "id": "M1",
+      "titulo": "Método principal",
+      "fase": "Frentes em paralelo",
+      "objetivo": "Aplicar e calibrar o método.",
+      "depende_de": ["M0"],
+      "contrato": {},
+      "etapas_estimadas": 6,
+      "etapas": [],
+      "emendas": []
+    },
+    {
+      "id": "M2",
+      "titulo": "Resultado final",
+      "fase": "Resultado",
+      "objetivo": "Responder à pergunta central.",
+      "depende_de": ["M1"],
+      "resultado_final": true,
+      "contrato": {},
+      "etapas_estimadas": 4,
+      "etapas": [],
+      "emendas": []
+    }
+  ]
+}

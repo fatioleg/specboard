@@ -1,0 +1,72 @@
+{
+  "projeto": {
+    "nome": "Projeto exemplo",
+    "titulo": "Mapa dos módulos do projeto",
+    "subtitulo": "catalisador X na reação de acoplamento",
+    "pergunta_central": "O catalisador X reduz a barreira da etapa determinante o suficiente para explicar o ganho de velocidade observado?",
+    "fontes": ".omc/specs/deep-interview.md, .omc/plans/plano.md",
+    "pendencias_humanas": [
+      {"id": "P-01", "modulo": "M3", "texto": "Definir a tolerância aceitável entre a barreira calculada e a experimental", "bloqueia": "M3"}
+    ],
+    "glossario": [
+      ["M0 … M3", "módulo (bloco grande de trabalho), na ordem do plano."],
+      ["M1.2", "etapa dentro do módulo; cada uma para para a sua validação."],
+      ["E-001", "evidência registrada (arquivo, tabela ou figura)."]
+    ]
+  },
+  "fases": ["Base", "Método", "Validação", "Resultado"],
+  "modulos": [
+    {
+      "id": "M0", "titulo": "Preparação dos dados", "fase": "Base", "quando": "fechado em 12/09",
+      "objetivo": "Estruturas de partida e dados experimentais auditados, com origem rastreável.",
+      "responde": "Base de todos os módulos.", "registro": "E-001 a E-004",
+      "depende_de": [],
+      "contrato": {
+        "pergunta": "Os dados de entrada estão completos e corretos?",
+        "criterios_aceitacao": ["Toda estrutura com origem e checksum registrados", "Constantes de velocidade experimentais com incerteza"],
+        "criterio_abandono": "Se a constante experimental não puder ser recuperada da fonte original, parar e rever o escopo.",
+        "parametros": {}
+      },
+      "etapas": [
+        {"id": "M0.1", "titulo": "Cópia protegida dos originais", "status": "executado", "impacto": "baixo", "revisao": "amostragem", "data": "2026-09-10",
+         "afirmacao": "Originais copiados sem alteração.", "verificacao": "Checksums em data/manifest.json coincidem com os originais.", "evidencia": ["E-001"]},
+        {"id": "M0.2", "titulo": "Constantes de velocidade experimentais", "status": "executado", "impacto": "alto", "revisao": "completa", "data": "2026-09-12",
+         "afirmacao": "k(com X) / k(sem X) = 38 ± 4 a 298 K.", "verificacao": "Abrir data/cinetica.csv; a razão deve bater com a Tabela 2 do artigo-fonte.", "evidencia": ["E-003", "data/cinetica.csv"]}
+      ],
+      "emendas": []
+    },
+    {
+      "id": "M1", "titulo": "Método de cálculo", "fase": "Método", "quando": "aberto em 13/09",
+      "objetivo": "Escolher e validar o nível de teoria antes de calcular a barreira de interesse.",
+      "responde": "Garante que a barreira calculada é confiável.",
+      "depende_de": ["M0"],
+      "contrato": {
+        "pergunta": "Qual nível de teoria reproduz barreiras de referência dentro de 4 kJ/mol?",
+        "criterios_aceitacao": ["MAE ≤ 4 kJ/mol contra o conjunto de referência", "Critérios escritos antes de ver as barreiras de interesse"],
+        "criterio_abandono": "Se nenhum funcional testado atingir MAE ≤ 8 kJ/mol, rever o plano com o usuário.",
+        "parametros": {"funcionais": ["ωB97X-D", "r2SCAN-3c"]}
+      },
+      "etapas": [
+        {"id": "M1.1", "titulo": "Conjunto de referência", "status": "executado", "impacto": "medio", "revisao": "completa", "data": "2026-09-14",
+         "afirmacao": "12 reações de referência com barreiras de alto nível selecionadas.", "verificacao": "Conferir a lista em refs/conjunto.md contra o artigo de benchmark.", "evidencia": ["refs/conjunto.md"]},
+        {"id": "M1.2", "titulo": "Pré-registro dos critérios", "status": "em_curso", "impacto": "alto", "revisao": "completa",
+         "descricao": "Travar MAE máximo, funcionais candidatos e regra de desempate antes de qualquer barreira de interesse.", "quem": "agente escreve → você aprova",
+         "afirmacao": "", "verificacao": "", "evidencia": []},
+        {"id": "M1.3", "titulo": "Benchmark dos funcionais", "status": "pendente", "impacto": "alto", "revisao": "completa", "afirmacao": "", "verificacao": "", "evidencia": []}
+      ],
+      "emendas": []
+    },
+    {
+      "id": "M2", "titulo": "Validação estrutural", "fase": "Validação",
+      "objetivo": "Comparar geometrias otimizadas com as estruturas cristalográficas.",
+      "depende_de": ["M0", "M1"], "contrato": {}, "etapas_estimadas": 4, "etapas": [], "emendas": []
+    },
+    {
+      "id": "M3", "titulo": "Barreira com e sem catalisador", "fase": "Resultado", "resultado_final": true,
+      "objetivo": "Calcular ΔG‡ com e sem X e comparar com a razão experimental.",
+      "responde": "A pergunta central.",
+      "bloqueio": "P-01: falta definir a tolerância aceitável.",
+      "depende_de": ["M1", "M2"], "contrato": {}, "etapas_estimadas": 5, "etapas": [], "emendas": []
+    }
+  ]
+}
