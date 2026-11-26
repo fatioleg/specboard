@@ -1,0 +1,19 @@
+{
+  "name": "specboard",
+  "version": "2.1.0",
+  "description": "Painel interativo de validação humana, servidor MCP (8 ferramentas seguras) e arquitetura de Harness para projetos com agentes de IA.",
+  "author": {
+    "name": "CEMOL (fatioleg)"
+  },
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.codex.json",
+  "mcpServers": "./.codex-plugin/mcp.json",
+  "interface": {
+    "displayName": "SpecBoard (CEMOL)",
+    "shortDescription": "Validação humana, mapa visual e servidor MCP para projetos com agentes",
+    "longDescription": "Converte a spec e o plano modular em um painel interativo local/SSH com separação estrita entre execução do agente e aprovação humana, hashing SHA-256 das evidências, proteção TOCTOU e inspeção completa do Harness.",
+    "developerName": "CEMOL (fatioleg)",
+    "category": "Productivity",
+    "defaultPrompt": "Verifique o status e a fila de validação do projeto no SpecBoard"
+  }
+}

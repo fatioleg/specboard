@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${PLUGIN_ROOT}/specboard/scripts/block_verify_hook.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

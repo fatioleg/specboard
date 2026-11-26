@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "specboard": {
+      "command": "python",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/specboard/scripts/sb_mcp.py"]
+    }
+  }
+}

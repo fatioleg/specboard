@@ -1,0 +1,16 @@
+{
+  "specboard-no-self-verify": {
+    "PreToolUse": [
+      {
+        "matcher": "run_command|write_file|edit_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python specboard/scripts/block_verify_hook.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

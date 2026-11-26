@@ -1682,6 +1682,137 @@ def construir_payload(
             "novos": [],
         }
 
+    # 10b) Resumo estruturado do Harness do projeto (entidades separadas para a aba Agente)
+    skills_map: dict[str, dict[str, Any]] = {}
+    mcps_map: dict[str, dict[str, Any]] = {}
+    scripts_map: dict[str, dict[str, Any]] = {}
+    hooks_codigo: list[dict[str, Any]] = []
+    regras_instrucao: list[dict[str, Any]] = []
+    papeis_map: dict[str, dict[str, Any]] = {}
+    guards_seen: set[tuple[str, str]] = set()
+
+    # Incluir a trava nativa em código do próprio SpecBoard
+    hooks_codigo.append({
+        "regra": "Bloqueio de autovalidação por agentes (PreToolUse)",
+        "onde_aplica": "block_verify_hook.py · CLI e endpoints /api/decisao, /api/politica",
+        "se_falhar": "Bloqueia execução (exit 2 / deny) e exige decisão humana no painel ou terminal",
+        "etapas": ["Todas"],
+        "nativo": True,
+    })
+
+    def _merge_comp(target: dict[str, dict[str, Any]], comp: dict[str, Any], etapa_id: str) -> None:
+        key = (comp.get("nome") or "") + "|" + (comp.get("mcp_server") or "")
+        if key not in target:
+            target[key] = {
+                "nome": comp.get("nome") or "—",
+                "tipo": comp.get("tipo") or "local_tool",
+                "mcp_server": comp.get("mcp_server") or "",
+                "funcao": comp.get("funcao") or "",
+                "motivo_escolha": comp.get("motivo_escolha") or "",
+                "planejado": bool(comp.get("planejado")),
+                "configurado": bool(comp.get("configurado")),
+                "observado": comp.get("observado") or {"estado": "sem_registro", "label": "sem registro"},
+                "etapas": [],
+            }
+        rec = target[key]
+        if etapa_id not in rec["etapas"]:
+            rec["etapas"].append(etapa_id)
+        if comp.get("configurado"):
+            rec["configurado"] = True
+        if (comp.get("observado") or {}).get("estado") == "observado":
+            rec["observado"] = comp["observado"]
+
+    for m in mods:
+        for e in m.get("etapas", []):
+            arq = e.get("_agente") or {}
+            papel = (arq.get("papel") or "").strip()
+            if papel:
+                p_rec = papeis_map.setdefault(papel, {"papel": papel, "modulos": [], "etapas": []})
+                if m["id"] not in p_rec["modulos"]:
+                    p_rec["modulos"].append(m["id"])
+                p_rec["etapas"].append(e["id"])
+            for c in arq.get("componentes") or []:
+                t = c.get("tipo") or "local_tool"
+                if t == "skill":
+                    _merge_comp(skills_map, c, e["id"])
+                elif t == "mcp_tool":
+                    _merge_comp(mcps_map, c, e["id"])
+                else:
+                    _merge_comp(scripts_map, c, e["id"])
+            for g in arq.get("guardrails") or []:
+                nat = g.get("natureza") or "instrucao"
+                regra_txt = (g.get("regra") or "").strip()
+                if not regra_txt:
+                    continue
+                gkey = (nat, regra_txt)
+                if gkey not in guards_seen:
+                    guards_seen.add(gkey)
+                    item = {
+                        "regra": regra_txt,
+                        "onde_aplica": g.get("onde_aplica") or "",
+                        "se_falhar": g.get("se_falhar") or "",
+                        "etapas": [e["id"]],
+                        "nativo": False,
+                    }
+                    if nat == "codigo":
+                        hooks_codigo.append(item)
+                    else:
+                        regras_instrucao.append(item)
+                else:
+                    lst = hooks_codigo if nat == "codigo" else regras_instrucao
+                    for it in lst:
+                        if it["regra"] == regra_txt and e["id"] not in it["etapas"]:
+                            it["etapas"].append(e["id"])
+
+    fases_ordem = estado.get("fases") or list(dict.fromkeys(m.get("fase") or "—" for m in mods))
+    fluxo_fases: list[dict[str, Any]] = []
+    for f_nome in fases_ordem:
+        f_mods = [m for m in mods if (m.get("fase") or "—") == f_nome]
+        if not f_mods:
+            continue
+        blocos = []
+        for m in f_mods:
+            ets = m.get("etapas") or []
+            p_m = (m.get("arquitetura_agente") or {}).get("papel") or (
+                (ets[0].get("_agente") or {}).get("papel") if ets else ""
+            )
+            blocos.append({
+                "id": m["id"],
+                "titulo": m.get("titulo") or m["id"],
+                "status": m["_status_mod"],
+                "eh_marco": bool(m.get("_eh_marco")),
+                "papel": p_m or "Execução modular",
+                "total_etapas": len(ets) or int(m.get("etapas_estimadas") or 0),
+                "verificadas": sum(1 for e in ets if e["_status"] == "verificado"),
+                "marcos": [e["id"] for e in ets if e.get("_eh_marco")],
+            })
+        fluxo_fases.append({"fase": f_nome, "blocos": blocos})
+
+    harness_custom = p.get("harness") if isinstance(p.get("harness"), dict) else {}
+    harness_resumo = {
+        "nome": harness_custom.get("nome") or f"Harness de {p.get('nome') or 'Projeto'}",
+        "descricao": harness_custom.get("descricao") or (
+            "Estrutura operacional que combina memória versionada, skills, scripts/MCPs, "
+            "hooks de proteção e validação humana para conduzir este projeto com segurança."
+        ),
+        "papeis": list(papeis_map.values()),
+        "skills": list(skills_map.values()),
+        "mcps": list(mcps_map.values()),
+        "scripts": list(scripts_map.values()),
+        "hooks_codigo": hooks_codigo,
+        "regras_instrucao": regras_instrucao,
+        "fluxo_fases": fluxo_fases,
+        "contadores": {
+            "skills": len(skills_map),
+            "mcps": len(mcps_map),
+            "scripts": len(scripts_map),
+            "hooks_codigo": len(hooks_codigo),
+            "regras_instrucao": len(regras_instrucao),
+            "papeis": len(papeis_map),
+            "fases": len(fluxo_fases),
+        },
+    }
+
     return {
         "versao_schema": 2,
         "modo_servidor": modo_servidor,
@@ -1689,6 +1820,7 @@ def construir_payload(
         "politica": politica,
         "resumo": resumo_obj,
         "situacao_atual": situacao_atual,
+        "harness_resumo": harness_resumo,
         "fila": fila_principal,
         "fila_todos": fila_lista,
         "fila_opcional": fila_opcional,

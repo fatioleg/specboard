@@ -1,0 +1,20 @@
+{
+  "name": "specboard-marketplace",
+  "interface": {
+    "displayName": "SpecBoard (CEMOL)"
+  },
+  "plugins": [
+    {
+      "name": "specboard",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

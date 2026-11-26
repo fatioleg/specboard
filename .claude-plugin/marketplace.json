@@ -1,0 +1,14 @@
+{
+  "name": "specboard-marketplace",
+  "owner": {
+    "name": "fatioleg"
+  },
+  "description": "Marketplace oficial do SpecBoard (CEMOL / UEG) — painel de validação humana, servidor MCP e harness auditável para agentes de IA.",
+  "plugins": [
+    {
+      "name": "specboard",
+      "source": "./",
+      "description": "Painel interativo de validação humana, servidor MCP seguro (zero autovalidação) e arquitetura visual de Harness."
+    }
+  ]
+}

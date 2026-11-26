@@ -1,0 +1,8 @@
+# Preservar bytes exatos das evidências de exemplo (evita invalidação SHA-256 por CRLF no Windows)
+examples/carbon_dots/data/** -text
+examples/carbon_dots/reports/** -text
+examples/carbon_dots/scripts/** -text
+examples/carbon_dots/figs/** binary
+docs/*.png binary
+docs/*.jpg binary
+.claude-plugin/*.png binary

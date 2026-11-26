@@ -1,0 +1,14 @@
+{
+  "name": "specboard",
+  "version": "2.1.0",
+  "description": "Painel interativo de validação humana, mapa visual de fases, servidor MCP (8 ferramentas seguras) e proteção contra autovalidação para projetos com agentes de IA.",
+  "author": {
+    "name": "CEMOL (fatioleg)",
+    "url": "https://github.com/fatioleg/specboard"
+  },
+  "repository": "https://github.com/fatioleg/specboard",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.claude.json",
+  "mcpServers": "./.mcp.json",
+  "keywords": ["specboard", "mcp", "human-in-the-loop", "validation", "sdd", "harness", "scientific-computing", "cemol"]
+}

@@ -4,25 +4,29 @@
 
 <br /><br />
 
+<img src="docs/logo-cemol-badge.png" alt="CEMOL — Centro de Bioestabilidade Molecular do Cerrado" width="76" />
+
 # SpecBoard
 
-**Controle visual e validação humana para projetos conduzidos por agentes de IA.**  
-O agente executa, gera resultados e prepara o caminho — **mas só você aprova, pausa, pede ajustes e libera a próxima fase**, tudo em um painel limpo no navegador.
+**Controle visual, validação humana e servidor MCP para projetos conduzidos por agentes de IA.**  
+Desenvolvido pelo **CEMOL — Centro de Bioestabilidade Molecular do Cerrado (UEG)**.  
+O agente executa e prepara evidências — **mas só você aprova, pausa, pede ajustes e libera a próxima fase**, direto no navegador.
 
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![Zero Dependências](https://img.shields.io/badge/Depend%C3%AAncias-Zero%20(stdlib)-059669?style=flat-square)](#comecar)
+[![Plugin MCP](https://img.shields.io/badge/Plugin%20MCP-Claude%20%7C%20Codex%20%7C%20Antigravity-7c3aed?style=flat-square)](#marketplace)
 [![Local & SSH](https://img.shields.io/badge/Execu%C3%A7%C3%A3o-100%25%20Local%20%2F%20SSH-0891b2?style=flat-square)](#ssh)
 [![Licença Apache 2.0](https://img.shields.io/badge/Licen%C3%A7a-Apache%202.0-475569?style=flat-square)](LICENSE)
 
-[Por que usar](#por-que-usar) · [Tour pelas telas](#telas) · [Políticas de controle](#politicas) · [Comece em 60s](#comecar) · [Segurança](#seguranca) · [Comandos](#comandos)
+[Por que usar](#por-que-usar) · [Tour pelas telas](#telas) · [Plugin MCP & Marketplace](#marketplace) · [Políticas](#politicas) · [Comece em 60s](#comecar) · [Segurança](#seguranca) · [Comandos](#comandos)
 
 </div>
 
 <details>
 <summary><b>English summary</b> (click to expand)</summary>
 
-> **SpecBoard** is a zero-dependency Python 3 stdlib dashboard and validation harness for AI-assisted modular and scientific projects (compatible with Claude Code, Antigravity, Codex, or any CLI agent).  
-> It strictly separates **agent execution** (`executado`) from **human verification** (`verificado`), lets humans review inline evidence (PNG/SVG charts, CSV tables, Markdown reports) and click **Approve / Hold / Request changes / Pause** directly in a local or SSH-tunneled browser UI, supports 3 project approval policies (`acompanhamento_livre`, `so_marcos` with granular milestones, `por_etapa`), and binds approvals to real file-byte SHA-256 hashes with TOCTOU (`HTTP 409`) protection.
+> **SpecBoard** is a zero-dependency Python 3 stdlib dashboard, **MCP server**, and multi-platform plugin (**Claude Code, OpenAI Codex, and Google Antigravity**) for AI-assisted modular and scientific projects, developed at **CEMOL (UEG)**.  
+> It strictly separates **agent execution** (`executado`) from **human verification** (`verificado`), lets humans review inline evidence (PNG/SVG charts, CSV tables, Markdown reports) and click **Approve / Hold / Request changes / Pause** in a calm local or SSH-tunneled web UI, maps the entire **Agent Harness** (skills, MCPs, scripts, code hooks, prompt rules, and stage flow), and enforces SHA-256 byte integrity + TOCTOU (`HTTP 409`) protection with zero self-validation.
 
 </details>
 
@@ -33,67 +37,128 @@ O agente executa, gera resultados e prepara o caminho — **mas só você aprova
 
 Quando um agente de IA trabalha em um projeto grande — uma pesquisa científica, um pipeline de dados ou um sistema complexo — acompanhar tudo apenas pelo chat rapidamente vira um emaranhado de mensagens. É fácil perder de vista **o que já foi validado de verdade** versus **o que o agente apenas disse que terminou**.
 
-O **SpecBoard** transforma o plano do projeto em um painel vivo, claro e auditável:
+O **SpecBoard** transforma o plano do projeto em um painel vivo, legível e auditável:
 
 | Sem SpecBoard (só no chat) | Com SpecBoard |
 | :--- | :--- |
 | O agente diz *"pronto!"* e já dispara a próxima fase cara sem conferência | **Executado ≠ Aprovado:** o agente registra o que fez, mas só você aprova e libera o próximo marco |
 | Gráficos, tabelas e relatórios ficam espalhados em várias pastas | **Revisão contextual:** abre a figura, tabela CSV ou relatório na tela ao lado do critério e dos botões de decisão |
-| Difícil lembrar em que fase o projeto parou depois de alguns dias | **Tela _Agora_:** mostra em segundos onde você está, o que o agente faz e qual é a sua próxima ação |
+| Difícil lembrar em que fase o projeto parou depois de alguns dias | **Home guiada + 📍 Onde estou:** sidebar das áreas do projeto e botão que destaca exatamente a etapa atual |
 | Arquivo editado depois da aprovação passa despercebido | **Rastreabilidade por SHA-256:** alterou um arquivo no disco, a aprovação anterior expira automaticamente |
-| Histórico do agente mistura contexto antigo com regras atuais | **Aba _Agente_:** separa memória fixa, ferramentas usadas, proteções ativas e pacote limpo para retomar sessão |
+| Impossível enxergar como o agente foi montado no projeto | **Arquitetura do Harness:** separa visualmente Skills, MCPs, Scripts, Hooks em código, Regras e Fluxo de Etapas |
 
 ---
 
 <a id="telas"></a>
 ## 🖥️ Como funciona na prática (4 telas)
 
-O SpecBoard organiza todo o acompanhamento em **4 visões integradas**, sem sobrecarga visual e com suporte a **tema escuro e claro em 1 clique**.
+Todas as páginas trazem o botão rápido **`⌂ Início`** no topo, alternância **Tema Claro / Escuro em 1 clique** e tipografia legível sem cortes.
 
-### 1. Tela _Agora_ — saiba o que fazer em 5 segundos
-Reúne o estado atual do projeto, o que o agente está fazendo, o progresso **realmente aprovado por você**, a sua próxima ação em destaque e a fila priorizada com botões diretos (`Revisar`, `✓ Aprovar` e menu `⋯` para *Deixar em espera*, *Pedir ajuste*, *Pausar* ou *Retomar*).
+### 1. Tela _Agora_ (Home) — barra lateral de áreas + sua próxima ação
+A barra lateral esquerda (com a logo do grupo) lista todas as fases do projeto e permite saltar para qualquer área ou clicar em **`📍 Onde estou agora`**. À direita você vê o progresso real aprovado por você, a ação prioritária e a fila com botões diretos (`Revisar`, `✓ Aprovar` e menu `⋯`).
 
-<img src="docs/preview-agora.png" alt="Tela Agora do SpecBoard" width="100%" />
+<img src="docs/preview-agora.png" alt="Tela Agora (Home) com barra lateral de áreas do projeto" width="100%" />
 
 ---
 
 ### 2. Tela _Revisão_ — olhe a evidência real e decida ao lado
-Ao clicar em **Revisar**, o painel abre em 2 colunas: à esquerda você confere **o que foi entregue**, os **critérios travados** e as **evidências inline** (gráficos PNG/SVG ampliáveis, tabelas CSV e relatórios Markdown); à direita você vê exatamente quais etapas serão liberadas e toma sua decisão.
+Em 2 colunas: à esquerda você confere **o que foi entregue**, os **critérios travados** e as **evidências inline** (gráficos PNG/SVG ampliáveis, tabelas CSV e relatórios Markdown); à direita você vê quais etapas serão liberadas e registra sua decisão.
 
 <img src="docs/preview-revisao.png" alt="Tela de Revisão Contextual com evidência inline" width="100%" />
 
 ---
 
-### 3. Aba _Projeto_ — mapa visual estilo fluxograma
-Mostra todas as fases lado a lado em um canvas interativo com zoom, busca e filtros. Linhas cinzas indicam sequência natural; linhas tracejadas vermelhas destacam dependências aguardando sua aprovação. Clicar em qualquer bloco ou etapa abre os detalhes e ações em um painel lateral sob demanda (também disponível em **Ver em lista**).
+### 3. Aba _Projeto_ — mapa interativo com botão `📍 Onde estou`
+Exibe todas as fases lado a lado em um canvas com zoom, busca, modo **Ver em lista** e o botão **`📍 Onde estou`**, que centraliza e enfatiza a fase, o bloco e a etapa em foco. Clicar em qualquer bloco ou etapa abre um painel lateral enxuto com checklist recolhível e atalhos para as evidências.
 
-<img src="docs/preview-projeto.png" alt="Mapa interativo do Projeto estilo fluxograma" width="100%" />
+<img src="docs/preview-projeto.png" alt="Mapa interativo do Projeto com destaque Onde Estou" width="100%" />
 
 ---
 
-### 4. Aba _Agente_ — transparência técnica em 4 passos (1 painel por vez)
-Permite inspecionar, etapa por etapa, exatamente como o agente está configurado — sem poluição na tela:
-1. **Memória e regras** (o que entra fixo vs. como retomar em uma nova conversa sem poluição)
-2. **Ferramentas** (distinguindo claramente o que foi *previsto*, *instalado* e *observado de fato* — exibe `sem registro` se não houver telemetria)
-3. **Proteções** (separando travas automáticas em código de orientações em texto)
-4. **Qualidade e revisão** (separando testes automáticos do agente da sua validação científica/humana)
+### 4. Aba _Agente & Harness_ — entenda toda a engenharia do projeto
+Mostra de forma agradável e separada por entidade **como o harness do projeto foi construído**: **📚 Skills**, **🔌 Servidores MCP**, **🛠 Scripts Locais**, **🪝 Hooks/Guardrails em código**, **📋 Regras em texto** e **🔄 Fluxo de Etapas & Papéis** — além da inspeção detalhada etapa por etapa.
 
-<img src="docs/preview-agente.png" alt="Aba Agente em 4 passos no SpecBoard" width="100%" />
+<img src="docs/preview-agente.png" alt="Aba Agente e Arquitetura do Harness separada por entidades" width="100%" />
+
+---
+
+<a id="marketplace"></a>
+## 🔌 Plugin MCP e Marketplace (Claude Code, Codex e Antigravity)
+
+Este repositório já está empacotado como **plugin + marketplace oficial com servidor MCP embutido** (`specboard/scripts/sb_mcp.py`, zero dependências) e **hook multi-plataforma contra autovalidação** (`block_verify_hook.py`) para os três ecossistemas:
+
+### 1. Claude Code (Marketplace + Plugin + MCP + Hook)
+
+```bash
+claude plugin marketplace add fatioleg/specboard
+claude plugin install specboard@specboard-marketplace
+```
+
+*(Manifestos incluídos: `.claude-plugin/marketplace.json`, `.claude-plugin/plugin.json`, `.mcp.json`, `hooks/hooks.claude.json` e `skills/specboard/SKILL.md`.)*
+
+### 2. OpenAI Codex (Marketplace + Plugin + MCP + Hook)
+
+```bash
+codex plugin marketplace add https://github.com/fatioleg/specboard.git
+# Em seguida, dentro do Codex, habilite em: /plugins -> SpecBoard (CEMOL)
+```
+
+Ou registre apenas o servidor MCP diretamente no Codex CLI:
+
+```bash
+codex mcp add specboard -- python /caminho/para/specboard/specboard/scripts/sb_mcp.py
+```
+
+*(Manifestos incluídos: `.agents/plugins/marketplace.json`, `.codex-plugin/plugin.json`, `.codex-plugin/mcp.json` e `hooks/hooks.codex.json`.)*
+
+### 3. Google Antigravity (Plugin nativo + MCP + Hook)
+
+```bash
+agy plugin install https://github.com/fatioleg/specboard
+```
+
+Ou adicione diretamente ao seu `~/.gemini/config/mcp_config.json` (Windows / Linux / macOS):
+
+```json
+{
+  "mcpServers": {
+    "specboard": {
+      "command": "python",
+      "args": ["C:/caminho/para/specboard/specboard/scripts/sb_mcp.py"]
+    }
+  }
+}
+```
+
+*(Manifestos incluídos: `plugin.json`, `mcp_config.json`, `hooks.json`, `rules/AGENTS.md` e `skills/specboard/SKILL.md`.)*
+
+### Ferramentas expostas pelo servidor MCP (`specboard`)
+
+| Ferramenta MCP | Para que serve | Pode aprovar pelo humano? |
+| :--- | :--- | :-: |
+| `specboard_status` | Resumo do projeto, fase atual, progresso aprovado e bloqueios | Não |
+| `specboard_queue` | Fila priorizada de entregas aguardando decisão humana | Não |
+| `specboard_gate` | Verifica se uma etapa está liberada ou bloqueada pela política | Não |
+| `specboard_context` | Monta pacote mínimo versionado para retomada limpa de sessão | Não |
+| `specboard_validate` | Valida `.specboard/estado.json`, contratos e arquivos de evidência | Não |
+| `specboard_build` | Gera `.specboard/painel.html` (snapshot estático somente leitura) | Não |
+| `specboard_harness` | Retorna o mapa completo de Skills, MCPs, Scripts, Hooks e Fluxo | Não |
+| `specboard_trace_tool` | Registra uso observado de ferramentas em `execucoes.jsonl` (OTel) | Não |
+
+> **Garantia estrutural:** o servidor MCP **não expõe** nenhuma ferramenta de aprovação, revisão ou troca de política. Decisões humanas acontecem somente no painel interativo (`serve`) ou no terminal humano.
 
 ---
 
 <a id="politicas"></a>
 ## 🎛️ Escolha o nível de controle do seu projeto
 
-Você pode escolher — e alterar a qualquer momento pelo topo do painel — o quanto o SpecBoard deve segurar o avanço automático do agente:
+Altere a qualquer momento diretamente pelo botão no topo do painel:
 
 | Modo | Como funciona | Quando usar |
 | :--- | :--- | :--- |
 | **Livre (sem travas)**<br>`acompanhamento_livre` | O agente avança sem bloqueios; o painel continua diferenciando o que ele executou do que você aprovou. | Exploração inicial, protótipos rápidos e rascunhos. |
 | **Só nos marcos** ⭐ *(padrão)*<br>`so_marcos` | Apenas os **marcos principais** (`marco: true`, no módulo ou em etapas específicas) precisam da sua aprovação para liberar dependentes; ramos paralelos seguem livres. | Projetos em fases e pesquisa científica (ex.: validar resultados-chave antes de rodar simulações caras). |
 | **Etapa por etapa**<br>`por_etapa` | Cada etapa dependente aguarda sua aprovação individual antes de liberar a próxima. | Auditoria rigorosa passo a passo e entregas críticas. |
-
-> **Regra de ouro:** em todos os modos — inclusive no *Livre* — o contador **"Aprovado por você"** nunca sobe sozinho. Só uma ação humana registrada aumenta o progresso verificado.
 
 ---
 
@@ -102,69 +167,49 @@ Você pode escolher — e alterar a qualquer momento pelo topo do painel — o q
 
 ### Requisitos
 - **Python 3.11+** (Windows, Linux ou macOS)
-- **Zero dependências externas** (apenas biblioteca padrão do Python + HTML/CSS/JS puro)
+- **Zero dependências externas** (biblioteca padrão do Python + HTML/CSS/JS puro)
 
-### 1. Instalar
+### 1. Testar agora com o exemplo pronto (sem configurar nada)
 
-```powershell
+```bash
 git clone https://github.com/fatioleg/specboard.git
-
-# Opcional — instalar como skill no Claude Code (Windows):
-Copy-Item -Recurse specboard\specboard "$env:USERPROFILE\.claude\skills\"
-```
-
-```bash
-# Opcional — instalar como skill no Claude Code (Linux / macOS):
-cp -r specboard/specboard ~/.claude/skills/
-```
-
-> O SpecBoard é **agnóstico de agente**: funciona com Claude Code, Antigravity, Codex ou qualquer fluxo via CLI (`gate`, `context`, `trace-tool`).
-
-### 2. Testar agora com o exemplo pronto (sem criar nada)
-
-O repositório já vem com um projeto de exemplo completo (gráfico PNG, tabela CSV, relatório Markdown, script e telemetria):
-
-```bash
+cd specboard
 python specboard/scripts/specboard.py --dir examples/carbon_dots serve --open
 ```
 
-### 3. Usar no seu próprio projeto
-
-Na pasta raiz do seu projeto:
+### 2. Usar no seu próprio projeto
 
 ```bash
-# 1. Inicializar o arquivo .specboard/estado.json com a política desejada
-python /caminho/para/specboard/scripts/specboard.py init --politica so_marcos
+# 1. Inicializar .specboard/estado.json com a política desejada
+python /caminho/para/specboard/specboard/scripts/specboard.py init --politica so_marcos
 
-# 2. Validar o arquivo e gerar uma cópia offline (somente leitura)
-python /caminho/para/specboard/scripts/specboard.py validate
-python /caminho/para/specboard/scripts/specboard.py build
+# 2. Validar e gerar snapshot estático offline
+python /caminho/para/specboard/specboard/scripts/specboard.py validate
+python /caminho/para/specboard/specboard/scripts/specboard.py build
 
 # 3. Abrir o painel interativo no navegador (onde você revisa e aprova tudo)
-python /caminho/para/specboard/scripts/specboard.py serve --port 8765 --open
+python /caminho/para/specboard/specboard/scripts/specboard.py serve --port 8765 --open
 ```
 
 <a id="ssh"></a>
 ### Uso em servidor remoto (SSH)
-
-Se o seu projeto roda em uma workstation Linux ou cluster remoto, suba o servidor apenas em `127.0.0.1` na máquina remota e abra um túnel SSH:
 
 ```bash
 ssh -L 8765:127.0.0.1:8765 usuario@servidor \
   "cd ~/meu-projeto && python3 ~/specboard/specboard/scripts/specboard.py serve --port 8765"
 ```
 
-Depois acesse `http://127.0.0.1:8765/` no navegador do seu computador: você visualiza figuras, tabelas e relatórios direto do servidor remoto e grava aprovações atomicamente em `.specboard/verificacoes.jsonl`, sem precisar baixar HTML manualmente.
+Acesse `http://127.0.0.1:8765/` no seu navegador local para revisar figuras, tabelas e relatórios direto do servidor remoto e gravar aprovações atomicamente em `.specboard/verificacoes.jsonl`.
 
 ---
 
 <a id="seguranca"></a>
 ## 🛡️ Por que confiar no painel?
 
-1. **Zero autovalidação:** o hook [block_verify_hook.py](specboard/scripts/block_verify_hook.py) impede que agentes chamem comandos/endpoints humanos (`verify`, `review`, `request-changes`, `policy`, `serve` com escrita ou edição direta de `verificacoes.jsonl`).
-2. **Assinatura pelos bytes reais (SHA-256):** cada aprovação grava o hash SHA-256 composto do conteúdo dos arquivos de evidência. Se qualquer arquivo mudar depois, o painel sinaliza **Arquivo alterado** e exige nova conferência.
-3. **Proteção TOCTOU (`HTTP 409 Conflict`):** se um arquivo for modificado no disco entre o momento em que você abriu a tela de Revisão e o clique em **Aprovar**, o servidor recusa a gravação às cegas e recarrega o arquivo novo na tela.
-4. **Segurança local por padrão:** o servidor escuta somente em `127.0.0.1`, exige token CSRF de sessão e checagem de `Origin` em toda escrita, bloqueia *path traversal* (`403`) e serve evidências com cabeçalho restritivo (`Content-Security-Policy`).
+1. **Zero autovalidação em Claude, Codex e Antigravity:** o hook [block_verify_hook.py](specboard/scripts/block_verify_hook.py) bloqueia qualquer tentativa de agentes aprovarem etapas, editarem `verificacoes.jsonl` ou iniciarem `serve` com escrita.
+2. **Assinatura pelos bytes reais (SHA-256):** cada aprovação grava o hash SHA-256 composto do conteúdo dos arquivos de evidência; se qualquer arquivo mudar depois, a aprovação expira automaticamente.
+3. **Proteção TOCTOU (`HTTP 409 Conflict`):** se um arquivo mudar no disco entre abrir a tela de Revisão e clicar em **Aprovar**, o servidor recusa aprovar às cegas e recarrega o conteúdo novo.
+4. **100% local por padrão:** escuta somente em `127.0.0.1`, exige token CSRF + checagem de `Origin`, bloqueia *path traversal* (`403`) e serve evidências com `Content-Security-Policy` restritivo.
 
 ---
 
@@ -189,44 +234,52 @@ Depois acesse `http://127.0.0.1:8765/` no navegador do seu computador: você vis
 
 ---
 
-## 🧪 Testes e estrutura do projeto
-
-Para executar toda a suíte automatizada (core, hashing SHA-256, políticas, servidor HTTP, proteção TOCTOU, hook de segurança e renderização da UI):
+## 🧪 Testes e estrutura do repositório
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
 <details>
-<summary><b>Ver estrutura completa de pastas e arquivos</b></summary>
+<summary><b>Ver estrutura completa de pastas e manifestos</b></summary>
 
 ```text
 specboard/
-├── docs/                          Imagens didáticas e prévias do README
+├── plugin.json                    Manifesto nativo Antigravity / agent-plugins
+├── mcp_config.json                Configuração MCP para Antigravity
+├── hooks.json                     Hook PreToolUse nativo para Antigravity
+├── .mcp.json                      Configuração MCP para Claude Code
+├── .claude-plugin/                Marketplace e plugin do Claude Code (inclui icon.png)
+├── .codex-plugin/                 Plugin e MCP do OpenAI Codex
+├── .agents/plugins/               Marketplace do Codex / cross-agent
+├── hooks/                         Hooks PreToolUse para Claude Code e Codex
+├── rules/AGENTS.md                Regras consolidadas do plugin
+├── skills/specboard/SKILL.md      Skill auto-descoberta nos marketplaces
+├── docs/                          Banner hero, logo CEMOL e prévias do README
 ├── specboard/
-│   ├── SKILL.md                   Instruções da skill para agentes
 │   ├── scripts/
-│   │   ├── specboard.py           CLI unificado (init, validate, build, serve, gate, context...)
-│   │   ├── sb_core.py             Domínio, hashing SHA-256 v2, políticas, fila e contexto limpo
-│   │   ├── sb_server.py           Servidor local/SSH (Python stdlib, CSRF, TOCTOU, evidências inline)
-│   │   └── block_verify_hook.py   Hook PreToolUse contra autovalidação por agentes
-│   ├── assets/
-│   │   ├── painel_template.html   Interface web única (Agora, Projeto, Revisão, Agente)
-│   │   └── estado_exemplo.json    Modelo inicial pronto para copiar
-│   └── references/
-│       ├── formato-estado.md      Especificação completa do schema v2 + retrocompatibilidade v1
-│       └── arquitetura-agente.md  Guia detalhado da aba Agente
-├── examples/
-│   ├── carbon_dots/               Exemplo completo v2 (PNG, CSV, Markdown, script e telemetria)
-│   ├── estado_completo.json       Fixture legada v1 preservada para regressão
-│   └── painel_completo.html       Painel v2 gerado sobre o exemplo legado
-└── tests/                         20 testes automatizados (unittest stdlib)
+│   │   ├── specboard.py           CLI unificado
+│   │   ├── sb_core.py             Domínio, hashing SHA-256 v2, políticas, fila e Harness
+│   │   ├── sb_server.py           Servidor local/SSH (CSRF, TOCTOU, evidências inline)
+│   │   ├── sb_mcp.py              Servidor MCP stdio (8 ferramentas seguras, stdlib puro)
+│   │   └── block_verify_hook.py   Hook multi-plataforma contra autovalidação
+│   ├── assets/painel_template.html Interface única (Home com sidebar, Projeto, Revisão, Harness)
+│   └── references/                Schema v2 e arquitetura do Harness/Agente
+├── examples/                      Exemplo público sintético (carbon_dots) + fixture legada v1
+└── tests/                         Suíte completa (core, políticas, servidor, MCP, plugins, hook, UI)
 ```
 
 </details>
 
 ---
 
-## 📄 Licença
+<div align="center">
 
+<img src="docs/logo-cemol.png" alt="CEMOL — Centro de Bioestabilidade Molecular do Cerrado (UEG)" width="170" />
+
+<br />
+
+Desenvolvido pelo **CEMOL — Centro de Bioestabilidade Molecular do Cerrado (UEG)**  
 Distribuído sob a licença **[Apache License 2.0](LICENSE)**.
+
+</div>

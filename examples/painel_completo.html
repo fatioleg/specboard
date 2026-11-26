@@ -8,183 +8,215 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
-/* SpecBoard v2 — Experiência calma, legível e direta (estilo Archify + Linear).
+/* SpecBoard v2.1 — Experiência calma, legível, com sidebar na Home, localizador Onde Estou e Harness visual.
    Gerado a partir de .specboard/estado.json — não edite o HTML gerado. */
 :root{
   --bg:#f8fafc; --canvas-dot:rgba(15,23,42,.075);
-  --surface:#ffffff; --surface-2:#f1f5f9; --surface-glass:rgba(255,255,255,.9);
-  --fg:#0f172a; --muted:#64748b; --line:#e2e8f0; --line-strong:#cbd5e1;
-  --accent:#0891b2; --accent-soft:rgba(8,145,178,.10); --accent-glow:rgba(8,145,178,.24);
-  --ok:#059669; --ok-soft:rgba(5,150,105,.11);
-  --exe:#d97706; --exe-soft:rgba(217,119,6,.12);
-  --rev:#2563eb; --rev-soft:rgba(37,99,235,.11);
-  --pause:#7c3aed; --pause-soft:rgba(124,58,237,.11);
-  --run:#2563eb; --run-soft:rgba(37,99,235,.11);
-  --block:#e11d48; --block-soft:rgba(225,29,72,.10);
-  --wait:#64748b; --wait-soft:rgba(100,116,139,.10);
+  --surface:#ffffff; --surface-2:#f1f5f9; --surface-glass:rgba(255,255,255,.92);
+  --fg:#0f172a; --muted:#475569; --line:#e2e8f0; --line-strong:#cbd5e1;
+  --accent:#0891b2; --accent-soft:rgba(8,145,178,.11); --accent-glow:rgba(8,145,178,.28);
+  --ok:#059669; --ok-soft:rgba(5,150,105,.12);
+  --exe:#d97706; --exe-soft:rgba(217,119,6,.13);
+  --rev:#2563eb; --rev-soft:rgba(37,99,235,.12);
+  --pause:#7c3aed; --pause-soft:rgba(124,58,237,.12);
+  --run:#2563eb; --run-soft:rgba(37,99,235,.12);
+  --block:#e11d48; --block-soft:rgba(225,29,72,.11);
+  --wait:#64748b; --wait-soft:rgba(100,116,139,.11);
   --edge:#94a3b8;
-  --shadow:0 1px 2px rgba(15,23,42,.04), 0 6px 20px rgba(15,23,42,.04);
-  --shadow-lg:0 16px 40px rgba(15,23,42,.12);
+  --shadow:0 1px 3px rgba(15,23,42,.05), 0 6px 20px rgba(15,23,42,.04);
+  --shadow-lg:0 16px 40px rgba(15,23,42,.13);
   --f-display:"Plus Jakarta Sans","Inter","Segoe UI",system-ui,sans-serif;
   --f-body:"Inter","Segoe UI",system-ui,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0b101b; --canvas-dot:rgba(148,163,184,.10);
-  --surface:#121928; --surface-2:#182234; --surface-glass:rgba(18,25,40,.9);
-  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.14); --line-strong:rgba(148,163,184,.26);
-  --accent:#22d3ee; --accent-soft:rgba(34,211,238,.11); --accent-glow:rgba(34,211,238,.26);
-  --ok:#34d399; --ok-soft:rgba(52,211,153,.13);
-  --exe:#fbbf24; --exe-soft:rgba(251,191,36,.13);
-  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.13);
-  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.14);
-  --run:#60a5fa; --run-soft:rgba(96,165,250,.14);
-  --block:#fb7185; --block-soft:rgba(251,113,133,.13);
-  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.12);
-  --edge:#475569; --shadow:0 2px 10px rgba(0,0,0,.28); --shadow-lg:0 20px 48px rgba(0,0,0,.55);
+  --surface:#121928; --surface-2:#182234; --surface-glass:rgba(18,25,40,.92);
+  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.16); --line-strong:rgba(148,163,184,.30);
+  --accent:#22d3ee; --accent-soft:rgba(34,211,238,.13); --accent-glow:rgba(34,211,238,.32);
+  --ok:#34d399; --ok-soft:rgba(52,211,153,.14);
+  --exe:#fbbf24; --exe-soft:rgba(251,191,36,.14);
+  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.14);
+  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.15);
+  --run:#60a5fa; --run-soft:rgba(96,165,250,.15);
+  --block:#fb7185; --block-soft:rgba(251,113,133,.14);
+  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.13);
+  --edge:#475569; --shadow:0 2px 10px rgba(0,0,0,.30); --shadow-lg:0 20px 48px rgba(0,0,0,.55);
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0b101b; --canvas-dot:rgba(148,163,184,.10);
-  --surface:#121928; --surface-2:#182234; --surface-glass:rgba(18,25,40,.9);
-  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.14); --line-strong:rgba(148,163,184,.26);
-  --accent:#22d3ee; --accent-soft:rgba(34,211,238,.11); --accent-glow:rgba(34,211,238,.26);
-  --ok:#34d399; --ok-soft:rgba(52,211,153,.13);
-  --exe:#fbbf24; --exe-soft:rgba(251,191,36,.13);
-  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.13);
-  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.14);
-  --run:#60a5fa; --run-soft:rgba(96,165,250,.14);
-  --block:#fb7185; --block-soft:rgba(251,113,133,.13);
-  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.12);
-  --edge:#475569; --shadow:0 2px 10px rgba(0,0,0,.28); --shadow-lg:0 20px 48px rgba(0,0,0,.55);
+  --surface:#121928; --surface-2:#182234; --surface-glass:rgba(18,25,40,.92);
+  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.16); --line-strong:rgba(148,163,184,.30);
+  --accent:#22d3ee; --accent-soft:rgba(34,211,238,.13); --accent-glow:rgba(34,211,238,.32);
+  --ok:#34d399; --ok-soft:rgba(52,211,153,.14);
+  --exe:#fbbf24; --exe-soft:rgba(251,191,36,.14);
+  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.14);
+  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.15);
+  --run:#60a5fa; --run-soft:rgba(96,165,250,.15);
+  --block:#fb7185; --block-soft:rgba(251,113,133,.14);
+  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.13);
+  --edge:#475569; --shadow:0 2px 10px rgba(0,0,0,.30); --shadow-lg:0 20px 48px rgba(0,0,0,.55);
   color-scheme:dark}
 
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:14.5px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:var(--f-display);margin:0;line-height:1.25;letter-spacing:-.015em}
-p{margin:0} code,pre{font-family:var(--f-mono);font-size:.84em}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{margin:0;font-family:var(--f-display);letter-spacing:-.015em}
+p{margin:0}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
 button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.muted{color:var(--muted)} .mono{font-family:var(--f-mono);font-size:.82em}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code,pre,.mono{font-family:var(--f-mono);font-size:12px}
+.muted{color:var(--muted)}
+.wrap-any{min-width:0;overflow-wrap:anywhere;word-break:break-word}
+.clamp1{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.clamp1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wrap-any{overflow-wrap:anywhere;word-break:break-word;min-width:0}
+.clamp3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
-/* === BARRA SUPERIOR === */
 .shell{min-height:100vh;display:flex;flex-direction:column}
-.nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:var(--surface-glass);border-bottom:1px solid var(--line);padding:10px clamp(16px,3vw,32px);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.nav-left{display:flex;align-items:center;gap:10px;min-width:0}
-.logo-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#6366f1);display:grid;place-items:center;color:#fff;font:700 13px var(--f-display);flex:none}
-.proj-title{font:700 15px var(--f-display);max-width:300px}
-.q-toggle{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap}
+
+/* === BARRA SUPERIOR COM BOTÃO HOME SEMPRE VISÍVEL === */
+.nav{position:sticky;top:0;z-index:45;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 22px;background:var(--surface-glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav-left,.nav-right{display:flex;align-items:center;gap:9px;min-width:0}
+.brand-btn{display:inline-flex;align-items:center;gap:9px;background:none;border:0;padding:2px 4px;border-radius:10px;cursor:pointer;text-align:left;min-width:0}
+.brand-btn:hover{background:var(--surface-2)}
+.brand-logo{width:32px;height:32px;border-radius:9px;object-fit:cover;border:1px solid var(--line-strong);box-shadow:0 2px 8px rgba(0,0,0,.18);flex:0 0 auto;background:#021324}
+.proj-title{font:700 15px var(--f-display);max-width:290px}
+.home-quick-btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line-strong);background:var(--surface);color:var(--fg);border-radius:9px;padding:5px 11px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .14s;white-space:nowrap}
+.home-quick-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.home-quick-btn.is-away{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.q-toggle{border:1px solid var(--line);background:var(--surface-2);color:var(--muted);border-radius:99px;padding:4px 10px;font-size:12px;cursor:pointer;transition:all .15s;white-space:nowrap}
 .q-toggle:hover{border-color:var(--accent);color:var(--fg)}
-.q-drawer{background:var(--surface);border-bottom:1px solid var(--line);padding:12px clamp(16px,3vw,32px);font-size:14px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.q-drawer b{color:var(--accent)}
-.offline-tip{background:var(--accent-soft);border-bottom:1px solid var(--accent-glow);padding:8px clamp(16px,3vw,32px);font-size:12.5px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 
 .seg-tabs{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
-.seg-tab{border:0;background:transparent;border-radius:7px;padding:6px 15px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .14s}
+.seg-tab{border:0;background:transparent;color:var(--muted);padding:6px 14px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .14s;white-space:nowrap}
 .seg-tab:hover{color:var(--fg)}
-.seg-tab[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.seg-badge{background:var(--exe-soft);color:var(--exe);font:700 11px var(--f-body);padding:1px 7px;border-radius:999px}
+.seg-tab[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.seg-badge{background:var(--exe-soft);color:var(--exe);border-radius:99px;padding:1px 7px;font-size:11px;font-weight:700}
 
-.nav-right{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.pill-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .14s}
-.pill-btn:hover{border-color:var(--accent);background:var(--surface-2)}
+.pill-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 12px;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .14s;white-space:nowrap}
+.pill-btn:hover{border-color:var(--accent)}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--line);background:var(--surface);border-radius:9px;cursor:pointer;font-size:14px;transition:all .14s}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
 .dot-live{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
 .dot-static{width:7px;height:7px;border-radius:50%;background:var(--wait)}
-.icon-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer;display:grid;place-items:center;font-size:14px;color:var(--muted)}
-.icon-btn:hover{border-color:var(--accent);color:var(--fg)}
 
-/* === BOTÕES E PILLS LIMPOS === */
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .12s;white-space:nowrap}
-.btn:hover:not(:disabled){border-color:var(--line-strong);background:var(--surface-2)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.btn-ok{background:var(--ok);border-color:var(--ok);color:#fff}
-.btn-ok:hover:not(:disabled){filter:brightness(1.06);background:var(--ok)}
-.btn-accent{background:var(--accent);border-color:var(--accent);color:#041318}
-.btn-accent:hover:not(:disabled){filter:brightness(1.06);background:var(--accent)}
+.q-drawer{padding:11px 22px;background:var(--surface-2);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:13.5px}
+.offline-tip{padding:9px 22px;background:var(--surface-2);border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* === CONTAINER === */
+.main{width:100%;max-width:1320px;margin:0 auto;padding:20px 22px 44px;display:grid;gap:18px;flex:1}
+.main.full-bleed{max-width:1660px}
+
+/* === BOTÕES === */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line-strong);background:var(--surface);color:var(--fg);border-radius:9px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:all .14s;white-space:nowrap}
+.btn:hover:not(:disabled){border-color:var(--accent);transform:translateY(-1px)}
+.btn:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#04131c}
+.btn-accent:hover:not(:disabled){filter:brightness(1.06)}
+.btn-ok{background:var(--ok);border-color:var(--ok);color:#031c13}
+.btn-ok:hover:not(:disabled){filter:brightness(1.06)}
 .btn-soft-ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
 .btn-soft-ok:hover:not(:disabled){border-color:var(--ok)}
 .btn-soft-warn{background:var(--exe-soft);border-color:transparent;color:var(--exe)}
+.btn-soft-warn:hover:not(:disabled){border-color:var(--exe)}
 .btn-soft-pause{background:var(--pause-soft);border-color:transparent;color:var(--pause)}
+.btn-soft-pause:hover:not(:disabled){border-color:var(--pause)}
 .btn-soft-block{background:var(--block-soft);border-color:transparent;color:var(--block)}
+.btn-soft-block:hover:not(:disabled){border-color:var(--block)}
 .btn-soft-accent{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
 .btn-soft-accent:hover:not(:disabled){border-color:var(--accent)}
-.btn-sm{padding:5px 11px;font-size:12.5px;border-radius:8px}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.btn-ghost:hover:not(:disabled){background:var(--surface-2);color:var(--fg);border-color:transparent;transform:none}
+.btn-sm{padding:6px 11px;font-size:12.5px;border-radius:8px}
 .btn-xs{padding:4px 9px;font-size:12px;border-radius:7px}
-.btn-ghost{border-color:transparent;background:transparent;color:var(--muted)}
-.btn-ghost:hover:not(:disabled){color:var(--fg);background:var(--surface-2)}
 
-/* Menu contextual "..." para ações secundárias sem poluição */
+/* === STATUS PILLS === */
+.st-pill{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:3px 9px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.st-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st-pill.nob::before{display:none}
+.st-verificado{background:var(--ok-soft);color:var(--ok)}
+.st-revisado{background:var(--rev-soft);color:var(--rev)}
+.st-executado,.st-aguarda{background:var(--exe-soft);color:var(--exe)}
+.st-aguardando_decisao{background:var(--pause-soft);color:var(--pause)}
+.st-em_curso,.st-parcial{background:var(--run-soft);color:var(--run)}
+.st-bloqueado,.st-correcao_solicitada{background:var(--block-soft);color:var(--block)}
+.st-pendente{background:var(--wait-soft);color:var(--wait)}
+.st-code{background:var(--pause-soft);color:var(--pause)}
+.st-accent{background:var(--accent-soft);color:var(--accent)}
+.code-tag{font:600 11.5px var(--f-mono);color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;white-space:nowrap}
+
+/* === MENU "⋯" === */
 .menu-wrap{position:relative;display:inline-flex}
-.menu-pop{position:absolute;right:0;top:calc(100% + 5px);z-index:55;background:var(--surface);border:1px solid var(--line-strong);border-radius:11px;padding:5px;min-width:190px;box-shadow:var(--shadow-lg);display:grid;gap:2px}
-.menu-item{border:0;background:transparent;border-radius:7px;padding:8px 10px;text-align:left;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;width:100%}
+.menu-pop{position:absolute;right:0;top:calc(100% + 5px);z-index:60;min-width:205px;background:var(--surface);border:1px solid var(--line-strong);border-radius:12px;padding:6px;box-shadow:var(--shadow-lg);display:grid;gap:2px}
+.menu-item{border:0;background:transparent;text-align:left;padding:8px 10px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--fg)}
 .menu-item:hover{background:var(--surface-2)}
 .menu-item.danger{color:var(--block)}
-.menu-sep{height:1px;background:var(--line);margin:3px 6px}
+.menu-sep{height:1px;background:var(--line);margin:4px 0}
 
-.st-pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
-.st-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
-.st-pill.nob::before{display:none}
-.st-verificado{color:var(--ok);background:var(--ok-soft)}
-.st-revisado{color:var(--rev);background:var(--rev-soft)}
-.st-executado,.st-aguarda{color:var(--exe);background:var(--exe-soft)}
-.st-aguardando_decisao{color:var(--pause);background:var(--pause-soft)}
-.st-em_curso{color:var(--run);background:var(--run-soft)}
-.st-bloqueado,.st-correcao_solicitada{color:var(--block);background:var(--block-soft)}
-.st-pendente,.st-parcial{color:var(--wait);background:var(--wait-soft)}
-.st-marco{color:var(--exe);background:var(--exe-soft)}
-.st-code{color:var(--pause);background:var(--pause-soft)}
+/* === CARDS === */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px;box-shadow:var(--shadow);display:grid;gap:12px;min-width:0}
+.alert-strip{background:var(--block-soft);border:1px solid var(--block);color:var(--fg);border-radius:12px;padding:12px 15px;font-size:13.5px}
 
-/* === LAYOUT PRINCIPAL === */
-.main{width:100%;max-width:1180px;margin:0 auto;padding:24px clamp(16px,3vw,32px) 56px;display:grid;gap:20px}
-.main.full-bleed{max-width:none;padding-inline:clamp(14px,2.2vw,28px)}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px;box-shadow:var(--shadow);display:grid;gap:14px;min-width:0}
-.alert-strip{background:var(--block-soft);border:1px solid var(--block);border-radius:10px;padding:10px 14px;font-size:13px}
-.code-tag{display:inline-block;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;font:500 11.5px var(--f-mono);color:var(--muted)}
+/* === HOME (AGORA) COM SIDEBAR LATERAL DE ÁREAS DO PROJETO === */
+.home-shell{display:grid;grid-template-columns:270px minmax(0,1fr);gap:20px;align-items:start}
+.home-sidebar{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);display:grid;gap:16px;position:sticky;top:72px;max-height:calc(100vh - 90px);overflow-y:auto;min-width:0}
+.sb-group-brand{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.sb-group-logo{width:50px;height:50px;border-radius:12px;object-fit:cover;border:1px solid var(--line-strong);box-shadow:0 4px 12px rgba(0,0,0,.22);flex:0 0 auto;background:#021324}
+.sb-sec{display:grid;gap:6px}
+.sb-sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:0 6px}
+.sb-nav-btn{border:1px solid transparent;background:transparent;border-radius:10px;padding:8px 10px;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;font-weight:600;color:var(--fg);transition:all .13s;width:100%}
+.sb-nav-btn:hover{background:var(--surface-2);border-color:var(--line)}
+.sb-area-btn{border:1px solid var(--line);background:var(--surface-2);border-radius:11px;padding:9px 11px;text-align:left;cursor:pointer;display:grid;gap:4px;transition:all .14s;width:100%}
+.sb-area-btn:hover{border-color:var(--accent);background:var(--surface)}
+.sb-area-btn.is-current{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-soft),var(--surface));box-shadow:0 0 0 1px var(--accent)}
+.sb-area-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:700}
+.sb-area-title{font-size:13px;font-weight:700;line-height:1.3;color:var(--fg)}
+.home-content{display:grid;gap:18px;min-width:0}
 
-/* === ABA AGORA (CALMA, HUMANA E RESPIRÁVEL) === */
+/* KPIs da Home SEM CORTAR TEXTO */
 .kpi-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.kpi-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:grid;gap:6px;box-shadow:var(--shadow);min-width:0}
-.kpi-lbl{font-size:12px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:6px}
-.kpi-val{font:700 16px var(--f-display)}
-.bar-slim{height:7px;border-radius:999px;background:var(--surface-2);overflow:hidden;display:flex;margin-top:2px}
+.kpi-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:var(--shadow);display:grid;gap:8px;min-width:0;align-content:start}
+.kpi-lbl{font-size:12px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.kpi-val{font:700 16px var(--f-display);line-height:1.3}
+.kpi-sub{font-size:12.5px;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}
+.bar-slim{height:7px;border-radius:99px;background:var(--surface-2);overflow:hidden;display:flex}
 .bar-slim i{display:block;height:100%}
 
-.focus-card{background:linear-gradient(135deg,var(--accent-soft),var(--surface) 60%);border:1px solid var(--accent-glow);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);display:grid;gap:12px}
-.focus-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.focus-eyebrow{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.02em}
-.focus-title{font:700 clamp(18px,2.2vw,22px) var(--f-display)}
-.action-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:4px}
+.focus-card{background:linear-gradient(135deg, var(--surface) 0%, var(--surface) 60%, var(--accent-soft) 100%);border:1px solid var(--accent-glow);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);display:grid;gap:13px}
+.focus-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.focus-eyebrow{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--accent)}
+.focus-title{font:700 20px/1.3 var(--f-display)}
+.action-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding-top:2px}
 
-.queue-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:visible}
-.queue-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.queue-card{background:var(--surface);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}
+.queue-head{padding:15px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .qrows{display:grid}
-.qrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);transition:background .12s}
+.qrow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--line);transition:background .12s}
 .qrow:last-child{border-bottom:0}
 .qrow:hover{background:var(--surface-2)}
-.qrow-main{min-width:0;display:grid;gap:5px}
-.qrow-title{font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.qrow-sub{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12.5px;color:var(--muted)}
-.qrow-actions{display:flex;gap:6px;align-items:center;flex:none}
+.qrow-main{display:grid;gap:5px;min-width:0}
+.qrow-title{font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.35}
+.qrow-sub{font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qrow-actions{display:flex;align-items:center;gap:7px;flex-shrink:0}
 
 .bottom-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .compact-list{display:grid;gap:8px}
 .compact-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);font-size:13px}
 .compact-row.is-block{border-left:3px solid var(--block)}
 
-/* === ABA PROJETO — CANVAS ARCHIFY LIMPO === */
+/* === ABA PROJETO — MAPA ARCHIFY LEGÍVEL + LOCALIZADOR ONDE ESTOU === */
 .canvas-shell{display:grid;gap:12px}
 .canvas-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
 .canvas-bar-group{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .search-in{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:6px 11px;font-size:13px;width:210px}
 .search-in:focus{border-color:var(--accent);outline:none;background:var(--surface)}
 
-.workspace-split{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
-.workspace-split.with-inspector{grid-template-columns:minmax(0,1fr) 370px}
+.workspace-split{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
+.workspace-split.with-inspector{grid-template-columns:minmax(0,1fr) 380px}
 
-.arch-viewport{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1px solid var(--line);border-radius:16px;overflow:auto;min-height:540px;max-height:76vh;padding:18px}
-.arch-world{position:relative;display:inline-flex;gap:22px;align-items:flex-start;transform-origin:0 0;min-width:max-content;padding:4px 8px 38px 4px}
+.arch-viewport{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1px solid var(--line);border-radius:16px;overflow:auto;min-height:540px;max-height:76vh;padding:20px}
+.arch-world{position:relative;display:inline-flex;gap:24px;align-items:flex-start;transform-origin:0 0;min-width:max-content;padding:6px 12px 42px 6px}
 svg.arch-svg{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:visible}
 svg.arch-svg path{fill:none;transition:opacity .18s,stroke .18s,stroke-width .18s}
 svg.arch-svg path.e-seq{stroke:var(--edge);stroke-width:1.75}
@@ -194,47 +226,58 @@ svg.arch-svg path.e-hot-down{stroke:var(--exe);stroke-width:2.8;stroke-dasharray
 svg.arch-svg path.e-hot-block{stroke:var(--block);stroke-width:3;stroke-dasharray:none}
 svg.arch-svg path.e-dim{opacity:.14}
 
-.lane{position:relative;z-index:2;width:236px;flex:0 0 auto;display:grid;gap:14px}
-.lane-head{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 13px;cursor:pointer;display:grid;gap:4px;box-shadow:var(--shadow);transition:all .15s;text-align:left}
+/* Largura generosa (272px) para NENHUM card esmagar texto */
+.lane{position:relative;z-index:2;width:272px;flex:0 0 auto;display:grid;gap:14px}
+.lane-head{background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:12px 14px;cursor:pointer;display:grid;gap:5px;box-shadow:var(--shadow);transition:all .16s;text-align:left}
 .lane-head:hover{border-color:var(--accent)}
-.lane-head.is-current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent), 0 6px 20px var(--accent-soft)}
-.lane-head-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:600}
-.lane-title{font:700 14px var(--f-display)}
+.lane-head.is-current{border:2px solid var(--accent);background:linear-gradient(135deg, var(--accent-soft), var(--surface));box-shadow:0 0 0 3px var(--accent-soft), var(--shadow-lg)}
+.lane-head-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:700}
+.lane-title{font:700 14.5px/1.3 var(--f-display)}
+.here-badge{display:inline-flex;align-items:center;gap:4px;background:var(--accent);color:#04131c;border-radius:99px;padding:2px 8px;font-size:10.5px;font-weight:800;letter-spacing:.02em;white-space:nowrap}
 
-.mod-node{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:13px;box-shadow:var(--shadow);display:grid;gap:8px;transition:all .14s}
-.mod-node::before{content:"";position:absolute;left:0;top:11px;bottom:11px;width:3.5px;border-radius:0 4px 4px 0;background:var(--node-accent,var(--wait))}
+.mod-node{position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);display:grid;gap:10px;transition:all .15s}
+.mod-node::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:4px;border-radius:0 4px 4px 0;background:var(--node-accent,var(--wait))}
 .mod-node:hover{border-color:var(--line-strong);transform:translateY(-1px)}
 .mod-node.is-final{box-shadow:0 0 0 1.5px var(--accent), var(--shadow)}
 .mod-node.is-dim{opacity:.24}
 .mod-node.is-hot{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
+.mod-node.is-selected{border:2px solid var(--accent);background:linear-gradient(180deg, var(--accent-soft) 0%, var(--surface) 38%);box-shadow:0 0 0 4px var(--accent-soft), var(--shadow-lg)}
 .mod-node.st-n-verificado{--node-accent:var(--ok)}
 .mod-node.st-n-aguarda{--node-accent:var(--exe)}
 .mod-node.st-n-em_curso{--node-accent:var(--run)}
 .mod-node.st-n-bloqueado{--node-accent:var(--block)}
 .mod-node.st-n-pendente,.mod-node.st-n-parcial{--node-accent:var(--wait)}
 
-.mod-head-btn{background:none;border:0;padding:0;text-align:left;cursor:pointer;display:grid;gap:5px;width:100%}
+.mod-head-btn{background:none;border:0;padding:0;text-align:left;cursor:pointer;display:grid;gap:6px;width:100%}
 .mod-meta{display:flex;justify-content:space-between;align-items:center;gap:6px}
-.mod-title{font:700 13.5px var(--f-display);line-height:1.3}
+.mod-title{font:700 14px/1.35 var(--f-display)}
 
-.stages-wrap{display:grid;gap:8px;padding-top:8px;border-top:1px dashed var(--line)}
-.st-card{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;display:grid;gap:6px;cursor:pointer;transition:all .12s}
+.stages-wrap{display:grid;gap:9px;padding-top:10px;border-top:1px dashed var(--line)}
+.st-card{background:var(--surface-2);border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;display:grid;gap:7px;cursor:pointer;transition:all .14s}
 .st-card:hover{border-color:var(--accent)}
-.st-card.is-sel{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 2px var(--accent-soft)}
+.st-card.is-sel{border:2px solid var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-soft), 0 8px 22px rgba(0,0,0,.14)}
+.st-card.is-here{border:2px solid var(--accent);background:linear-gradient(135deg, var(--accent-soft), var(--surface));box-shadow:0 0 0 4px var(--accent-soft)}
 .st-card-top{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:nowrap}
 .st-card-top .st-pill{font-size:10.5px;padding:2px 7px;white-space:nowrap}
-.st-card-title{font-size:12.5px;font-weight:600;line-height:1.32}
+.st-card-title{font-size:13px;font-weight:600;line-height:1.38}
 
-.mini-ced{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding-top:6px;border-top:1px solid var(--line)}
-.mini-ced-box{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:5px 7px;font-size:10.5px;display:grid;gap:2px}
-.mini-ced-box b{color:var(--accent);font-size:10px}
+/* Resumo legível em largura total (substitui as 3 caixinhas esmagadas!) */
+.st-preview{display:grid;gap:7px;padding-top:8px;border-top:1px solid var(--line);font-size:12px;line-height:1.45}
+.st-preview-meta{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;color:var(--muted);font-weight:600}
+.st-preview-crit{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:7px 9px;color:var(--fg);overflow-wrap:anywhere}
 
-/* Inspetor flutuante direito no Projeto */
-.inspector{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow-lg);display:grid;gap:14px;max-height:76vh;overflow-y:auto;position:sticky;top:72px;min-width:0}
-.ins-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;border-bottom:1px solid var(--line);padding-bottom:10px}
-.ins-sec{display:grid;gap:6px;font-size:13px;min-width:0}
-.ins-sec h4{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-.ins-box{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;display:grid;gap:7px;min-width:0;overflow-wrap:anywhere;word-break:break-word}
+/* === INSPETOR LATERAL DIREITO LEVE E AMIGÁVEL === */
+.inspector{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow-lg);display:grid;gap:14px;max-height:76vh;overflow-y:auto;position:sticky;top:72px;min-width:0}
+.ins-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.ins-sec{display:grid;gap:7px;font-size:13.5px;min-width:0}
+.ins-sec h4{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ins-box{background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:12px 14px;display:grid;gap:8px;min-width:0;overflow-wrap:anywhere;word-break:break-word}
+.check-list{display:grid;gap:7px;margin:0;padding:0;list-style:none}
+.check-item{display:flex;gap:8px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:12.5px;line-height:1.45}
+.check-ic{color:var(--accent);font-weight:800;flex:0 0 auto;margin-top:1px}
+details.clean-fold{border:1px solid var(--line);border-radius:10px;padding:8px 11px;background:var(--surface-2)}
+details.clean-fold summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--accent);list-style:none;display:flex;align-items:center;justify-content:space-between}
+details.clean-fold[open] summary{margin-bottom:8px}
 
 /* === REVISÃO CONTEXTUAL === */
 .rev-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
@@ -249,7 +292,35 @@ svg.arch-svg path.e-dim{opacity:.14}
 .ev-md pre{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;margin:0}
 .ev-md ul{margin:0;padding-left:18px}
 
-/* === ABA AGENTE (1 PAINEL POR VEZ, ZERO OVERFLOW, PORTUGUÊS CLARO) === */
+/* === ABA HARNESS & AGENTE (ESTRUTURADA, AMIGÁVEL E POR ENTIDADE) === */
+.harness-hero{background:linear-gradient(135deg, var(--surface) 0%, var(--surface) 58%, var(--accent-soft) 100%);border:1px solid var(--accent-glow);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);display:grid;gap:14px}
+.stat-pills{display:flex;flex-wrap:wrap;gap:8px}
+.stat-chip{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:6px 11px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .13s}
+.stat-chip:hover{border-color:var(--accent);transform:translateY(-1px)}
+.stat-chip.is-active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+
+.arch-pillars{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.pillar-card{background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:12px;text-align:left;cursor:pointer;display:grid;gap:4px;position:relative;transition:all .14s;box-shadow:var(--shadow)}
+.pillar-card::before{content:"";position:absolute;top:0;left:10px;right:10px;height:3px;border-radius:0 0 3px 3px;background:var(--pc,var(--accent))}
+.pillar-card:hover,.pillar-card.is-active{border-color:var(--pc,var(--accent));transform:translateY(-1px);box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
+.pillar-ic{font-size:17px}
+.pillar-t{font:700 13px/1.25 var(--f-display)}
+.pillar-s{font-size:11.5px;color:var(--muted)}
+
+.entity-section{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px;box-shadow:var(--shadow);display:grid;gap:14px}
+.entity-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.entity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.entity-card{background:var(--surface-2);border:1px solid var(--line);border-top:3px solid var(--ec,var(--accent));border-radius:12px;padding:13px 14px;display:grid;gap:7px;align-content:start;min-width:0;overflow-wrap:anywhere}
+.entity-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.entity-name{font:700 13.5px/1.3 var(--f-display)}
+.entity-desc{font-size:12.5px;line-height:1.45;color:var(--fg)}
+.entity-foot{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding-top:4px}
+
+.flow-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:12px}
+.flow-phase{background:var(--surface-2);border:1px solid var(--line);border-radius:13px;padding:13px;display:grid;gap:9px;align-content:start}
+.flow-mod{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 11px;display:grid;gap:5px;cursor:pointer;transition:all .13s;text-align:left;width:100%}
+.flow-mod:hover{border-color:var(--accent)}
+
 .agent-shell{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;align-items:start}
 .agent-rail{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:14px;box-shadow:var(--shadow);display:grid;gap:10px;max-height:78vh;overflow-y:auto;position:sticky;top:72px;min-width:0}
 .rail-phase{display:grid;gap:4px}
@@ -257,20 +328,19 @@ svg.arch-svg path.e-dim{opacity:.14}
 .rail-item{border:1px solid transparent;background:transparent;border-radius:9px;padding:8px 10px;text-align:left;cursor:pointer;display:grid;gap:3px;transition:all .12s;width:100%;min-width:0}
 .rail-item:hover{background:var(--surface-2);border-color:var(--line)}
 .rail-item.is-active{background:var(--accent-soft);border-color:var(--accent)}
-.rail-item-title{font-size:13px;font-weight:600;line-height:1.3}
+.rail-item-title{font-size:13px;font-weight:600;line-height:1.35}
 .agent-main{display:grid;gap:16px;min-width:0}
-.agent-canvas{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1px solid var(--line);border-radius:16px;padding:18px;overflow:hidden}
-.layer-grid{position:relative;display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:24px;z-index:2}
-.layer-node{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:pointer;text-align:left;display:grid;gap:5px;box-shadow:var(--shadow);transition:all .14s;position:relative;min-width:0}
+.agent-canvas{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1px solid var(--line);border-radius:16px;padding:16px;overflow:hidden}
+.layer-grid{position:relative;display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:18px;z-index:2}
+.layer-node{background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:12px 14px;cursor:pointer;text-align:left;display:grid;gap:4px;box-shadow:var(--shadow);transition:all .14s;position:relative;min-width:0}
 .layer-node::before{content:"";position:absolute;top:0;left:12px;right:12px;height:3px;border-radius:0 0 3px 3px;background:var(--layer-c,var(--accent))}
 .layer-node:hover{border-color:var(--accent);transform:translateY(-1px)}
-.layer-node.open{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
+.layer-node.open{border-color:var(--accent);background:linear-gradient(135deg, var(--accent-soft), var(--surface));box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
 .clean-list{margin:0;padding-left:18px;display:grid;gap:6px}
 .chip-row{display:flex;flex-wrap:wrap;gap:6px}
 .file-chip{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:12px;max-width:100%}
-.comp-table{width:100%;border-collapse:collapse;font-size:13px}
-.comp-table th,.comp-table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-.comp-table th{background:var(--surface-2);font-size:11.5px;font-weight:700;color:var(--muted)}
+.file-chip.is-btn{cursor:pointer}
+.file-chip.is-btn:hover{border-color:var(--accent);color:var(--accent)}
 .lineage{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .lin-node{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:12.5px}
 
@@ -286,17 +356,18 @@ svg.arch-svg path.e-dim{opacity:.14}
 .lightbox img{max-width:95vw;max-height:92vh;background:#fff;border-radius:10px}
 
 /* === RESPONSIVO === */
-@media (max-width:1024px){
-  .workspace-split.with-inspector,.rev-grid,.agent-shell{grid-template-columns:minmax(0,1fr)}
-  .inspector,.rev-rail,.agent-rail{position:static;max-height:none}
+@media (max-width:1120px){
+  .home-shell,.workspace-split.with-inspector,.rev-grid,.agent-shell{grid-template-columns:minmax(0,1fr)}
+  .home-sidebar,.inspector,.rev-rail,.agent-rail{position:static;max-height:none}
+  .arch-pillars{grid-template-columns:repeat(3,minmax(0,1fr))}
   .layer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:760px){
-  .kpi-strip,.bottom-two,.layer-grid{grid-template-columns:minmax(0,1fr)}
+  .kpi-strip,.bottom-two,.layer-grid,.arch-pillars{grid-template-columns:minmax(0,1fr)}
   .qrow{grid-template-columns:minmax(0,1fr);gap:8px}
   .arch-world{flex-direction:column;gap:20px;min-width:0;width:100%;padding:4px}
   .lane{width:100%}
-  .proj-title{max-width:180px}
+  .proj-title{max-width:170px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
@@ -304,15 +375,19 @@ svg.arch-svg path.e-dim{opacity:.14}
 <body>
 <div class="shell" id="app"></div>
 <script>
-let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nome": "Projeto exemplo", "titulo": "Mapa dos módulos do projeto", "subtitulo": "catalisador X na reação de acoplamento", "pergunta_central": "O catalisador X reduz a barreira da etapa determinante o suficiente para explicar o ganho de velocidade observado?", "fontes": ".omc/specs/deep-interview.md, .omc/plans/plano.md", "pendencias_humanas": [{"id": "P-01", "modulo": "M3", "texto": "Definir a tolerância aceitável entre a barreira calculada e a experimental", "bloqueia": "M3"}], "glossario": [["M0 … M3", "módulo (bloco grande de trabalho), na ordem do plano."], ["M1.2", "etapa dentro do módulo; cada uma para para a sua validação."], ["E-001", "evidência registrada (arquivo, tabela ou figura)."]]}, "fases": ["Base", "Método", "Validação", "Resultado"], "modulos": [{"id": "M0", "titulo": "Preparação dos dados", "fase": "Base", "quando": "fechado em 12/09", "objetivo": "Estruturas de partida e dados experimentais auditados, com origem rastreável.", "responde": "Base de todos os módulos.", "registro": "E-001 a E-004", "depende_de": [], "contrato": {"pergunta": "Os dados de entrada estão completos e corretos?", "criterios_aceitacao": ["Toda estrutura com origem e checksum registrados", "Constantes de velocidade experimentais com incerteza"], "criterio_abandono": "Se a constante experimental não puder ser recuperada da fonte original, parar e rever o escopo.", "parametros": {}}, "etapas": [{"id": "M0.1", "titulo": "Cópia protegida dos originais", "status": "executado", "impacto": "baixo", "revisao": "amostragem", "data": "2026-09-10", "afirmacao": "Originais copiados sem alteração.", "verificacao": "Checksums em data/manifest.json coincidem com os originais.", "evidencia": ["E-001"], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "816b4fa8de281875", "criterio_hash": "48fab09c332bc4ff", "hash_etapa_v1": "f55f8c643a67", "evidencias": [{"ref": "E-001", "id": null, "descricao": "", "tipo": "referencia_logica", "estado": "sem_arquivo_local", "sha256": null, "versao": null, "bytes": null, "obrigatoria": false}], "fingerprint_total": "d73f5be0babb2535"}, "_eh_marco": false, "_modulo_id": "M0", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}]}, {"id": "M0.2", "titulo": "Constantes de velocidade experimentais", "status": "executado", "impacto": "alto", "revisao": "completa", "data": "2026-09-12", "afirmacao": "k(com X) / k(sem X) = 38 ± 4 a 298 K.", "verificacao": "Abrir data/cinetica.csv; a razão deve bater com a Tabela 2 do artigo-fonte.", "evidencia": ["E-003", "data/cinetica.csv"], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "96bf03a08232a403", "criterio_hash": "48fab09c332bc4ff", "hash_etapa_v1": "18684e7b67ea", "evidencias": [{"ref": "E-003", "id": null, "descricao": "", "tipo": "referencia_logica", "estado": "sem_arquivo_local", "sha256": null, "versao": null, "bytes": null, "obrigatoria": false}, {"ref": "data/cinetica.csv", "id": null, "descricao": "", "tipo": "arquivo_local", "estado": "ausente", "sha256": null, "versao": null, "bytes": null, "obrigatoria": true}], "fingerprint_total": "7fcb4c4f193f4822"}, "_eh_marco": false, "_modulo_id": "M0", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}]}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [], "_status_mod": "aguarda"}, {"id": "M1", "titulo": "Método de cálculo", "fase": "Método", "quando": "aberto em 13/09", "objetivo": "Escolher e validar o nível de teoria antes de calcular a barreira de interesse.", "responde": "Garante que a barreira calculada é confiável.", "depende_de": ["M0"], "contrato": {"pergunta": "Qual nível de teoria reproduz barreiras de referência dentro de 4 kJ/mol?", "criterios_aceitacao": ["MAE ≤ 4 kJ/mol contra o conjunto de referência", "Critérios escritos antes de ver as barreiras de interesse"], "criterio_abandono": "Se nenhum funcional testado atingir MAE ≤ 8 kJ/mol, rever o plano com o usuário.", "parametros": {"funcionais": ["ωB97X-D", "r2SCAN-3c"]}}, "etapas": [{"id": "M1.1", "titulo": "Conjunto de referência", "status": "executado", "impacto": "medio", "revisao": "completa", "data": "2026-09-14", "afirmacao": "12 reações de referência com barreiras de alto nível selecionadas.", "verificacao": "Conferir a lista em refs/conjunto.md contra o artigo de benchmark.", "evidencia": ["refs/conjunto.md"], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "5aac962196259ab7", "criterio_hash": "9cc96ba44f1cf7ef", "hash_etapa_v1": "55da7759aa14", "evidencias": [{"ref": "refs/conjunto.md", "id": null, "descricao": "", "tipo": "arquivo_local", "estado": "ausente", "sha256": null, "versao": null, "bytes": null, "obrigatoria": true}], "fingerprint_total": "cefb7d695714983c"}, "_eh_marco": false, "_modulo_id": "M1", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}], "_base_reaberta_por": [], "_libera": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "_bloqueia_agora": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}]}, {"id": "M1.2", "titulo": "Pré-registro dos critérios", "status": "em_curso", "impacto": "alto", "revisao": "completa", "descricao": "Travar MAE máximo, funcionais candidatos e regra de desempate antes de qualquer barreira de interesse.", "quem": "agente escreve → você aprova", "afirmacao": "", "verificacao": "", "evidencia": [], "_status": "em_curso", "_status_agente": "em_curso", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "a973faf3fc147eed", "criterio_hash": "9cc96ba44f1cf7ef", "hash_etapa_v1": "144be5e116cc", "evidencias": [], "fingerprint_total": "0bb9309fbffd2ba4"}, "_eh_marco": false, "_modulo_id": "M1", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.1", "modulo_origem": "M1", "motivo": "Aguarda aprovação de M1.1 (Conjunto de referência): aguarda aprovação."}], "_base_reaberta_por": [], "_libera": [{"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "_bloqueia_agora": [{"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}]}, {"id": "M1.3", "titulo": "Benchmark dos funcionais", "status": "pendente", "impacto": "alto", "revisao": "completa", "afirmacao": "", "verificacao": "", "evidencia": [], "_status": "pendente", "_status_agente": "pendente", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "b3c0ed1ae7b09645", "criterio_hash": "9cc96ba44f1cf7ef", "hash_etapa_v1": "fcb08c123516", "evidencias": [], "fingerprint_total": "e5a36f6d88780f0a"}, "_eh_marco": false, "_modulo_id": "M1", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.1", "modulo_origem": "M1", "motivo": "Aguarda aprovação de M1.1 (Conjunto de referência): aguarda aprovação."}, {"tipo": "etapa_pendente", "origem_id": "M1.2", "modulo_origem": "M1", "motivo": "Aguarda aprovação de M1.2 (Pré-registro dos critérios): aguarda aprovação."}], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}]}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}], "_status_mod": "em_curso"}, {"id": "M2", "titulo": "Validação estrutural", "fase": "Validação", "objetivo": "Comparar geometrias otimizadas com as estruturas cristalográficas.", "depende_de": ["M0", "M1"], "contrato": {}, "etapas_estimadas": 4, "etapas": [], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.1", "modulo_origem": "M1", "motivo": "Depende de M1.1 (Conjunto de referência): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.2", "modulo_origem": "M1", "motivo": "Depende de M1.2 (Pré-registro dos critérios): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.3", "modulo_origem": "M1", "motivo": "Depende de M1.3 (Benchmark dos funcionais): aguarda aprovação humana."}], "_status_mod": "bloqueado"}, {"id": "M3", "titulo": "Barreira com e sem catalisador", "fase": "Resultado", "resultado_final": true, "objetivo": "Calcular ΔG‡ com e sem X e comparar com a razão experimental.", "responde": "A pergunta central.", "bloqueio": "P-01: falta definir a tolerância aceitável.", "depende_de": ["M1", "M2"], "contrato": {}, "etapas_estimadas": 5, "etapas": [], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [{"tipo": "bloqueio_modulo", "origem_id": "M3", "motivo": "P-01: falta definir a tolerância aceitável."}, {"tipo": "etapa_pendente", "origem_id": "M1.1", "modulo_origem": "M1", "motivo": "Depende de M1.1 (Conjunto de referência): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.2", "modulo_origem": "M1", "motivo": "Depende de M1.2 (Pré-registro dos critérios): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.3", "modulo_origem": "M1", "motivo": "Depende de M1.3 (Benchmark dos funcionais): aguarda aprovação humana."}, {"tipo": "modulo_nao_detalhado", "origem_id": "M2", "modulo_origem": "M2", "motivo": "Módulo anterior M2 ainda não foi executado/verificado."}], "_status_mod": "bloqueado"}]}, "politica": {"modo": "por_etapa", "canal_padrao": "ambos", "definida_em": "", "definida_por": "compatibilidade legada", "legada": true, "historico": []}, "resumo": {"total": 14, "verificadas": 0, "estimado": true, "contagem": {"executado": 3, "em_curso": 1, "pendente": 1}}, "situacao_atual": {"fase_atual": "Base", "modulo_atual_id": "M0", "modulo_atual_titulo": "Preparação dos dados", "etapa_foco_id": "M0.2", "marco_atual": {"id": "M0", "modulo_id": "M0", "titulo": "Preparação dos dados", "status": "aguarda", "contrato_travado": false}, "atividade_agente": {"origem": "reportado_pelo_agente", "estado": "executando", "etapa_id": "M1.2", "resumo": "Executando M1.2 — Pré-registro dos critérios", "sessao_id": "", "atualizado_em": ""}, "bloqueios_sistema": [{"tipo": "etapa_pendente", "origem": "sistema", "gravidade": "alta", "origem_id": "M1.2", "status_origem": "em_curso", "titulo": "M1.2 — Pré-registro dos critérios", "retidos": ["M2", "M3"], "detalhe": "em andamento · segura: Validação estrutural, Barreira com e sem catalisador"}, {"tipo": "pendencia_humana", "origem": "humano", "gravidade": "media", "alvo_id": "M3", "titulo": "P-01: Definir a tolerância aceitável entre a barreira calculada e a experimental", "detalhe": "Bloqueia M3", "retidos": ["M3"]}], "proxima_acao": {"tipo": "revisar", "etapa_id": "M0.2", "modulo_id": "M0", "titulo": "Constantes de velocidade experimentais", "detalhe": "Aprovar esta entrega libera: Método de cálculo, Validação estrutural.", "cta_label": "Revisar evidências", "fila_count": 3, "fila_total_count": 3}}, "fila": [{"id": "M0.2", "modulo_id": "M0", "modulo_titulo": "Preparação dos dados", "fase": "Base", "titulo": "Constantes de velocidade experimentais", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "evidencia_ausente": true}, {"id": "M1.1", "modulo_id": "M1", "modulo_titulo": "Método de cálculo", "fase": "Método", "titulo": "Conjunto de referência", "impacto": "medio", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "bloqueia_agora": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "evidencia_ausente": true}, {"id": "M0.1", "modulo_id": "M0", "modulo_titulo": "Preparação dos dados", "fase": "Base", "titulo": "Cópia protegida dos originais", "impacto": "baixo", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "amostragem", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "evidencia_ausente": false}], "fila_todos": [{"id": "M0.2", "modulo_id": "M0", "modulo_titulo": "Preparação dos dados", "fase": "Base", "titulo": "Constantes de velocidade experimentais", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "evidencia_ausente": true}, {"id": "M1.1", "modulo_id": "M1", "modulo_titulo": "Método de cálculo", "fase": "Método", "titulo": "Conjunto de referência", "impacto": "medio", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "bloqueia_agora": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "evidencia_ausente": true}, {"id": "M0.1", "modulo_id": "M0", "modulo_titulo": "Preparação dos dados", "fase": "Base", "titulo": "Cópia protegida dos originais", "impacto": "baixo", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "amostragem", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "evidencia_ausente": false}], "fila_opcional": [], "relacoes_mapa": [{"de": "M0", "para": "M1", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M0", "para": "M2", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M1", "para": "M2", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M1", "para": "M3", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M2", "para": "M3", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}], "eventos": [{"id": "exec:M0.1:d73f5be0babb2535", "tipo": "entrega", "data": "2026-09-10", "alvo_id": "M0.1", "texto": "M0.1 (Cópia protegida dos originais) marcada como executada pelo agente."}, {"id": "exec:M0.2:7fcb4c4f193f4822", "tipo": "entrega", "data": "2026-09-12", "alvo_id": "M0.2", "texto": "M0.2 (Constantes de velocidade experimentais) marcada como executada pelo agente."}, {"id": "exec:M1.1:cefb7d695714983c", "tipo": "entrega", "data": "2026-09-14", "alvo_id": "M1.1", "texto": "M1.1 (Conjunto de referência) marcada como executada pelo agente."}], "mudancas": {"referencia_confiavel": false, "referencia_em": "", "novos": []}, "erros": [], "avisos": ["M0.2: evidência local ausente no disco: 'data/cinetica.csv'.", "M1.1: evidência local ausente no disco: 'refs/conjunto.md'."], "gerado_em": "2026-11-26 10:30:43"};
+let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nome": "Projeto exemplo", "titulo": "Mapa dos módulos do projeto", "subtitulo": "catalisador X na reação de acoplamento", "pergunta_central": "O catalisador X reduz a barreira da etapa determinante o suficiente para explicar o ganho de velocidade observado?", "fontes": ".omc/specs/deep-interview.md, .omc/plans/plano.md", "pendencias_humanas": [{"id": "P-01", "modulo": "M3", "texto": "Definir a tolerância aceitável entre a barreira calculada e a experimental", "bloqueia": "M3"}], "glossario": [["M0 … M3", "módulo (bloco grande de trabalho), na ordem do plano."], ["M1.2", "etapa dentro do módulo; cada uma para para a sua validação."], ["E-001", "evidência registrada (arquivo, tabela ou figura)."]]}, "fases": ["Base", "Método", "Validação", "Resultado"], "modulos": [{"id": "M0", "titulo": "Preparação dos dados", "fase": "Base", "quando": "fechado em 12/09", "objetivo": "Estruturas de partida e dados experimentais auditados, com origem rastreável.", "responde": "Base de todos os módulos.", "registro": "E-001 a E-004", "depende_de": [], "contrato": {"pergunta": "Os dados de entrada estão completos e corretos?", "criterios_aceitacao": ["Toda estrutura com origem e checksum registrados", "Constantes de velocidade experimentais com incerteza"], "criterio_abandono": "Se a constante experimental não puder ser recuperada da fonte original, parar e rever o escopo.", "parametros": {}}, "etapas": [{"id": "M0.1", "titulo": "Cópia protegida dos originais", "status": "executado", "impacto": "baixo", "revisao": "amostragem", "data": "2026-09-10", "afirmacao": "Originais copiados sem alteração.", "verificacao": "Checksums em data/manifest.json coincidem com os originais.", "evidencia": ["E-001"], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "816b4fa8de281875", "criterio_hash": "48fab09c332bc4ff", "hash_etapa_v1": "f55f8c643a67", "evidencias": [{"ref": "E-001", "id": null, "descricao": "", "tipo": "referencia_logica", "estado": "sem_arquivo_local", "sha256": null, "versao": null, "bytes": null, "obrigatoria": false}], "fingerprint_total": "d73f5be0babb2535"}, "_eh_marco": false, "_modulo_id": "M0", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}]}, {"id": "M0.2", "titulo": "Constantes de velocidade experimentais", "status": "executado", "impacto": "alto", "revisao": "completa", "data": "2026-09-12", "afirmacao": "k(com X) / k(sem X) = 38 ± 4 a 298 K.", "verificacao": "Abrir data/cinetica.csv; a razão deve bater com a Tabela 2 do artigo-fonte.", "evidencia": ["E-003", "data/cinetica.csv"], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "96bf03a08232a403", "criterio_hash": "48fab09c332bc4ff", "hash_etapa_v1": "18684e7b67ea", "evidencias": [{"ref": "E-003", "id": null, "descricao": "", "tipo": "referencia_logica", "estado": "sem_arquivo_local", "sha256": null, "versao": null, "bytes": null, "obrigatoria": false}, {"ref": "data/cinetica.csv", "id": null, "descricao": "", "tipo": "arquivo_local", "estado": "ausente", "sha256": null, "versao": null, "bytes": null, "obrigatoria": true}], "fingerprint_total": "7fcb4c4f193f4822"}, "_eh_marco": false, "_modulo_id": "M0", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}]}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [], "_status_mod": "aguarda"}, {"id": "M1", "titulo": "Método de cálculo", "fase": "Método", "quando": "aberto em 13/09", "objetivo": "Escolher e validar o nível de teoria antes de calcular a barreira de interesse.", "responde": "Garante que a barreira calculada é confiável.", "depende_de": ["M0"], "contrato": {"pergunta": "Qual nível de teoria reproduz barreiras de referência dentro de 4 kJ/mol?", "criterios_aceitacao": ["MAE ≤ 4 kJ/mol contra o conjunto de referência", "Critérios escritos antes de ver as barreiras de interesse"], "criterio_abandono": "Se nenhum funcional testado atingir MAE ≤ 8 kJ/mol, rever o plano com o usuário.", "parametros": {"funcionais": ["ωB97X-D", "r2SCAN-3c"]}}, "etapas": [{"id": "M1.1", "titulo": "Conjunto de referência", "status": "executado", "impacto": "medio", "revisao": "completa", "data": "2026-09-14", "afirmacao": "12 reações de referência com barreiras de alto nível selecionadas.", "verificacao": "Conferir a lista em refs/conjunto.md contra o artigo de benchmark.", "evidencia": ["refs/conjunto.md"], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "5aac962196259ab7", "criterio_hash": "9cc96ba44f1cf7ef", "hash_etapa_v1": "55da7759aa14", "evidencias": [{"ref": "refs/conjunto.md", "id": null, "descricao": "", "tipo": "arquivo_local", "estado": "ausente", "sha256": null, "versao": null, "bytes": null, "obrigatoria": true}], "fingerprint_total": "cefb7d695714983c"}, "_eh_marco": false, "_modulo_id": "M1", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}], "_base_reaberta_por": [], "_libera": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "_bloqueia_agora": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}]}, {"id": "M1.2", "titulo": "Pré-registro dos critérios", "status": "em_curso", "impacto": "alto", "revisao": "completa", "descricao": "Travar MAE máximo, funcionais candidatos e regra de desempate antes de qualquer barreira de interesse.", "quem": "agente escreve → você aprova", "afirmacao": "", "verificacao": "", "evidencia": [], "_status": "em_curso", "_status_agente": "em_curso", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "a973faf3fc147eed", "criterio_hash": "9cc96ba44f1cf7ef", "hash_etapa_v1": "144be5e116cc", "evidencias": [], "fingerprint_total": "0bb9309fbffd2ba4"}, "_eh_marco": false, "_modulo_id": "M1", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.1", "modulo_origem": "M1", "motivo": "Aguarda aprovação de M1.1 (Conjunto de referência): aguarda aprovação."}], "_base_reaberta_por": [], "_libera": [{"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "_bloqueia_agora": [{"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}]}, {"id": "M1.3", "titulo": "Benchmark dos funcionais", "status": "pendente", "impacto": "alto", "revisao": "completa", "afirmacao": "", "verificacao": "", "evidencia": [], "_status": "pendente", "_status_agente": "pendente", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "b3c0ed1ae7b09645", "criterio_hash": "9cc96ba44f1cf7ef", "hash_etapa_v1": "fcb08c123516", "evidencias": [], "fingerprint_total": "e5a36f6d88780f0a"}, "_eh_marco": false, "_modulo_id": "M1", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.1", "modulo_origem": "M1", "motivo": "Aguarda aprovação de M1.1 (Conjunto de referência): aguarda aprovação."}, {"tipo": "etapa_pendente", "origem_id": "M1.2", "modulo_origem": "M1", "motivo": "Aguarda aprovação de M1.2 (Pré-registro dos critérios): aguarda aprovação."}], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}]}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}], "_status_mod": "em_curso"}, {"id": "M2", "titulo": "Validação estrutural", "fase": "Validação", "objetivo": "Comparar geometrias otimizadas com as estruturas cristalográficas.", "depende_de": ["M0", "M1"], "contrato": {}, "etapas_estimadas": 4, "etapas": [], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [{"tipo": "etapa_pendente", "origem_id": "M0.1", "modulo_origem": "M0", "motivo": "Depende de M0.1 (Cópia protegida dos originais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M0.2", "modulo_origem": "M0", "motivo": "Depende de M0.2 (Constantes de velocidade experimentais): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.1", "modulo_origem": "M1", "motivo": "Depende de M1.1 (Conjunto de referência): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.2", "modulo_origem": "M1", "motivo": "Depende de M1.2 (Pré-registro dos critérios): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.3", "modulo_origem": "M1", "motivo": "Depende de M1.3 (Benchmark dos funcionais): aguarda aprovação humana."}], "_status_mod": "bloqueado"}, {"id": "M3", "titulo": "Barreira com e sem catalisador", "fase": "Resultado", "resultado_final": true, "objetivo": "Calcular ΔG‡ com e sem X e comparar com a razão experimental.", "responde": "A pergunta central.", "bloqueio": "P-01: falta definir a tolerância aceitável.", "depende_de": ["M1", "M2"], "contrato": {}, "etapas_estimadas": 5, "etapas": [], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [{"tipo": "bloqueio_modulo", "origem_id": "M3", "motivo": "P-01: falta definir a tolerância aceitável."}, {"tipo": "etapa_pendente", "origem_id": "M1.1", "modulo_origem": "M1", "motivo": "Depende de M1.1 (Conjunto de referência): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.2", "modulo_origem": "M1", "motivo": "Depende de M1.2 (Pré-registro dos critérios): aguarda aprovação humana."}, {"tipo": "etapa_pendente", "origem_id": "M1.3", "modulo_origem": "M1", "motivo": "Depende de M1.3 (Benchmark dos funcionais): aguarda aprovação humana."}, {"tipo": "modulo_nao_detalhado", "origem_id": "M2", "modulo_origem": "M2", "motivo": "Módulo anterior M2 ainda não foi executado/verificado."}], "_status_mod": "bloqueado"}]}, "politica": {"modo": "por_etapa", "canal_padrao": "ambos", "definida_em": "", "definida_por": "compatibilidade legada", "legada": true, "historico": []}, "resumo": {"total": 14, "verificadas": 0, "estimado": true, "contagem": {"executado": 3, "em_curso": 1, "pendente": 1}}, "situacao_atual": {"fase_atual": "Base", "modulo_atual_id": "M0", "modulo_atual_titulo": "Preparação dos dados", "etapa_foco_id": "M0.2", "marco_atual": {"id": "M0", "modulo_id": "M0", "titulo": "Preparação dos dados", "status": "aguarda", "contrato_travado": false}, "atividade_agente": {"origem": "reportado_pelo_agente", "estado": "executando", "etapa_id": "M1.2", "resumo": "Executando M1.2 — Pré-registro dos critérios", "sessao_id": "", "atualizado_em": ""}, "bloqueios_sistema": [{"tipo": "etapa_pendente", "origem": "sistema", "gravidade": "alta", "origem_id": "M1.2", "status_origem": "em_curso", "titulo": "M1.2 — Pré-registro dos critérios", "retidos": ["M2", "M3"], "detalhe": "em andamento · segura: Validação estrutural, Barreira com e sem catalisador"}, {"tipo": "pendencia_humana", "origem": "humano", "gravidade": "media", "alvo_id": "M3", "titulo": "P-01: Definir a tolerância aceitável entre a barreira calculada e a experimental", "detalhe": "Bloqueia M3", "retidos": ["M3"]}], "proxima_acao": {"tipo": "revisar", "etapa_id": "M0.2", "modulo_id": "M0", "titulo": "Constantes de velocidade experimentais", "detalhe": "Aprovar esta entrega libera: Método de cálculo, Validação estrutural.", "cta_label": "Revisar evidências", "fila_count": 3, "fila_total_count": 3}}, "harness_resumo": {"nome": "Harness de Projeto exemplo", "descricao": "Estrutura operacional que combina memória versionada, skills, scripts/MCPs, hooks de proteção e validação humana para conduzir este projeto com segurança.", "papeis": [], "skills": [], "mcps": [], "scripts": [], "hooks_codigo": [{"regra": "Bloqueio de autovalidação por agentes (PreToolUse)", "onde_aplica": "block_verify_hook.py · CLI e endpoints /api/decisao, /api/politica", "se_falhar": "Bloqueia execução (exit 2 / deny) e exige decisão humana no painel ou terminal", "etapas": ["Todas"], "nativo": true}], "regras_instrucao": [], "fluxo_fases": [{"fase": "Base", "blocos": [{"id": "M0", "titulo": "Preparação dos dados", "status": "aguarda", "eh_marco": false, "papel": "Execução modular", "total_etapas": 2, "verificadas": 0, "marcos": []}]}, {"fase": "Método", "blocos": [{"id": "M1", "titulo": "Método de cálculo", "status": "em_curso", "eh_marco": false, "papel": "Execução modular", "total_etapas": 3, "verificadas": 0, "marcos": []}]}, {"fase": "Validação", "blocos": [{"id": "M2", "titulo": "Validação estrutural", "status": "bloqueado", "eh_marco": false, "papel": "Execução modular", "total_etapas": 4, "verificadas": 0, "marcos": []}]}, {"fase": "Resultado", "blocos": [{"id": "M3", "titulo": "Barreira com e sem catalisador", "status": "bloqueado", "eh_marco": false, "papel": "Execução modular", "total_etapas": 5, "verificadas": 0, "marcos": []}]}], "contadores": {"skills": 0, "mcps": 0, "scripts": 0, "hooks_codigo": 1, "regras_instrucao": 0, "papeis": 0, "fases": 4}}, "fila": [{"id": "M0.2", "modulo_id": "M0", "modulo_titulo": "Preparação dos dados", "fase": "Base", "titulo": "Constantes de velocidade experimentais", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "evidencia_ausente": true}, {"id": "M1.1", "modulo_id": "M1", "modulo_titulo": "Método de cálculo", "fase": "Método", "titulo": "Conjunto de referência", "impacto": "medio", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "bloqueia_agora": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "evidencia_ausente": true}, {"id": "M0.1", "modulo_id": "M0", "modulo_titulo": "Preparação dos dados", "fase": "Base", "titulo": "Cópia protegida dos originais", "impacto": "baixo", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "amostragem", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "evidencia_ausente": false}], "fila_todos": [{"id": "M0.2", "modulo_id": "M0", "modulo_titulo": "Preparação dos dados", "fase": "Base", "titulo": "Constantes de velocidade experimentais", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "evidencia_ausente": true}, {"id": "M1.1", "modulo_id": "M1", "modulo_titulo": "Método de cálculo", "fase": "Método", "titulo": "Conjunto de referência", "impacto": "medio", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "bloqueia_agora": [{"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}, {"tipo": "modulo", "id": "M3", "titulo": "Barreira com e sem catalisador"}], "evidencia_ausente": true}, {"id": "M0.1", "modulo_id": "M0", "modulo_titulo": "Preparação dos dados", "fase": "Base", "titulo": "Cópia protegida dos originais", "impacto": "baixo", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "amostragem", "eh_marco": false, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M1", "titulo": "Método de cálculo"}, {"tipo": "etapa", "id": "M1.1", "titulo": "Conjunto de referência"}, {"tipo": "etapa", "id": "M1.2", "titulo": "Pré-registro dos critérios"}, {"tipo": "etapa", "id": "M1.3", "titulo": "Benchmark dos funcionais"}, {"tipo": "modulo", "id": "M2", "titulo": "Validação estrutural"}], "evidencia_ausente": false}], "fila_opcional": [], "relacoes_mapa": [{"de": "M0", "para": "M1", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M0", "para": "M2", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M1", "para": "M2", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M1", "para": "M3", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M2", "para": "M3", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}], "eventos": [{"id": "exec:M0.1:d73f5be0babb2535", "tipo": "entrega", "data": "2026-09-10", "alvo_id": "M0.1", "texto": "M0.1 (Cópia protegida dos originais) marcada como executada pelo agente."}, {"id": "exec:M0.2:7fcb4c4f193f4822", "tipo": "entrega", "data": "2026-09-12", "alvo_id": "M0.2", "texto": "M0.2 (Constantes de velocidade experimentais) marcada como executada pelo agente."}, {"id": "exec:M1.1:cefb7d695714983c", "tipo": "entrega", "data": "2026-09-14", "alvo_id": "M1.1", "texto": "M1.1 (Conjunto de referência) marcada como executada pelo agente."}], "mudancas": {"referencia_confiavel": false, "referencia_em": "", "novos": []}, "erros": [], "avisos": ["M0.2: evidência local ausente no disco: 'data/cinetica.csv'.", "M1.1: evidência local ausente no disco: 'refs/conjunto.md'."], "gerado_em": "2026-11-26 11:52:50"};
 (function(){
   if (!D || !D.estado) {
     document.getElementById('app').innerHTML = '<div class="main"><div class="alert-strip">Nenhum dado carregado. Abra com <code>python specboard.py serve --open</code>.</div></div>';
     return;
   }
 
+  // Brasão compacto do grupo CEMOL (sobrescrevível por projeto.logo)
+  const CEMOL_LOGO_URI = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwQDAwQEBAQFBQQFBwsHBwYGBw4KCggLEA4RERAOEA8SFBoWEhMYEw8QFh8XGBsbHR0dERYgIh8cIhocHRz/2wBDAQUFBQcGBw0HBw0cEhASHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBz/wAARCABgAGADASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAABgIDBAUHAQgA/8QANhAAAgEDAwIFAwMCBAcAAAAAAQIDBAURABIhBjETIkFRYQcUcSOBkRUyQmKToRYkNFJy4fH/xAAbAQACAgMBAAAAAAAAAAAAAAADBAIFAAEGB//EADMRAAECBAQDBwMDBQAAAAAAAAECEQADITEEEkFhE1GRBXGBobHB8CIjMhQV8SSSosLR/9oADAMBAAIRAxEAPwDw8DnSgM64o06o1YiK4wgRk6V4TfGnVXTvhsApIIVhkH0P499baNPEXwW+Nd8BvjRG/Tc69ORX1Killo2qPtZUR/1YJCpYBkIHBVSQRkHB9dEtl6dtNr+qFmtdU092s8tTTtG8cPhmqSRVZDsY/wBuWGfgNoC8RLSCRVgT0v41giZayQLO3nGbeA3xr7wW+NaV1B09bLt9VrpaaITWq1/eSiRpId/2yoC0jhB/gGCQP+0jQsnT8klkqrx9zTpRQ1H20YdiJZ3xuwqAHspBJOAM++tS8VLWlJNHAP8AdaNqlLSSLs/leB3wm+Nc2EameGxDEKSFGSQOw9zplhjTECeI540ksBp1xpkjUSTEhDqjnUqmp3qJo4YwN8jBVycDJ+dRk1pPTXT1rl+n/VlZX7Y73S1FGlKJDtZAzZJx7MN2fhNBnz0yUhR1IHUge9YnLlmYWG56B4i9AWm1zdQWyS7UNVW0kbOZKWEBvuZAcRx8kAAnkkkDA5POm/qNda29dXVlRWx0sDIFiipaSZJY6WJRhYgyeXIHfHqT+NTLJbKbqDqO1WR3qYrfWyS7JpIwQIyGYukbHG447t8YxjTC3fpC3KDb+nKu4PjIkvFbhP8AShC/7udLIL4jisVFrcgSeZAq1daQVQ+1kcAP1psH9o59O7zQ2y9yUd2iop7PcYjBUxVoYxgjzI+F8wZWHBHPmPvrc26zpJZKKooKSaaShiEFNNR9OyyGGMDAVHaPIGPnWQWPq3q+/wB0prN0wtLbqmpJWKntNNFS5wCTmTG7sDyW1s3Tf0F6hu2yr6p64uwG4boKaeQl+DlRI7YznjIUjg+4Ouf7fxWCwyuJjlhBI/EEknR8oTrZ3al6RY9mpnLTkkJKhzZvN/GKuXrOmpqqpq6uGqgnqo/BnnrLDJGZUxjazBMkY9M6xTry60FfdoaO0JRxWmgiEcCUgYIWbzO/m8xYnAJPPlHtr0XWfQKugEcvTvX99pC8hBFVKxUANg8qwPvyQQTjOM6xXq6p606RrRR9U0tLcUOdj3CkjqFkGSOJMBgeM43AjQOwcb2fPnZsEsKU34klJ5UBSHIDi9AYL2lLxCZeWelhzZ/N/aBjoOvrLX1RR1FEKaSXDI0FVMsUdQjDDRlm8uSO2fUD8aV1vbKGK9XGW30U9JTuV208gCiCQnDpwSpHqMHGDx2117p0pXqTWWGst8mMl7XV7o/9OYH/AGbTt1oKey3y4WlPuZaGmMRMqIAfD2q4Z0HBYZ7jng9866NR/qeKxSrLbmARqCRR6a1irSPs5HBD35EjcA6d0BNTA9PLJDIBvjYqwByM/nUZho3vdopB0lZJqYK9zlqqlZgnLOAc/wAAbSP/AC0EtpuRPE5JUNCR0JHSkBmSjLIB1APUPBF0LbrfeOqbbb7ozLRVbtCzI21lZlYIQffdt76OKTp+gtlzNrvl1goaSB5YaqvkGXZYmyPDGDlnDKACG2gNrOLTQS1Mcspg3U5Ig+4OdsMjAlCSOxO0/nnHOju0Wa79W1co8RGeCCOaprqpg0VNglmduDuZtpIHrtyeNIY0kTCszGSBXY8xfnbVhQw1hwClsrl+u3l6xL6eqrXN9WbYbLR1FLbY3ZIRUuzTSjwXPiOWPds5x2AxrP7fSy19RS0sAzNOyRoPk4A0QfTqYt11apNzOTLI25u5/Tfk6v8A6OdJ1F3vUd7lgqxarQyyNUwAYWfgxqeDxnk8Hj2zok2cMGmYu+VCdyT9fiXMCSgz8ibOo/6x6Q6G6Xh6F6Pp7bPbmo6qSRDNWsyT+HPJhS0TkZ42nyhcDIyTydGs9wlepmmAp5ViXJd5/CaIpw7OOy5wMY7fzqlrep6WjM9ZFVR1EiBFR8hzIzDAUJ/hOQOfz86yes6huHVU8tXXzYd4kgeKKFNzIrnduB5AAyeCcAEj114knCz+0pq8RPoSXJL3Og189mjvAUYVCUI+NG7i5VQmkWoG2nZwsZULl0bB28HIb054ORjkaEerbHT9YWausdRXRNUVkZf/AKPdJGUbAYAtgbd2BnB5zoBsfUS00/3Ecr4nV/8AmomMiLHgYwuAFI2qvPOc8nGivqnq2GzW1q5Z2pDIEdkaRXzjALEAEuewIHuMe+tI7OxGFxCBJ/JwzDUbV1r6gUgpmy5ss57a90eNbtRtba6to3ZXamkeIsuQG2kjIyAcaML5UUUX1EqTcKaWoo3WJZBAzLIg8FDvQg91xnHrg6pOrY62sr6u61UjTTVZ8aZyuPM3PA9uw051u4/4wqiZDGP0DvAzt/Sj5/bXuS0KWtCZlCUKduf0WMcAU8EKYWUGfl9UWVTa6e4XBKO1V0VZBUMtPBVqNrIH8xLjAO5VRgcAbgRoT6po6S3X6uo6Es1LTuIlZjkkgAMSffdnRXdbVdOmq4QuyJUeFLLDVUzfpz55DrwNpGRx/myNBlzpHgCuIsQqfB8YZxK4GWPPc88/tnS+CU6gpK3S1LV3PTQamggmJDJIKWL9Nvm0EXQPUQ6eeu+9o/vLJWIIKyEYLY9GCnvjJ/nuCBqwa71cdLV2qhqh/Sato5JR/ZJVgjbGhb0XCDPbndnPbQv0nQJc7zDSmuSimkBEMsi5QvjhTggjPIyPXGjWj6f+3v8ASWm9+FCZKkLPzhTEQ77lc9lbDr6EZIPbQcVwJU9S1fkQCR3atzDXG3IQSRxVykgWdh46fzvFJ9PWC9b2sgbR4kmBnOP03xzrY+h+rKfoH6V2l4Gp1udxLzotPLudm343Sqe2FXAxx++spuN8oYvqLHfqUBLca8MirHtUwrtQsB7EbsDVVXw1VFWVNhqaqYwUE8ixRbzsXOfMo+Rg8e+irT+pUFLDOlJbuKnHgVB4Gn7SWTViQ/ezdWMa9c75bamKd6QiniZ9kcEg3uMsfOHGCAPnnnjXLJcYj1LTUEgQCYtPTCEjgqhDLx3VlLdxrM6t5E6TsHhM4zU1WHXIbyFdvPfjJ1e/SpWm+olseUvKY46mV5GbJwYmOcemC38nVNi+z5Iws6byC/8AF/cfKxYSMXM4qEHUp829jEy89UVFmvc9vtxTfRhNsko3NFgcgEnBJyckj10L3fqauvlZFLVVE0uMhS+AFXHIA9O3ppHWiB+sLmSMGVlYHB4yo/8AeqZE2WwyAld1QIiQCMLgEj+catuzsPh5UmVNCBnIFdajnAp+JmFa5b0BPkYl3KWSW1SMxjCkEALkbf8ALjSesj4nVVV5d3EIIzjtEmefTtqLTW1q+4UdCrtvnmWMhifKvGSfwMnOrq1XijfrxrzUFTQ/eNuDrlRE4ZAx+ANufg6cnzmXxEh8qVU7yGHixhRR4oyqo5A6O/R4aNwqKhKakrao/Y0YkMQJ3PTrgK6bvUANx+BqB1pfFvklG1JSfa2mlUw0sZwDj1OB27Aft3Jzq+q7GJ7rU2y1qkssdWyQq39qxKEbc7DkgZRfc7RjvoN6mpUobvPTrVrVyR4WSVAQm/HKjJJIHbPvnSmFEmZNStN2JA79W5l7nfeJz+IiWUm1j4afNorYGRZUaRS8YILKDjI9s6KBUVNTGrVUtTLTSxNHGazdmEHO0q54YZ9M+/GdCSnRX031rdLJA9FFNTyUTBj4NWC0Y9wMe/t2Ptp3FIWU5paQSOZbpQwth1JCsqywMW1NaKOu6Z6grqlWhqbdBDHBG7k+GTId35zjaNNyU69QwxpGwnvtuiEUkcbc1sKjgr7yIPKR3KgEcg6hSVtNFGjzTCAybZFp6KMnau7coO84AzyAckA9hxqZaYKWtiqroKYw01vKb6upqXyrsfIqrEqktwT34xknSQStIVMJN6bOAGvUE6A3NKgGGSUEhAAtXwcvs3tyiXbalepKeltsy7aSnUkJEgJjGcsxYkBR3JY/P41o3TDWLo+OWooR4k86BRufdPNHyxLEgBFwhbaoycDOgalpY7897r0W3VJpvCkleKlqJpKjxDgEIZByDwQfk86+gtb3K136spY7ZI1pYkwSULK8ygZdhlzgqAcg+3fSOMkIxCTLUopTRxo5Y173F+8toxh1qlELACjVjsHt0gg6lp7FdwZpyqVITh4jl1X0JA7rzgjuO/bWbXJjQKaTcjwL2jIAHPqCCQfzotl6brV/oUf2lnaqucckzoadlWlSMZYuwfuByQB8d9QqeCmFOLvaorfMlJUxwyusE8MkJc4RwviHKk5+QfTU8ElGHSEhZUBYaAuQK6OQQOem+YhapqirKEk9WYG2tGPrFXDSmyQvHK6Q3qvjMaRueaWJhyW9nccAegJz31Ims0FJ0/YqqmQzVNyp5UmjV8bj4gx+AAcH8aZvf2dlvlbSTUzvVQSFJZ6apYhmyCeJFYnkd86ZiuMDRs0UgqDHl2grYzyu4uwARsEZOSOM47EDThExaUzUksWJ3DFhsA4Ic73LwsCgFSDpTuqPO/8AER6ismgVzTT1EVLHGsbfbbt0yjuXccDJ5xnj86FpCpdtgITPAJzgaJupOsLleolpJZoI6NcHwaXIRvbOeTj27D20LE6dwyVBLrSxO7+whaepJUyS4jgOr63XCeWk+1iZEmhVnRzGh3KOSCxGRjuD+3tqlEYHvqStS6U326BVQnLlRhn9gT6ge2jTJWcM0QQvKXiwalq7kIZ44ncGJQ0h4XIyvLHA9Bq7sszUduuFrrDSy0Nbsd0jq1Ekbocq6lQw7EggjkHQsla6xJGUikVM7fETdtzycaU9fK6Iu2Ndm7BjXYTux3xj20Jcha05CzP6Fx7RNMxKTnF/+0MHNBV09oprpTwRhaW4QxRkmom8Rdjbt25Ye5PsMAcactnUH9Dk8SiemhaGqFSTJ4794/DKPmPkMCSSfU6BBdKpYhGkgRck+Qbc5GD211brUhSrsJVPGJPN/wDdBOACgrPXNet7D0EEGKIbLRrU+aweU/Us8QsxSeklmo/uMtIs7fdrMSZQw2euT27aYp6yCkoxS0McMdFJVR1VQGlmZ5fDOUQMYgAoPwT86C3u1SyIiMsSqMARDbxpJulS0Rjd96nH9/JwBgDUf25Og89yfUkjkbRn6o6n4wHoGgjv6QXSrqauDw1q6qdp5PFrFwA2TtUFV9T3PtqpSmqraJ5pInjPhlUfuCSQOGHHYnUJblMkTx7Y2DlSTIu8jaCOM59zpLV8hieNVjRHILBFxux20xLkLQkSx+I9IEqYlSivX3idcq2aKmellZHqJMGVhGg2juFBA5J7k/sPXVAdTZKl5YFhcKwU+ViPMo9gfb41G8MfOiy5WUM0RWvMXj//2Q==";
+
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const baseName = p => String(p || '').split(/[\\/]/).pop() || String(p || '');
+  const displayCompName = s => { const t = String(s || ''); return (!t.includes(' ') && /[\\/]/.test(t)) ? baseName(t) : t; };
   const POL_LABEL = {acompanhamento_livre:'Livre (sem travas)', so_marcos:'Só nos marcos', por_etapa:'Etapa por etapa'};
   const ST_LABEL = {
     verificado:'Aprovado', revisado:'Lido', executado:'Aguarda sua decisão',
@@ -324,14 +399,14 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     executando:'Trabalhando agora', aguardando_humano:'Aguardando você',
     aguardando_correcao:'Aguardando retomada', ocioso:'Parado', sem_dados:'Sem atividade informada'
   };
-  const TIPO_COMP = {skill:'Guia (Skill)', local_tool:'Script local', mcp_tool:'Integração (MCP)'};
+  const TIPO_COMP = {skill:'Skill (Guia)', local_tool:'Script local', mcp_tool:'Servidor MCP'};
 
   const UI = {
     tab: 'agora',
     showQuestion: false,
     queueFilter: 'pendentes',
     showAllBlockers: false,
-    openMenuId: null, // controla qual menu "⋯" está aberto
+    openMenuId: null,
     projetoModo: 'fluxo',
     projetoFiltro: 'todos',
     projetoSearch: '',
@@ -341,16 +416,19 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     selectedStageId: null,
     selectedModId: null,
     hoverModId: null,
+    spotlightTargetId: null, // etapa ou fase enfatizada pelo botão "Onde estou"
     returnAfterReview: null,
     reviewStageId: null,
     reviewEvIndex: 0,
     reviewEvidenceCache: {},
     reviewConflictMsg: '',
     reviewBusy: false,
+    agentView: 'harness', // 'harness' (visão do projeto) | 'etapa' (detalhes por etapa)
+    harnessFocus: 'todos', // 'todos' | 'skills' | 'mcps' | 'scripts' | 'hooks' | 'regras' | 'fluxo'
     agentStageId: null,
     agentReturnStageId: null,
     agentSearch: '',
-    agentActiveLayer: 'contexto', // 1 painel focado por vez (zero sobrecarga!)
+    agentActiveLayer: 'contexto',
     agentContextBundle: null,
     showPolicyModal: false,
     policyBusy: false,
@@ -385,6 +463,10 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
   function getReviewer(){ try { return localStorage.getItem(projectKey('revisor')) || ''; } catch(e) { return ''; } }
   function setReviewer(v){ try { localStorage.setItem(projectKey('revisor'), (v || '').trim()); } catch(e) {} }
   function canWrite(){ return !!(D.modo_servidor && !(D.servidor && D.servidor.readonly)); }
+  function getGroupLogo(){
+    const custom = D.estado && D.estado.projeto && D.estado.projeto.logo;
+    return custom || CEMOL_LOGO_URI;
+  }
 
   function findStage(sid){
     for (const m of (D.estado.modulos || [])) {
@@ -408,6 +490,62 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const arr = mods.length ? mods : list.map(x => x.titulo || x.id);
     return arr.slice(0, 2).join(', ') + (arr.length > 2 ? ` (+${arr.length - 2})` : '');
   }
+  function getWhereAmI(){
+    const sit = D.situacao_atual || {};
+    const prox = sit.proxima_acao || {};
+    const ativ = sit.atividade_agente || {};
+    const stageId = prox.etapa_id || sit.etapa_foco_id || ativ.etapa_id || null;
+    const pair = stageId ? findStage(stageId) : null;
+    const mod = (pair && pair.m) || (sit.modulo_atual_id ? findMod(sit.modulo_atual_id) : null);
+    return {
+      fase: (mod && mod.fase) || sit.fase_atual || fasesList()[0] || '—',
+      modId: mod ? mod.id : null,
+      stageId: pair ? pair.e.id : null,
+      stageTitle: pair ? pair.e.titulo : (mod ? mod.titulo : '—')
+    };
+  }
+  function goHome(){
+    UI.openMenuId = null;
+    UI.reviewStageId = null;
+    UI.tab = 'agora';
+    render();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  function focusWhereAmI(customPhase, customModId, customStageId){
+    const cur = getWhereAmI();
+    const fase = customPhase || cur.fase;
+    const modId = customModId !== undefined ? customModId : cur.modId;
+    const stageId = customStageId !== undefined ? customStageId : cur.stageId;
+    UI.openMenuId = null;
+    UI.reviewStageId = null;
+    UI.tab = 'projeto';
+    UI.projetoModo = 'fluxo';
+    UI.projetoFiltro = 'todos';
+    UI.projetoSearch = '';
+    if (fase) UI.expandedPhases.add(fase);
+    if (modId) {
+      UI.expandedModules.add(modId);
+      UI.selectedModId = modId;
+    }
+    UI.selectedStageId = stageId || null;
+    UI.spotlightTargetId = stageId ? ('stage-node-' + stageId) : (modId ? ('node-mod-' + modId) : null);
+    render();
+    setTimeout(() => {
+      const vp = document.getElementById('arch-viewport');
+      const target = UI.spotlightTargetId
+        ? document.getElementById(UI.spotlightTargetId)
+        : document.querySelector('.lane-head.is-current');
+      if (vp && target) {
+        const vr = vp.getBoundingClientRect(), tr = target.getBoundingClientRect();
+        vp.scrollTo({
+          left: Math.max(0, vp.scrollLeft + (tr.left - vr.left) - (vp.clientWidth - tr.width) / 2),
+          top: Math.max(0, vp.scrollTop + (tr.top - vr.top) - (vp.clientHeight - tr.height) / 2),
+          behavior: 'smooth'
+        });
+      }
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }, 60);
+  }
 
   (function init(){
     const sit = D.situacao_atual || {};
@@ -420,15 +558,15 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
   })();
 
   function getEffectiveMudancas(){
-    if (D.modo_servidor && D.mudancas) return D.mudancas;
+    if (D.mudancas && D.mudancas.referencia_confiavel) return D.mudancas;
     try {
-      const raw = localStorage.getItem(projectKey('visita'));
-      if (!raw) return {referencia_confiavel:false, referencia_em:'', novos:[]};
-      const v = JSON.parse(raw);
-      if (!v || !Array.isArray(v.event_ids)) return {referencia_confiavel:false, referencia_em:'', novos:[]};
-      const seen = new Set(v.event_ids);
-      return {referencia_confiavel:true, referencia_em:v.registrada_em || '', novos:(D.eventos || []).filter(e => !seen.has(e.id))};
-    } catch(e) { return {referencia_confiavel:false, referencia_em:'', novos:[]}; }
+      const saved = JSON.parse(localStorage.getItem(projectKey('visita')) || 'null');
+      if (saved && Array.isArray(saved.event_ids)) {
+        const seen = new Set(saved.event_ids);
+        return {referencia_confiavel: true, referencia_em: saved.registrada_em || '', novos: (D.eventos || []).filter(e => !seen.has(e.id))};
+      }
+    } catch(e) {}
+    return {referencia_confiavel: false, referencia_em: '', novos: []};
   }
 
   async function apiPost(url, body){
@@ -513,7 +651,6 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     else showToast(data.erro || 'Erro ao travar critérios.', true);
   }
 
-  // Botões limpos e legíveis: Revisar + Aprovar + menu "⋯" com ações secundárias
   function renderRowActions(e, menuKey, qidx){
     const s = e._status;
     const w = canWrite();
@@ -534,7 +671,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       menuItems.push(`<button type="button" class="menu-item danger" data-act="bloquear" data-sid="${esc(e.id)}">⛔ Pausar / bloquear</button>`);
     }
     if (menuItems.length) menuItems.push('<div class="menu-sep"></div>');
-    menuItems.push(`<button type="button" class="menu-item" data-goto-agent="${esc(e.id)}">⚙ Ver detalhes do agente</button>`);
+    menuItems.push(`<button type="button" class="menu-item" data-goto-agent="${esc(e.id)}">🏗 Ver no Harness / Agente</button>`);
 
     return `<button type="button" class="btn btn-sm" data-open-review="${esc(e.id)}"${qidx !== undefined ? ` data-qidx-btn="${qidx}"` : ''}>Revisar</button>
       ${canApprove ? `<button type="button" class="btn btn-soft-ok btn-sm" data-act="verificado" data-sid="${esc(e.id)}">✓ Aprovar</button>` : ''}
@@ -558,18 +695,19 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     render();
   }
 
-  function openReview(etapaId, qIdx){
+  function openReview(etapaId, qIdx, evIdx){
     UI.openMenuId = null;
     const pair = findStage(etapaId);
     if (!pair) return;
     UI.returnAfterReview = {tab: UI.tab, scrollY: window.scrollY, qIdx: typeof qIdx === 'number' ? qIdx : null, stageId: UI.selectedStageId};
     UI.reviewStageId = etapaId;
-    UI.reviewEvIndex = 0;
+    UI.reviewEvIndex = typeof evIdx === 'number' ? evIdx : 0;
     UI.reviewEvidenceCache = {};
     render();
     window.scrollTo({top: 0, behavior: 'instant'});
     const evs = (pair.e._snapshot && pair.e._snapshot.evidencias) || [];
-    if (evs[0] && evs[0].estado === 'ok') loadEvidencePreview(evs[0].ref, evs[0].midia);
+    const targetEv = evs[UI.reviewEvIndex] || evs[0];
+    if (targetEv && targetEv.estado === 'ok') loadEvidencePreview(targetEv.ref, targetEv.midia);
   }
   function closeReview(){
     const ret = UI.returnAfterReview;
@@ -582,6 +720,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     UI.openMenuId = null;
     UI.agentReturnStageId = etapaId;
     UI.agentStageId = etapaId;
+    UI.agentView = 'etapa';
     UI.agentContextBundle = null;
     UI.reviewStageId = null;
     UI.tab = 'agente';
@@ -591,14 +730,8 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
   function returnFromAgent(){
     const sid = UI.agentReturnStageId || UI.agentStageId;
     const pair = sid ? findStage(sid) : null;
-    UI.tab = 'projeto';
-    if (pair) {
-      UI.expandedPhases.add(pair.m.fase || '—');
-      UI.expandedModules.add(pair.m.id);
-      UI.selectedModId = pair.m.id;
-      UI.selectedStageId = pair.e.id;
-    }
-    render();
+    if (pair) focusWhereAmI(pair.m.fase || '—', pair.m.id, pair.e.id);
+    else { UI.tab = 'projeto'; render(); }
   }
 
   function renderMarkdownSafe(md){
@@ -624,27 +757,31 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     return html || '<p class="muted">(vazio)</p>';
   }
 
-  // ==================== BARRA SUPERIOR ====================
+  // ==================== BARRA SUPERIOR (COM LOGO DO GRUPO + BOTÃO INÍCIO EM TODAS AS PÁGINAS) ====================
   function renderNav(){
     const P = D.estado.projeto || {};
     const pol = D.politica || {};
     const filaN = (D.fila || []).length;
     const rev = getReviewer();
+    const isHome = UI.tab === 'agora' && !UI.reviewStageId;
     return `<header class="nav">
       <div class="nav-left">
-        <div class="logo-mark" aria-hidden="true">SB</div>
-        <div class="proj-title clamp1" title="${esc(P.titulo || P.nome)}">${esc(P.nome || P.titulo || 'SpecBoard')}</div>
+        <button type="button" class="brand-btn" data-go-home title="Voltar ao início (Home)">
+          <img class="brand-logo" src="${esc(getGroupLogo())}" alt="Logo CEMOL">
+          <div class="proj-title clamp1" title="${esc(P.titulo || P.nome)}">${esc(P.nome || P.titulo || 'SpecBoard')}</div>
+        </button>
+        <button type="button" class="home-quick-btn ${isHome ? '' : 'is-away'}" id="btn-go-home" data-go-home title="Voltar rápido para a Home">⌂ Início</button>
         <button type="button" class="q-toggle" id="btn-toggle-q">${UI.showQuestion ? 'Ocultar objetivo ▴' : 'Objetivo central ▾'}</button>
       </div>
       <div class="seg-tabs" role="tablist" aria-label="Navegação principal">
-        <button type="button" role="tab" class="seg-tab" data-tab="agora" aria-selected="${UI.tab === 'agora' && !UI.reviewStageId ? 'true' : 'false'}">
+        <button type="button" role="tab" class="seg-tab" data-tab="agora" aria-selected="${isHome ? 'true' : 'false'}">
           Agora ${filaN ? `<span class="seg-badge">${filaN}</span>` : ''}
         </button>
         <button type="button" role="tab" class="seg-tab" data-tab="projeto" aria-selected="${UI.tab === 'projeto' && !UI.reviewStageId ? 'true' : 'false'}">
           Projeto
         </button>
         <button type="button" role="tab" class="seg-tab" data-tab="agente" aria-selected="${UI.tab === 'agente' && !UI.reviewStageId ? 'true' : 'false'}">
-          Agente
+          Agente & Harness
         </button>
       </div>
       <div class="nav-right">
@@ -666,8 +803,9 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     ${!canWrite() ? `<div class="offline-tip"><span><b>Modo somente leitura:</b> para aprovar, pausar ou pedir ajustes diretamente aqui, abra o painel com o comando <code>serve --open</code> no terminal.</span></div>` : ''}`;
   }
 
-  // ==================== ABA 1: AGORA ====================
+  // ==================== ABA 1: HOME (AGORA) COM SIDEBAR DE ÁREAS DO PROJETO ====================
   function renderAgora(){
+    const P = D.estado.projeto || {};
     const sit = D.situacao_atual || {};
     const marco = sit.marco_atual || {};
     const ativ = sit.atividade_agente || {};
@@ -679,6 +817,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const pct = tot ? Math.round(100 * (R.verificadas || 0) / tot) : 0;
     const w = n => tot ? (100 * (n || 0) / tot) : 0;
     const mud = getEffectiveMudancas();
+    const curLoc = getWhereAmI();
 
     const focusPair = prox.etapa_id ? findStage(prox.etapa_id) : null;
     const filaBloq = D.fila || [];
@@ -694,215 +833,314 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const nPause = stagesAll.filter(p => p.e._status === 'aguardando_decisao').length;
     const nBlk = stagesAll.filter(p => p.e._status === 'bloqueado' || p.e._status === 'correcao_solicitada').length;
 
-    return `<div class="main">
-      <section class="kpi-strip" aria-label="Resumo do momento">
-        <div class="kpi-box">
-          <div class="kpi-lbl"><span>Onde o projeto está</span><button type="button" class="btn btn-ghost btn-xs" data-goto-mod="${esc(sit.modulo_atual_id || '')}">Ver no mapa →</button></div>
-          <div class="kpi-val clamp1">${esc(sit.fase_atual || '—')}</div>
-          <div class="muted clamp1" style="font-size:12.5px">Ponto atual: ${esc(marco.titulo || '—')}</div>
+    const fases = fasesList();
+    const mods = D.estado.modulos || [];
+    const areasHtml = fases.map((f, idx) => {
+      const fMods = mods.filter(m => (m.fase || '—') === f);
+      const totF = fMods.reduce((a, m) => a + ((m.etapas || []).length || m.etapas_estimadas || 0), 0);
+      const verF = fMods.reduce((a, m) => a + (m.etapas || []).filter(e => e._status === 'verificado').length, 0);
+      const isCur = f === curLoc.fase;
+      const doneAll = totF > 0 && verF === totF;
+      const firstMod = fMods[0];
+      return `<button type="button" class="sb-area-btn ${isCur ? 'is-current' : ''}" data-jump-phase="${esc(f)}" data-jump-mod="${esc(firstMod ? firstMod.id : '')}">
+        <div class="sb-area-top">
+          <span>Fase ${idx + 1}</span>
+          ${isCur ? '<span class="here-badge">📍 Atual</span>' : `<span style="color:${doneAll ? 'var(--ok)' : 'var(--muted)'}">${verF}/${totF}${doneAll ? ' ✓' : ''}</span>`}
         </div>
-        <div class="kpi-box">
-          <div class="kpi-lbl"><span>O que o agente está fazendo</span><span class="st-pill st-em_curso nob">Informado pelo agente</span></div>
-          <div class="kpi-val clamp1">${esc(ATIV_LABEL[ativ.estado] || ativ.estado || 'Sem atividade')}</div>
-          <div class="muted clamp1" style="font-size:12.5px" title="${esc(ativ.resumo || '')}">${esc(ativ.resumo || 'Nenhuma tarefa ativa no momento.')}</div>
-        </div>
-        <div class="kpi-box">
-          <div class="kpi-lbl"><span>Aprovado por você</span><b style="color:var(--ok);font-size:14px">${pct}%</b></div>
-          <div class="bar-slim" aria-hidden="true">
-            <i style="width:${w(c.verificado)}%;background:var(--ok)"></i>
-            <i style="width:${w(c.revisado)}%;background:var(--rev)"></i>
-            <i style="width:${w(c.executado)}%;background:var(--exe)"></i>
-            <i style="width:${w(c.aguardando_decisao)}%;background:var(--pause)"></i>
-            <i style="width:${w(c.em_curso)}%;background:var(--run)"></i>
-            <i style="width:${w((c.bloqueado || 0) + (c.correcao_solicitada || 0))}%;background:var(--block)"></i>
-          </div>
-          <div class="muted" style="font-size:12.5px"><b>${c.verificado || 0} de ${tot}</b> aprovadas · ${(c.executado || 0) + (c.revisado || 0)} feitas pelo agente</div>
-        </div>
-      </section>
+        <div class="sb-area-title">${esc(f.replace(/^Fase \d+\s*·\s*/, ''))}</div>
+        ${isCur ? `<div class="muted" style="font-size:11.5px">${verF} de ${totF} aprovadas</div>` : ''}
+      </button>`;
+    }).join('');
 
-      <section class="focus-card" aria-label="Sua próxima ação">
-        <div class="focus-top">
-          <span class="focus-eyebrow">SUA VEZ AGORA</span>
-          ${focusPair ? `<span class="st-pill st-${esc(focusPair.e._status)}">${esc(ST_LABEL[focusPair.e._status] || focusPair.e._status)}</span>` : ''}
+    const sidebar = `<aside class="home-sidebar" aria-label="Guia das áreas do projeto">
+      <div class="sb-group-brand">
+        <img class="sb-group-logo" src="${esc(getGroupLogo())}" alt="Logo CEMOL">
+        <div class="wrap-any">
+          <div style="font-size:11px;font-weight:800;color:var(--accent);letter-spacing:.05em">CEMOL · SPECBOARD</div>
+          <div style="font:700 13.5px/1.25 var(--f-display);margin-top:2px">${esc(P.nome || 'Projeto')}</div>
+          <div class="muted" style="font-size:11.5px;margin-top:3px">${pct}% aprovado (${c.verificado || 0}/${tot})</div>
         </div>
-        <div class="focus-title">${esc(prox.titulo || 'Tudo em dia')}</div>
-        <p class="muted" style="font-size:14px">${esc(prox.detalhe || '')}</p>
-        <div class="action-bar">
-          ${focusPair ? `
-            <button type="button" class="btn btn-accent" data-open-review="${esc(focusPair.e.id)}" data-qidx-btn="0">Revisar evidências</button>
-            ${canWrite() && focusPair.e._status !== 'verificado' ? `<button type="button" class="btn btn-ok" data-act="verificado" data-sid="${esc(focusPair.e.id)}">✓ Aprovar direto</button>` : ''}
-            ${canWrite() ? `
-              <button type="button" class="btn" data-act="aguardar_decisao" data-sid="${esc(focusPair.e.id)}">Deixar em espera</button>
-              <button type="button" class="btn" data-act="pedir_correcao" data-sid="${esc(focusPair.e.id)}">Pedir ajuste</button>
-              <button type="button" class="btn btn-ghost" data-act="bloquear" data-sid="${esc(focusPair.e.id)}">Pausar etapa</button>
-            ` : ''}
-          ` : `<button type="button" class="btn btn-accent" data-tab-jump="projeto">Abrir mapa do Projeto →</button>`}
-        </div>
-      </section>
+      </div>
 
-      <section class="queue-card" aria-label="Entregas aguardando decisão">
-        <div class="queue-head">
-          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-            <h3>Aguardando sua decisão</h3>
-            <div class="seg-tabs">
-              <button type="button" class="seg-tab" data-qfilter="pendentes" aria-selected="${UI.queueFilter === 'pendentes' ? 'true' : 'false'}">Marcos (${filaBloq.length})</button>
-              ${filaTodas.length !== filaBloq.length ? `<button type="button" class="seg-tab" data-qfilter="todas" aria-selected="${UI.queueFilter === 'todas' ? 'true' : 'false'}">Todas (${filaTodas.length})</button>` : ''}
-              <button type="button" class="seg-tab" data-qfilter="aguardando" aria-selected="${UI.queueFilter === 'aguardando' ? 'true' : 'false'}">Em espera (${nPause})</button>
-              <button type="button" class="seg-tab" data-qfilter="bloqueadas" aria-selected="${UI.queueFilter === 'bloqueadas' ? 'true' : 'false'}">Pausadas (${nBlk})</button>
+      <button type="button" class="btn btn-accent" id="btn-home-where" style="width:100%">📍 Onde estou agora</button>
+
+      <div class="sb-sec">
+        <div class="sb-sec-lbl">Nesta página</div>
+        <button type="button" class="sb-nav-btn" data-scroll-sec="sec-foco"><span>⚡ Sua vez agora</span><span class="muted">→</span></button>
+        <button type="button" class="sb-nav-btn" data-scroll-sec="sec-fila"><span>✅ Fila de decisão</span><span class="seg-badge">${filaBloq.length}</span></button>
+        <button type="button" class="sb-nav-btn" data-scroll-sec="sec-extras"><span>🔒 Bloqueios & novidades</span><span class="muted">${bloqs.length + (P.pendencias_humanas || []).length}</span></button>
+      </div>
+
+      <div class="sb-sec">
+        <div class="sb-sec-lbl">Áreas do projeto (${fases.length} fases)</div>
+        ${areasHtml}
+      </div>
+
+      <div class="sb-sec" style="padding-top:6px;border-top:1px solid var(--line)">
+        <div class="sb-sec-lbl">Outras visões</div>
+        <button type="button" class="sb-nav-btn" data-tab-jump="projeto"><span>🗺 Mapa completo do Projeto</span><span>→</span></button>
+        <button type="button" class="sb-nav-btn" data-tab-jump="agente"><span>🏗 Arquitetura do Harness</span><span>→</span></button>
+      </div>
+    </aside>`;
+
+    return `<div class="main full-bleed">
+      <div class="home-shell">
+        ${sidebar}
+        <div class="home-content">
+          <section class="kpi-strip" aria-label="Resumo do momento">
+            <div class="kpi-box">
+              <div class="kpi-lbl"><span>Onde o projeto está</span><button type="button" class="btn btn-soft-accent btn-xs" id="btn-kpi-where">📍 Localizar</button></div>
+              <div class="kpi-val">${esc(sit.fase_atual || '—')}</div>
+              <div class="kpi-sub"><b>Ponto atual:</b> ${esc(marco.titulo || curLoc.stageTitle || '—')}</div>
             </div>
-          </div>
-        </div>
-        <div class="qrows">
-          ${listItems.length ? listItems.map(({item, pair}, idx) => {
-            if (!pair) return '';
-            const unlockStr = formatUnlocks(item.bloqueia_agora);
-            return `<div class="qrow" data-qidx="${idx}">
-              <div class="qrow-main">
-                <div class="qrow-title">
-                  <span>${esc(item.titulo)}</span>
-                  <span class="code-tag">${esc(item.id)}</span>
-                </div>
-                <div class="qrow-sub">
-                  <span class="st-pill st-${esc(pair.e._status)}">${esc(ST_LABEL[pair.e._status] || pair.e._status)}</span>
-                  ${item.eh_marco ? '<span class="st-pill st-marco nob">Marco principal</span>' : ''}
-                  ${pair.e._exp ? `<span class="st-pill st-bloqueado">Arquivo alterado</span>` : ''}
-                  ${unlockStr ? `<span>Libera: <b>${esc(unlockStr)}</b></span>` : `<span>${esc(item.fase || '')}</span>`}
-                </div>
+            <div class="kpi-box">
+              <div class="kpi-lbl"><span>O que o agente está fazendo</span><span class="st-pill st-em_curso nob">Informado pelo agente</span></div>
+              <div class="kpi-val">${esc(ATIV_LABEL[ativ.estado] || ativ.estado || 'Sem atividade')}</div>
+              <div class="kpi-sub">${esc(ativ.resumo || 'Nenhuma tarefa ativa no momento.')}</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-lbl"><span>Aprovado por você</span><b style="color:var(--ok);font-size:15px">${pct}%</b></div>
+              <div class="bar-slim" aria-hidden="true">
+                <i style="width:${w(c.verificado)}%;background:var(--ok)"></i>
+                <i style="width:${w(c.revisado)}%;background:var(--rev)"></i>
+                <i style="width:${w(c.executado)}%;background:var(--exe)"></i>
+                <i style="width:${w(c.aguardando_decisao)}%;background:var(--pause)"></i>
+                <i style="width:${w(c.em_curso)}%;background:var(--run)"></i>
+                <i style="width:${w((c.bloqueado || 0) + (c.correcao_solicitada || 0))}%;background:var(--block)"></i>
               </div>
-              <div class="qrow-actions">${renderRowActions(pair.e, 'q-' + item.id, idx)}</div>
-            </div>`;
-          }).join('') : `<div style="padding:24px;text-align:center" class="muted">Nada pendente nesta aba.</div>`}
-        </div>
-      </section>
+              <div class="kpi-sub"><b>${c.verificado || 0} de ${tot}</b> aprovadas · ${(c.executado || 0) + (c.revisado || 0)} feitas pelo agente</div>
+            </div>
+          </section>
 
-      <section class="bottom-two">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-            <h3>Pontos travados ou aguardando autorização <span class="muted" style="font-weight:500">(${bloqs.length})</span></h3>
-            ${bloqs.length > 4 ? `<button type="button" class="btn btn-ghost btn-xs" id="btn-all-bloqs">${UI.showAllBlockers ? 'Mostrar menos' : 'Ver todos'}</button>` : ''}
-          </div>
-          ${bloqVisiveis.length ? `<div class="compact-list">${bloqVisiveis.map(b => {
-            const pOrig = b.origem_id ? findStage(b.origem_id) : null;
-            return `<div class="compact-row is-block">
-              <div class="wrap-any">
-                <div style="font-weight:600">${esc(b.titulo)}</div>
-                <div class="muted" style="font-size:12px">${esc(b.detalhe)}</div>
-              </div>
-              <div style="display:flex;gap:5px;flex:none">
-                ${pOrig ? `<button type="button" class="btn btn-xs" data-open-review="${esc(pOrig.e.id)}">Abrir</button>` : ''}
-              </div>
-            </div>`;
-          }).join('')}</div>` : '<p class="muted">Nenhum ponto travado fora da fila acima.</p>'}
-        </div>
+          <section class="focus-card" id="sec-foco" aria-label="Sua próxima ação">
+            <div class="focus-top">
+              <span class="focus-eyebrow">SUA VEZ AGORA</span>
+              ${focusPair ? `<span class="st-pill st-${esc(focusPair.e._status)}">${esc(ST_LABEL[focusPair.e._status] || focusPair.e._status)}</span>` : ''}
+            </div>
+            <div class="focus-title">${esc(prox.titulo || 'Tudo em dia')}</div>
+            <p class="muted" style="font-size:14px">${esc(prox.detalhe || '')}</p>
+            <div class="action-bar">
+              ${focusPair ? `
+                <button type="button" class="btn btn-accent" data-open-review="${esc(focusPair.e.id)}" data-qidx-btn="0">Revisar evidências</button>
+                ${canWrite() && focusPair.e._status !== 'verificado' ? `<button type="button" class="btn btn-ok" data-act="verificado" data-sid="${esc(focusPair.e.id)}">✓ Aprovar direto</button>` : ''}
+                ${canWrite() ? `
+                  <button type="button" class="btn" data-act="aguardar_decisao" data-sid="${esc(focusPair.e.id)}">Deixar em espera</button>
+                  <button type="button" class="btn" data-act="pedir_correcao" data-sid="${esc(focusPair.e.id)}">Pedir ajuste</button>
+                  <button type="button" class="btn btn-ghost" data-act="bloquear" data-sid="${esc(focusPair.e.id)}">Pausar etapa</button>
+                ` : ''}
+              ` : `<button type="button" class="btn btn-accent" data-tab-jump="projeto">Abrir mapa do Projeto →</button>`}
+            </div>
+          </section>
 
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-            <h3>Novidades desde sua última visita</h3>
-            <button type="button" class="btn btn-xs" id="btn-mark-visit">${mud.referencia_confiavel ? 'Marcar como visto' : 'Marcar ponto inicial'}</button>
-          </div>
-          ${mud.referencia_confiavel ? (
-            mud.novos.length
-              ? `<div class="compact-list">${mud.novos.slice(0, 5).map(ev => `<div class="compact-row"><span class="wrap-any">${esc(ev.texto)}</span><span class="muted" style="font-size:11.5px;flex:none">${esc(ev.data)}</span></div>`).join('')}</div>`
-              : `<p class="muted">Nenhuma novidade desde ${esc(mud.referencia_em)}.</p>`
-          ) : '<p class="muted">Clique em <b>Marcar ponto inicial</b> para acompanhar o que mudar a partir de hoje.</p>'}
+          <section class="queue-card" id="sec-fila" aria-label="Entregas aguardando decisão">
+            <div class="queue-head">
+              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                <h3>Aguardando sua decisão</h3>
+                <div class="seg-tabs">
+                  <button type="button" class="seg-tab" data-qfilter="pendentes" aria-selected="${UI.queueFilter === 'pendentes' ? 'true' : 'false'}">Marcos (${filaBloq.length})</button>
+                  ${filaTodas.length !== filaBloq.length ? `<button type="button" class="seg-tab" data-qfilter="todas" aria-selected="${UI.queueFilter === 'todas' ? 'true' : 'false'}">Todas (${filaTodas.length})</button>` : ''}
+                  <button type="button" class="seg-tab" data-qfilter="aguardando" aria-selected="${UI.queueFilter === 'aguardando' ? 'true' : 'false'}">Em espera (${nPause})</button>
+                  <button type="button" class="seg-tab" data-qfilter="bloqueadas" aria-selected="${UI.queueFilter === 'bloqueadas' ? 'true' : 'false'}">Pausadas (${nBlk})</button>
+                </div>
+              </div>
+            </div>
+            <div class="qrows">
+              ${listItems.length ? listItems.map(({item, pair}, idx) => {
+                if (!pair) return '';
+                const unlockStr = formatUnlocks(item.bloqueia_agora);
+                return `<div class="qrow" data-qidx="${idx}">
+                  <div class="qrow-main">
+                    <div class="qrow-title">
+                      <span>${esc(pair.e.titulo)}</span>
+                      <span class="code-tag">${esc(pair.e.id)}</span>
+                    </div>
+                    <div class="qrow-sub">
+                      <span class="st-pill st-${esc(pair.e._status)}">${esc(ST_LABEL[pair.e._status] || pair.e._status)}</span>
+                      ${pair.e._eh_marco ? '<span class="st-pill st-executado nob">Marco principal</span>' : ''}
+                      ${pair.e._exp ? '<span class="st-pill st-bloqueado">Arquivo alterado</span>' : ''}
+                      ${unlockStr ? `<span>Libera: <b>${esc(unlockStr)}</b></span>` : `<span>${esc(pair.m.titulo)}</span>`}
+                    </div>
+                  </div>
+                  <div class="qrow-actions">${renderRowActions(pair.e, 'q-' + pair.e.id, idx)}</div>
+                </div>`;
+              }).join('') : `<div style="padding:26px 20px;text-align:center" class="muted">Nenhuma entrega nesta aba no momento.</div>`}
+            </div>
+          </section>
+
+          <section class="bottom-two" id="sec-extras">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+                <h3>Pontos travados ou aguardando autorização (${bloqs.length + (P.pendencias_humanas || []).length})</h3>
+                ${bloqs.length > 4 ? `<button type="button" class="btn btn-ghost btn-xs" id="btn-all-bloqs">${UI.showAllBlockers ? 'Ver menos' : `Ver todos (${bloqs.length})`}</button>` : ''}
+              </div>
+              <div class="compact-list">
+                ${bloqVisiveis.map(b => `<div class="compact-row is-block">
+                  <div class="wrap-any"><b>${esc(b.origem_titulo || b.origem_id)}</b><div class="muted" style="font-size:12.5px">${esc(b.motivo)}</div></div>
+                  ${b.origem_id ? `<button type="button" class="btn btn-xs" data-open-review="${esc(b.origem_id)}">Abrir</button>` : ''}
+                </div>`).join('')}
+                ${(P.pendencias_humanas || []).slice(0, 4).map(ph => `<div class="compact-row">
+                  <div class="wrap-any"><b>${esc(ph.id)}</b> · ${esc(ph.texto)}${ph.bloqueia ? `<div class="muted" style="font-size:12px">Libera: ${esc(ph.bloqueia)}</div>` : ''}</div>
+                  ${ph.modulo ? `<button type="button" class="btn btn-xs" data-goto-mod="${esc(ph.modulo)}">Mapa</button>` : ''}
+                </div>`).join('')}
+                ${!bloqs.length && !(P.pendencias_humanas || []).length ? '<p class="muted">Nenhum ponto travado fora da fila acima.</p>' : ''}
+              </div>
+            </div>
+
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+                <h3>Novidades desde sua última visita</h3>
+                <button type="button" class="btn btn-xs" id="btn-mark-visit">${mud.referencia_confiavel ? 'Marcar como visto' : 'Marcar ponto inicial'}</button>
+              </div>
+              ${mud.referencia_confiavel
+                ? (mud.novos.length
+                  ? `<div class="compact-list">${mud.novos.slice(0, 5).map(ev => `<div class="compact-row"><span class="wrap-any">${esc(ev.texto)}</span><span class="muted" style="font-size:11.5px;white-space:nowrap">${esc(ev.data)}</span></div>`).join('')}</div>`
+                  : `<p class="muted">Tudo igual desde ${esc(mud.referencia_em)}.</p>`)
+                : `<p class="muted">Clique em <b>Marcar ponto inicial</b> para acompanhar o que mudar a partir de hoje.</p>`}
+            </div>
+          </section>
         </div>
-      </section>
+      </div>
     </div>`;
   }
 
-  // ==================== ABA 2: PROJETO (CANVAS ARCHIFY LIMPO) ====================
-  function getConnectedModSet(mid){
+  // ==================== ABA 2: PROJETO (MAPA LEGÍVEL + ONDE ESTOU + INSPETOR LIMPO) ====================
+  function getConnectedModSet(modId){
     const up = new Set(), down = new Set();
-    if (!mid) return {up, down};
+    if (!modId) return {up, down};
     for (const r of (D.relacoes_mapa || [])) {
-      if (r.para === mid) up.add(r.de);
-      if (r.de === mid) down.add(r.para);
+      if (r.para === modId) up.add(r.de);
+      if (r.de === modId) down.add(r.para);
     }
     return {up, down};
   }
 
   function renderInspector(){
-    const pair = UI.selectedStageId ? findStage(UI.selectedStageId) : null;
-    const mod = pair ? pair.m : (UI.selectedModId ? findMod(UI.selectedModId) : null);
-    if (!mod) return '';
-    const ct = mod.contrato || {};
-    const canLock = !ct.hash && ct.pergunta && (ct.criterios_aceitacao || []).length && ct.criterio_abandono;
-
-    if (pair) {
+    if (!UI.selectedStageId && !UI.selectedModId) return '';
+    if (UI.selectedStageId) {
+      const pair = findStage(UI.selectedStageId);
+      if (!pair) return '';
       const {m, e} = pair;
       const evs = (e._snapshot && e._snapshot.evidencias) || [];
-      const unlockStr = formatUnlocks(e._libera) || 'fim do ciclo';
-      const w = canWrite();
+      const curLoc = getWhereAmI();
+      const isHere = curLoc.stageId === e.id;
       return `<aside class="inspector" aria-label="Detalhes da etapa">
         <div class="ins-head">
           <div class="wrap-any">
-            <span class="code-tag">${esc(e.id)}</span>
-            <h3 style="margin-top:6px">${esc(e.titulo)}</h3>
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+              <span class="code-tag">${esc(e.id)}</span>
+              ${isHere ? '<span class="here-badge">📍 Você está aqui</span>' : ''}
+            </div>
+            <h3 style="margin-top:7px;font-size:16px;line-height:1.3">${esc(e.titulo)}</h3>
+            <div class="muted" style="font-size:12px;margin-top:3px">${esc(m.titulo)}</div>
           </div>
           <button type="button" class="icon-btn" id="btn-close-ins" title="Fechar">×</button>
         </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
+
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
           <span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span>
-          ${e._eh_marco ? '<span class="st-pill st-marco nob">Marco principal</span>' : ''}
+          ${e._eh_marco ? '<span class="st-pill st-executado nob">★ Marco principal</span>' : ''}
+          ${e._exp ? '<span class="st-pill st-bloqueado">Arquivo alterado</span>' : ''}
         </div>
+
         <div class="action-bar">
           <button type="button" class="btn btn-accent btn-sm" data-open-review="${esc(e.id)}">Revisar evidências</button>
-          ${w && e._status !== 'verificado' && ['executado','revisado','aguardando_decisao','correcao_solicitada'].includes(e._status)
+          ${canWrite() && e._status !== 'verificado' && ['executado','revisado','aguardando_decisao','correcao_solicitada'].includes(e._status)
             ? `<button type="button" class="btn btn-ok btn-sm" data-act="verificado" data-sid="${esc(e.id)}">✓ Aprovar</button>` : ''}
-          ${w ? `
-            <button type="button" class="btn btn-sm" data-act="aguardar_decisao" data-sid="${esc(e.id)}">Em espera</button>
-            <button type="button" class="btn btn-sm" data-act="pedir_correcao" data-sid="${esc(e.id)}">Pedir ajuste</button>
-            <button type="button" class="btn btn-sm btn-soft-block" data-act="bloquear" data-sid="${esc(e.id)}">Pausar</button>
-          ` : ''}
-          ${w && ['bloqueado','aguardando_decisao','correcao_solicitada'].includes(e._status)
-            ? `<button type="button" class="btn btn-sm btn-soft-accent" data-act="desbloquear" data-sid="${esc(e.id)}">▶ Retomar</button>` : ''}
-          <button type="button" class="btn btn-ghost btn-sm" data-goto-agent="${esc(e.id)}">⚙ Ver detalhes do agente</button>
+          ${renderRowActions(e, 'ins-' + e.id).replace(/<button[^>]*data-open-review[^>]*>Revisar<\/button>/, '').replace(/<button[^>]*data-act="verificado"[^>]*>✓ Aprovar<\/button>/, '')}
         </div>
+
         <div class="ins-sec">
           <h4>Resumo da entrega</h4>
-          <div class="ins-box">${esc(e.afirmacao || e.descricao || 'Sem resumo registrado.')}</div>
+          <p style="font-size:13.5px;line-height:1.5">${esc(e.afirmacao || e.descricao || 'Etapa planejada aguardando execução.')}</p>
         </div>
+
         <div class="ins-sec">
           <h4>Como conferir</h4>
-          <div class="ins-box">
-            <div>${esc(e.verificacao || '—')}</div>
-            <div class="muted" style="font-size:12px">Libera: <b>${esc(unlockStr)}</b></div>
-          </div>
+          <div class="check-item"><span class="check-ic">✓</span><span>${esc(e.verificacao || 'Conferir arquivos anexados abaixo.')}</span></div>
         </div>
+
         <div class="ins-sec">
-          <h4>Arquivos anexados (${evs.length})</h4>
-          <div class="ins-box">
-            ${evs.length ? evs.map(ev => `<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span title="${esc(ev.ref)}">📄 ${esc(baseName(ev.ref))}</span><span class="st-pill ${ev.estado === 'ok' ? 'st-verificado' : 'st-bloqueado'} nob">${ev.estado === 'ok' ? 'Pronto' : esc(ev.estado)}</span></div>`).join('') : '<span class="muted">Nenhum arquivo anexado ainda.</span>'}
-          </div>
+          <h4>Evidências (${evs.length})</h4>
+          ${evs.length ? `<div class="chip-row">${evs.map((ev, i) => `<button type="button" class="file-chip is-btn" data-open-review-ev="${esc(e.id)}" data-ev-open-idx="${i}" title="${esc(ev.ref)}">📄 ${esc(baseName(ev.ref))} ${ev.estado === 'ok' ? '✓' : '!'}</button>`).join('')}</div>` : '<span class="muted">Nenhum arquivo anexado ainda.</span>'}
         </div>
+
+        ${(e._regs || []).length ? `<details class="clean-fold">
+          <summary>Histórico de decisões (${e._regs.length}) ▾</summary>
+          <div style="display:grid;gap:6px;font-size:12.5px">
+            ${e._regs.slice().reverse().map(r => `<div><b>${esc(ST_LABEL[r.nivel] || r.acao || r.nivel)}</b> · ${esc(r.revisor)} <span class="muted">(${esc(r.data)})</span>${r.nota ? `<div class="muted">${esc(r.nota)}</div>` : ''}</div>`).join('')}
+          </div>
+        </details>` : ''}
       </aside>`;
     }
 
+    const mod = findMod(UI.selectedModId);
+    if (!mod) return '';
+    const ct = mod.contrato || {};
+    const crits = ct.criterios_aceitacao || [];
+    const canLock = !ct.hash && ct.pergunta && crits.length && ct.criterio_abandono;
+    const ets = mod.etapas || [];
     return `<aside class="inspector" aria-label="Detalhes do bloco">
       <div class="ins-head">
         <div class="wrap-any">
-          <span class="code-tag">${esc(mod.id)}</span>
-          <h3 style="margin-top:6px">${esc(mod.titulo)}</h3>
+          <span class="code-tag">${esc(mod.id)}${mod._eh_marco ? ' · ★ Marco' : ''}</span>
+          <h3 style="margin-top:7px;font-size:16px;line-height:1.3">${esc(mod.titulo)}</h3>
+          <div class="muted" style="font-size:12px;margin-top:3px">${esc(mod.fase || '')}</div>
         </div>
         <button type="button" class="icon-btn" id="btn-close-ins" title="Fechar">×</button>
       </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">
+
+      <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
         <span class="st-pill st-${esc(mod._status_mod)}">${esc(ST_LABEL[mod._status_mod] || mod._status_mod)}</span>
-        ${ct.hash ? `<span class="st-pill st-verificado nob">🔒 Critérios travados</span>` : (canLock && canWrite() ? `<button type="button" class="btn btn-soft-accent btn-xs" data-lock-mod="${esc(mod.id)}">🔒 Travar critérios</button>` : '')}
+        ${ct.hash
+          ? `<span class="st-pill st-verificado nob">🔒 Critérios travados</span>`
+          : (canLock && canWrite() ? `<button type="button" class="btn btn-soft-accent btn-xs" data-lock-mod="${esc(mod.id)}">🔒 Travar critérios</button>` : '')}
       </div>
-      <div class="ins-sec"><h4>Objetivo</h4><div class="ins-box">${esc(mod.objetivo || '—')}</div></div>
-      ${ct.pergunta || (ct.criterios_aceitacao || []).length ? `<div class="ins-sec"><h4>Critérios de aprovação</h4><div class="ins-box">
-        ${ct.pergunta ? `<div><b>Pergunta:</b> ${esc(ct.pergunta)}</div>` : ''}
-        ${(ct.criterios_aceitacao || []).length ? `<ul class="clean-list">${ct.criterios_aceitacao.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
-        ${ct.criterio_abandono ? `<div class="muted"><b>Quando parar / rever:</b> ${esc(ct.criterio_abandono)}</div>` : ''}
-      </div></div>` : ''}
+
+      <div class="ins-sec">
+        <h4>Objetivo deste bloco</h4>
+        <p style="font-size:13.5px;line-height:1.5">${esc(mod.objetivo || '—')}</p>
+      </div>
+
+      ${ct.pergunta ? `<div class="ins-sec">
+        <h4>Pergunta-chave</h4>
+        <div class="ins-box" style="font-size:13px">${esc(ct.pergunta)}</div>
+      </div>` : ''}
+
+      ${crits.length ? `<div class="ins-sec">
+        <h4>Checklist de aprovação (${crits.length})</h4>
+        <ul class="check-list">
+          ${crits.slice(0, 2).map(x => `<li class="check-item"><span class="check-ic">○</span><span>${esc(x)}</span></li>`).join('')}
+        </ul>
+        ${crits.length > 2 ? `<details class="clean-fold">
+          <summary>Ver mais ${crits.length - 2} critério(s) ▾</summary>
+          <ul class="check-list">${crits.slice(2).map(x => `<li class="check-item"><span class="check-ic">○</span><span>${esc(x)}</span></li>`).join('')}</ul>
+        </details>` : ''}
+      </div>` : ''}
+
+      ${ct.criterio_abandono ? `<details class="clean-fold">
+        <summary>⚠️ Quando parar ou rever ▾</summary>
+        <p class="muted" style="font-size:12.5px;line-height:1.5">${esc(ct.criterio_abandono)}</p>
+      </details>` : ''}
+
+      ${ets.length ? `<div class="ins-sec">
+        <h4>Etapas deste bloco (${ets.length})</h4>
+        <div class="compact-list">
+          ${ets.map(e => `<button type="button" class="flow-mod" data-select-stage="${esc(e.id)}">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+              <span class="code-tag">${esc(e.id)}</span>
+              <span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span>
+            </div>
+            <div style="font-size:12.5px;font-weight:600;line-height:1.35">${esc(e.titulo)}</div>
+          </button>`).join('')}
+        </div>
+      </div>` : ''}
     </aside>`;
   }
 
   function renderProjeto(){
     const fases = fasesList();
     const mods = D.estado.modulos || [];
-    const sit = D.situacao_atual || {};
+    const curLoc = getWhereAmI();
     const q = UI.projetoSearch.trim().toLowerCase();
     const activeMod = UI.hoverModId || UI.selectedModId;
     const conn = getConnectedModSet(activeMod);
@@ -920,6 +1158,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
 
     const toolbar = `<div class="canvas-bar">
       <div class="canvas-bar-group">
+        <button type="button" class="btn btn-accent btn-sm" id="btn-where-am-i" title="Localizar e destacar exatamente a etapa onde você está trabalhando agora">📍 Onde estou</button>
         <input class="search-in" id="proj-search" type="search" value="${esc(UI.projetoSearch)}" placeholder="Buscar etapa...">
         ${[['todos','Todos'],['aguarda','Para decidir'],['bloqueado','Pausados'],['verificado','Aprovados']].map(([k, l]) =>
           `<button type="button" class="btn btn-xs ${UI.projetoFiltro === k ? 'btn-soft-accent' : ''}" data-pfilter="${k}">${l}</button>`
@@ -941,15 +1180,16 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       const listHtml = fases.map(f => {
         const fMods = mods.filter(m => (m.fase || '—') === f && modMatches(m));
         if (!fMods.length) return '';
+        const isCur = f === curLoc.fase;
         return `<div class="card">
-          <h3>${esc(f)}</h3>
+          <div style="display:flex;align-items:center;gap:8px"><h3>${esc(f)}</h3>${isCur ? '<span class="here-badge">📍 Fase atual</span>' : ''}</div>
           ${fMods.map(m => `<div class="qrows" style="border:1px solid var(--line);border-radius:12px">
             <div style="padding:10px 14px;background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;gap:8px;border-radius:12px 12px 0 0">
               <b>${esc(m.titulo)}</b>
               <span class="st-pill st-${esc(m._status_mod)}">${esc(ST_LABEL[m._status_mod] || m._status_mod)}</span>
             </div>
             ${(m.etapas || []).map(e => `<div class="qrow">
-              <div class="qrow-main"><div class="qrow-title"><span>${esc(e.titulo)}</span><span class="code-tag">${esc(e.id)}</span></div><div class="qrow-sub"><span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span></div></div>
+              <div class="qrow-main"><div class="qrow-title"><span>${esc(e.titulo)}</span><span class="code-tag">${esc(e.id)}</span>${e.id === curLoc.stageId ? '<span class="here-badge">📍 Aqui</span>' : ''}</div><div class="qrow-sub"><span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span></div></div>
               <div class="qrow-actions">${renderRowActions(e, 'l-' + e.id)}</div>
             </div>`).join('')}
           </div>`).join('')}
@@ -961,24 +1201,25 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const lanesHtml = fases.map((f, idx) => {
       const fMods = mods.filter(m => (m.fase || '—') === f);
       const isExpPhase = UI.expandedPhases.has(f);
-      const isCur = f === sit.fase_atual;
+      const isCur = f === curLoc.fase;
       const totF = fMods.reduce((a, m) => a + ((m.etapas || []).length || m.etapas_estimadas || 0), 0);
       const verF = fMods.reduce((a, m) => a + (m.etapas || []).filter(e => e._status === 'verificado').length, 0);
 
       const modsHtml = isExpPhase ? fMods.map(m => {
         const mOpen = UI.expandedModules.has(m.id);
+        const isSelMod = UI.selectedModId === m.id;
         const dim = !modMatches(m) || (activeMod && activeMod !== m.id && !conn.up.has(m.id) && !conn.down.has(m.id));
-        const hot = activeMod && (activeMod === m.id || conn.up.has(m.id) || conn.down.has(m.id));
+        const hot = activeMod && !isSelMod && (conn.up.has(m.id) || conn.down.has(m.id));
         const ets = m.etapas || [];
         const verM = ets.filter(e => e._status === 'verificado').length;
-        return `<div class="mod-node st-n-${esc(m._status_mod)} ${m.resultado_final ? 'is-final' : ''} ${dim ? 'is-dim' : ''} ${hot ? 'is-hot' : ''}" id="node-mod-${esc(m.id)}" data-hover-mod="${esc(m.id)}">
+        return `<div class="mod-node st-n-${esc(m._status_mod)} ${m.resultado_final ? 'is-final' : ''} ${dim ? 'is-dim' : ''} ${hot ? 'is-hot' : ''} ${isSelMod ? 'is-selected' : ''}" id="node-mod-${esc(m.id)}" data-hover-mod="${esc(m.id)}">
           <button type="button" class="mod-head-btn" data-toggle-mod="${esc(m.id)}" aria-expanded="${mOpen ? 'true' : 'false'}">
             <div class="mod-meta">
               <span class="code-tag">${esc(m.id)}${m._eh_marco ? ' ★' : ''}${m.resultado_final ? ' ◎' : ''}</span>
               <span class="st-pill st-${esc(m._status_mod)}">${esc(ST_LABEL[m._status_mod] || m._status_mod)}</span>
             </div>
-            <div class="mod-title clamp2" title="${esc(m.titulo)}">${esc(m.titulo)}</div>
-            <div class="muted" style="font-size:12px;display:flex;justify-content:space-between">
+            <div class="mod-title">${esc(m.titulo)}</div>
+            <div class="muted" style="font-size:12px;display:flex;justify-content:space-between;align-items:center">
               <span>${ets.length ? `${verM} de ${ets.length} aprovadas` : `~${m.etapas_estimadas || 0} previstas`}</span>
               <span>${mOpen ? 'Recolher ▴' : 'Ver etapas ▾'}</span>
             </div>
@@ -986,17 +1227,20 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
           ${mOpen ? `<div class="stages-wrap">
             ${ets.length ? ets.map(e => {
               const isSel = UI.selectedStageId === e.id;
+              const isHere = curLoc.stageId === e.id;
               const evN = (e._snapshot && e._snapshot.evidencias && e._snapshot.evidencias.length) || 0;
-              return `<div class="st-card ${isSel ? 'is-sel' : ''}" id="stage-node-${esc(e.id)}" data-select-stage="${esc(e.id)}">
+              return `<div class="st-card ${isSel ? 'is-sel' : ''} ${isHere ? 'is-here' : ''}" id="stage-node-${esc(e.id)}" data-select-stage="${esc(e.id)}">
                 <div class="st-card-top">
-                  <span class="muted mono" style="font-weight:600;white-space:nowrap;flex-shrink:0">${esc(e.id)}${e._eh_marco ? ' ★' : ''}</span>
-                  <span class="st-pill st-${esc(e._status)}">${esc(e._status === 'executado' ? 'Decidir' : (ST_LABEL[e._status] || e._status))}</span>
+                  <span class="muted mono" style="font-weight:700;white-space:nowrap;flex-shrink:0">${esc(e.id)}${e._eh_marco ? ' ★' : ''}</span>
+                  ${isHere ? '<span class="here-badge">📍 Aqui</span>' : `<span class="st-pill st-${esc(e._status)}">${esc(e._status === 'executado' ? 'Decidir' : (ST_LABEL[e._status] || e._status))}</span>`}
                 </div>
-                <div class="st-card-title clamp2" title="${esc(e.titulo)}">${esc(e.titulo)}</div>
-                ${isSel ? `<div class="mini-ced">
-                  <div class="mini-ced-box"><b>Critério</b><span class="clamp2">${esc(e.verificacao || '—')}</span></div>
-                  <div class="mini-ced-box"><b>Arquivos</b><span>${evN} anexo(s)</span></div>
-                  <div class="mini-ced-box"><b>Status</b><span>${esc(ST_LABEL[e._status] || e._status)}</span></div>
+                <div class="st-card-title">${esc(e.titulo)}</div>
+                ${isSel ? `<div class="st-preview">
+                  <div class="st-preview-meta">
+                    <span>📄 ${evN} evidência(s) · ${esc(ST_LABEL[e._status] || e._status)}</span>
+                    <button type="button" class="btn btn-soft-accent btn-xs" data-open-review="${esc(e.id)}">Revisar →</button>
+                  </div>
+                  <div class="st-preview-crit"><b>Critério:</b> ${esc(e.verificacao || 'Conferir detalhes no painel ao lado.')}</div>
                 </div>` : ''}
               </div>`;
             }).join('') : `<div class="muted" style="font-size:12px">Etapas detalhadas ao abrir esta fase.</div>`}
@@ -1007,10 +1251,11 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       return `<div class="lane" data-lane="${idx}">
         <button type="button" class="lane-head ${isCur ? 'is-current' : ''}" data-toggle-phase="${esc(f)}" aria-expanded="${isExpPhase ? 'true' : 'false'}">
           <div class="lane-head-top">
-            <span>Fase ${idx + 1}${isCur ? ' · Atual' : ''}</span>
-            <span>${verF}/${totF} ${isExpPhase ? '▾' : '▸'}</span>
+            <span>Fase ${idx + 1}</span>
+            ${isCur ? '<span class="here-badge">📍 VOCÊ ESTÁ AQUI</span>' : `<span>${verF}/${totF} ${isExpPhase ? '▾' : '▸'}</span>`}
           </div>
-          <div class="lane-title clamp1" title="${esc(f)}">${esc(f.replace(/^Fase \d+\s*·\s*/, ''))}</div>
+          <div class="lane-title">${esc(f.replace(/^Fase \d+\s*·\s*/, ''))}</div>
+          ${isCur ? `<div class="muted" style="font-size:11.5px;display:flex;justify-content:space-between"><span>${verF} de ${totF} aprovadas</span><span>${isExpPhase ? '▾' : '▸'}</span></div>` : ''}
         </button>
         ${modsHtml}
       </div>`;
@@ -1029,7 +1274,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
           ${renderInspector()}
         </div>
         <div class="muted" style="font-size:12px;display:flex;gap:16px;flex-wrap:wrap">
-          <span>Clique em qualquer bloco ou etapa para abrir ações e detalhes à direita.</span>
+          <span>Clique em <b>📍 Onde estou</b> para centralizar e destacar sua etapa atual, ou clique em qualquer bloco para abrir detalhes à direita.</span>
           <span><b style="color:var(--edge)">━━▶</b> Sequência</span>
           <span><b style="color:var(--block)">┅┅▶</b> Depende de aprovação</span>
           <span><b>★</b> Marco · <b>◎</b> Resultado final</span>
@@ -1142,7 +1387,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
         </div>
         <div style="display:flex;gap:8px;align-items:center">
           <span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span>
-          <button type="button" class="btn btn-sm btn-ghost" data-goto-agent="${esc(e.id)}">⚙ Detalhes do agente</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-goto-agent="${esc(e.id)}">🏗 Ver no Harness</button>
         </div>
       </div>
 
@@ -1213,17 +1458,199 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     </div>`;
   }
 
-  // ==================== ABA 3: AGENTE (CALMA, 1 PAINEL POR VEZ, PORTUGUÊS CLARO) ====================
+  // ==================== ABA 3: ARQUITETURA DO HARNESS & AGENTE (ENTIDADES SEPARADAS E AMIGÁVEIS) ====================
+  function renderEntityCard(comp, color, badgeText){
+    const obs = comp.observado || {};
+    const isObs = obs.estado === 'observado';
+    return `<div class="entity-card" style="--ec:${color}">
+      <div class="entity-card-top">
+        <div class="entity-name">${esc(displayCompName(comp.nome))}</div>
+        <span class="st-pill ${isObs ? 'st-verificado' : 'st-pendente'} nob">${isObs ? esc(obs.label) : 'sem registro'}</span>
+      </div>
+      ${comp.mcp_server ? `<div class="muted" style="font-size:12px">🔌 Servidor: <b>${esc(comp.mcp_server)}</b></div>` : ''}
+      <div class="entity-desc">${esc(comp.funcao || 'Componente cadastrado para esta etapa.')}</div>
+      ${comp.motivo_escolha ? `<div class="muted" style="font-size:12px"><b>Por que existe:</b> ${esc(comp.motivo_escolha)}</div>` : ''}
+      <div class="entity-foot">
+        <span class="st-pill st-accent nob">${esc(badgeText)}</span>
+        <span class="code-tag">${comp.configurado ? 'Instalado' : 'Opcional'}</span>
+        ${(comp.etapas || []).slice(0, 5).map(sid => `<button type="button" class="btn btn-ghost btn-xs" data-pick-agent-jump="${esc(sid)}" title="Ver detalhes da etapa ${esc(sid)}">${esc(sid)}</button>`).join('')}
+        ${(comp.etapas || []).length > 5 ? `<span class="muted" style="font-size:11.5px">+${comp.etapas.length - 5}</span>` : ''}
+      </div>
+    </div>`;
+  }
+
+  function renderHarnessOverview(){
+    const H = D.harness_resumo || {
+      nome: 'Arquitetura do Harness',
+      descricao: 'Visão estruturada das entidades que constroem e controlam o agente neste projeto.',
+      skills: [], mcps: [], scripts: [], hooks_codigo: [], regras_instrucao: [], papeis: [], fluxo_fases: [],
+      contadores: {skills:0, mcps:0, scripts:0, hooks_codigo:0, regras_instrucao:0, papeis:0, fases:0}
+    };
+    const cnt = H.contadores || {};
+    const f = UI.harnessFocus || 'todos';
+    const show = key => f === 'todos' || f === key;
+
+    const pillars = [
+      ['skills', '📚', 'Skills (Guias)', `${cnt.skills || 0} guia(s)`, 'var(--ok)'],
+      ['mcps', '🔌', 'Servidores MCP', `${cnt.mcps || 0} integração(ões)`, 'var(--pause)'],
+      ['scripts', '🛠', 'Scripts & Tools', `${cnt.scripts || 0} script(s)`, 'var(--run)'],
+      ['hooks', '🪝', 'Hooks (Código)', `${cnt.hooks_codigo || 0} trava(s)`, 'var(--accent)'],
+      ['regras', '📋', 'Regras (Prompt)', `${cnt.regras_instrucao || 0} orientação(ões)`, 'var(--exe)'],
+      ['fluxo', '🔄', 'Fluxo & Papéis', `${cnt.fases || 0} fase(s)`, 'var(--ok)']
+    ];
+
+    return `<div style="display:grid;gap:18px">
+      <div class="harness-hero">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+          <div style="display:grid;gap:6px;max-width:780px">
+            <span class="focus-eyebrow">COMO O HARNESS DESTE PROJETO FUNCIONA</span>
+            <h2 style="font-size:20px">${esc(H.nome)}</h2>
+            <p class="muted" style="font-size:13.5px;line-height:1.5">${esc(H.descricao)}</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn btn-soft-accent btn-sm" id="btn-mode-stage">🔍 Inspecionar etapa por etapa →</button>
+            <button type="button" class="btn btn-sm" id="btn-agent-back" title="Voltar à etapa no Projeto">← Voltar ao mapa</button>
+          </div>
+        </div>
+
+        <div class="arch-pillars" role="navigation" aria-label="Pilares do Harness">
+          ${pillars.map(([k, ic, t, s, col]) => `<button type="button" class="pillar-card ${f === k ? 'is-active' : ''}" style="--pc:${col}" data-harness-focus="${k}">
+            <span class="pillar-ic">${ic}</span>
+            <span class="pillar-t">${t}</span>
+            <span class="pillar-s">${s}</span>
+          </button>`).join('')}
+        </div>
+
+        <div class="stat-pills">
+          <button type="button" class="stat-chip ${f === 'todos' ? 'is-active' : ''}" data-harness-focus="todos">✨ Ver tudo</button>
+          ${pillars.map(([k, ic, t]) => `<button type="button" class="stat-chip ${f === k ? 'is-active' : ''}" data-harness-focus="${k}">${ic} ${t}</button>`).join('')}
+        </div>
+      </div>
+
+      ${show('skills') ? `<section class="entity-section">
+        <div class="entity-head">
+          <div><h3>📚 Skills (Guias especializados)</h3><p class="muted" style="font-size:12.5px">Playbooks reutilizáveis que ensinam ao agente como conduzir análises, padronizações e checagens.</p></div>
+          <span class="st-pill st-verificado nob">${(H.skills || []).length} cadastrada(s)</span>
+        </div>
+        ${(H.skills || []).length
+          ? `<div class="entity-grid">${H.skills.map(c => renderEntityCard(c, 'var(--ok)', 'Skill')).join('')}</div>`
+          : `<p class="muted">Nenhuma skill específica declarada nas etapas (uso: <b>sem registro</b>).</p>`}
+      </section>` : ''}
+
+      ${show('mcps') ? `<section class="entity-section">
+        <div class="entity-head">
+          <div><h3>🔌 Servidores MCP (Integrações externas)</h3><p class="muted" style="font-size:12.5px">Conectores padronizados (Model Context Protocol) que expõem dados ou ferramentas externas ao agente.</p></div>
+          <span class="st-pill st-code nob">${(H.mcps || []).length} cadastrado(s)</span>
+        </div>
+        ${(H.mcps || []).length
+          ? `<div class="entity-grid">${H.mcps.map(c => renderEntityCard(c, 'var(--pause)', 'MCP')).join('')}</div>`
+          : `<p class="muted">Nenhum servidor MCP declarado neste projeto (uso: <b>sem registro</b>).</p>`}
+      </section>` : ''}
+
+      ${show('scripts') ? `<section class="entity-section">
+        <div class="entity-head">
+          <div><h3>🛠 Scripts e Ferramentas Locais</h3><p class="muted" style="font-size:12.5px">Programas determinísticos (Python, GROMACS, verificadores) usados para calcular sem alucinação.</p></div>
+          <span class="st-pill st-em_curso nob">${(H.scripts || []).length} ferramenta(s)</span>
+        </div>
+        ${(H.scripts || []).length
+          ? `<div class="entity-grid">${H.scripts.map(c => renderEntityCard(c, 'var(--run)', 'Script local')).join('')}</div>`
+          : `<p class="muted">Nenhum script local declarado nas etapas.</p>`}
+      </section>` : ''}
+
+      ${show('hooks') ? `<section class="entity-section">
+        <div class="entity-head">
+          <div><h3>🪝 Hooks & Guardrails Automáticos (Código)</h3><p class="muted" style="font-size:12.5px">Travas executadas em código que <b>impedem fisicamente</b> ações proibidas — independentes da memória do modelo.</p></div>
+          <span class="st-pill st-accent nob">${(H.hooks_codigo || []).length} trava(s) em código</span>
+        </div>
+        <div class="entity-grid">
+          ${(H.hooks_codigo || []).map(g => `<div class="entity-card" style="--ec:var(--accent)">
+            <div class="entity-card-top">
+              <div class="entity-name">${esc(g.regra)}</div>
+              <span class="st-pill st-code nob">${g.nativo ? 'Nativo' : 'Projeto'}</span>
+            </div>
+            <div class="entity-desc"><b>Onde atua:</b> ${esc(g.onde_aplica || '—')}</div>
+            <div class="muted" style="font-size:12px"><b>Se violar:</b> ${esc(g.se_falhar || 'Bloqueia avanço')}</div>
+            <div class="entity-foot">
+              ${(g.etapas || []).slice(0, 5).map(sid => `<span class="code-tag">${esc(sid)}</span>`).join('')}
+            </div>
+          </div>`).join('')}
+        </div>
+      </section>` : ''}
+
+      ${show('regras') ? `<section class="entity-section">
+        <div class="entity-head">
+          <div><h3>📋 Regras e Orientações (Instrução / Prompt)</h3><p class="muted" style="font-size:12.5px">Diretrizes de conduta e limites científicos orientados ao agente (separados das travas em código).</p></div>
+          <span class="st-pill st-executado nob">${(H.regras_instrucao || []).length} orientação(ões)</span>
+        </div>
+        ${(H.regras_instrucao || []).length ? `<div class="entity-grid">
+          ${H.regras_instrucao.map(g => `<div class="entity-card" style="--ec:var(--exe)">
+            <div class="entity-card-top">
+              <div class="entity-name">${esc(g.regra)}</div>
+              <span class="st-pill st-executado nob">Instrução</span>
+            </div>
+            <div class="entity-desc"><b>Onde atua:</b> ${esc(g.onde_aplica || '—')}</div>
+            <div class="muted" style="font-size:12px"><b>Ação esperada:</b> ${esc(g.se_falhar || '—')}</div>
+          </div>`).join('')}
+        </div>` : `<p class="muted">Nenhuma regra adicional em texto cadastrada.</p>`}
+      </section>` : ''}
+
+      ${show('fluxo') ? `<section class="entity-section">
+        <div class="entity-head">
+          <div><h3>🔄 Fluxo de Etapas, Papéis e Portões Humanos</h3><p class="muted" style="font-size:12.5px">Como o trabalho atravessa cada fase do projeto e quem atua em cada bloco (clique em um bloco para inspecionar a etapa).</p></div>
+          <span class="st-pill st-verificado nob">${(H.papeis || []).length} papel(is) · ${(H.fluxo_fases || []).length} fase(s)</span>
+        </div>
+        ${(H.papeis || []).length ? `<div class="chip-row">${H.papeis.map(p => `<span class="file-chip">🤖 <b>${esc(p.papel)}</b> <span class="muted">(${p.modulos.join(', ')})</span></span>`).join('')}</div>` : ''}
+        <div class="flow-strip">
+          ${(H.fluxo_fases || []).map((ff, idx) => `<div class="flow-phase">
+            <div style="font-size:11.5px;font-weight:800;color:var(--accent)">FASE ${idx + 1}</div>
+            <div style="font:700 14px var(--f-display)">${esc(ff.fase.replace(/^Fase \d+\s*·\s*/, ''))}</div>
+            ${ff.blocos.map(b => `<button type="button" class="flow-mod" data-open-mod-agent="${esc(b.id)}">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+                <span class="code-tag">${esc(b.id)}${b.eh_marco ? ' ★' : ''}</span>
+                <span class="st-pill st-${esc(b.status)}">${esc(ST_LABEL[b.status] || b.status)}</span>
+              </div>
+              <div style="font-size:13px;font-weight:700;line-height:1.3">${esc(b.titulo)}</div>
+              <div class="muted" style="font-size:11.5px">🤖 ${esc(b.papel)}</div>
+              <div class="muted" style="font-size:11.5px">${b.verificadas}/${b.total_etapas} aprovadas${b.marcos.length ? ` · Marcos: ${b.marcos.join(', ')}` : ''}</div>
+            </button>`).join('')}
+          </div>`).join('')}
+        </div>
+      </section>` : ''}
+    </div>`;
+  }
+
   function renderAgente(){
     const stages = allStages();
     const pair = findStage(UI.agentStageId) || stages[0];
     if (!pair) return `<div class="main"><div class="card"><p class="muted">Nenhuma etapa cadastrada.</p></div></div>`;
+
+    const modeBar = `<div class="canvas-bar">
+      <div class="canvas-bar-group">
+        <div class="seg-tabs">
+          <button type="button" class="seg-tab" data-agent-view="harness" aria-selected="${UI.agentView === 'harness' ? 'true' : 'false'}">🏗 Arquitetura do Harness</button>
+          <button type="button" class="seg-tab" data-agent-view="etapa" aria-selected="${UI.agentView === 'etapa' ? 'true' : 'false'}">🔍 Detalhes por Etapa</button>
+        </div>
+      </div>
+      <div class="canvas-bar-group">
+        <span class="muted" style="font-size:12.5px">Entenda como skills, MCPs, scripts, hooks e etapas operam juntos</span>
+      </div>
+    </div>`;
+
+    if (UI.agentView === 'harness') {
+      return `<div class="main full-bleed">${modeBar}${renderHarnessOverview()}</div>`;
+    }
+
     const {m, e} = pair;
     const arq = e._agente || {};
     const dur = arq.contexto_duravel || {};
     const exe = arq.contexto_execucao || {};
     const comps = arq.componentes || [];
+    const cSkills = comps.filter(c => c.tipo === 'skill');
+    const cMcps = comps.filter(c => c.tipo === 'mcp_tool');
+    const cScripts = comps.filter(c => c.tipo !== 'skill' && c.tipo !== 'mcp_tool');
     const guards = arq.guardrails || [];
+    const gCode = guards.filter(g => g.natureza === 'codigo');
+    const gText = guards.filter(g => g.natureza !== 'codigo');
     const aval = arq.avaliacao || {};
     const active = UI.agentActiveLayer || 'contexto';
     const q = UI.agentSearch.trim().toLowerCase();
@@ -1231,7 +1658,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const lBtn = (k, num, title, sub, col) => `<button type="button" class="layer-node ${active === k ? 'open' : ''}" id="ag-layer-${k}" style="--layer-c:${col}" data-pick-layer="${k}">
       <span style="color:${col};font-size:11.5px;font-weight:700">${num}</span>
       <h3 style="font-size:14px">${title}</h3>
-      <span class="muted clamp1" style="font-size:12px">${sub}</span>
+      <span class="muted" style="font-size:12px">${sub}</span>
     </button>`;
 
     const fases = fasesList();
@@ -1241,7 +1668,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       return `<div class="rail-phase">
         <div class="rail-phase-lbl">Fase ${fIdx + 1} · ${esc(f.replace(/^Fase \d+\s*·\s*/, ''))}</div>
         ${stInPhase.map(s => `<button type="button" class="rail-item ${s.e.id === e.id ? 'is-active' : ''}" data-pick-agent="${esc(s.e.id)}">
-          <div class="rail-item-title clamp2" title="${esc(s.e.titulo)}">${esc(s.e.titulo)}</div>
+          <div class="rail-item-title">${esc(s.e.titulo)}</div>
           <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)">
             <span>${esc(s.e.id)}</span>
             <span>${esc(ST_LABEL[s.e._status] || s.e._status)}</span>
@@ -1254,68 +1681,82 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     if (active === 'contexto') {
       detailHtml = `<div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-          <h3>O que o agente precisa lembrar nesta etapa</h3>
+          <div>
+            <h3>🧠 Memória fixa & retomada limpa</h3>
+            <p class="muted" style="font-size:12.5px">Separa as decisões permanentes do projeto daquilo que entra em uma nova conversa.</p>
+          </div>
           <button type="button" class="btn btn-soft-accent btn-sm" id="btn-gen-context">Gerar resumo para nova sessão</button>
         </div>
         <div class="bottom-two">
           <div class="ins-box">
-            <b>Base fixa do projeto</b>
+            <b>📌 Base fixa do projeto</b>
             <div><b>Objetivo:</b> ${esc(dur.objetivo || m.objetivo || '—')}</div>
             ${dur.protocolo && dur.protocolo.nome ? `<div><b>Protocolo:</b> ${esc(dur.protocolo.nome)} (${esc(dur.protocolo.versao || '')})</div>` : ''}
             ${dur.janela_analise ? `<div><b>Recorte:</b> ${esc(dur.janela_analise)}</div>` : ''}
-            ${(dur.decisoes_aceitas || []).length ? `<div><b>Decisões já tomadas:</b><ul class="clean-list" style="margin-top:4px">${dur.decisoes_aceitas.map(d => `<li>${esc(d)}</li>`).join('')}</ul></div>` : ''}
+            ${(dur.decisoes_aceitas || []).length ? `<div><b>Decisões-chave:</b><div class="chip-row" style="margin-top:6px">${dur.decisoes_aceitas.map(d => `<span class="file-chip">${esc(d)}</span>`).join('')}</div></div>` : ''}
             ${(dur.artefatos_referencia || []).length ? `<div><b>Arquivos de referência:</b><div class="chip-row" style="margin-top:6px">${dur.artefatos_referencia.map(r => `<span class="file-chip" title="${esc(r.caminho || r.nome)}">📄 ${esc(r.nome || baseName(r.caminho))}</span>`).join('')}</div></div>` : ''}
           </div>
           <div class="ins-box">
-            <b>Como retomar em uma nova conversa</b>
+            <b>🔄 Como retomar sem arrastar histórico</b>
             <div>${esc(exe.estrategia_retomada || 'Carregue apenas o protocolo, os arquivos de referência e o último ponto aprovado.')}</div>
-            ${(exe.fontes_carregadas || []).length ? `<div><b>Incluído ao retomar:</b><div class="chip-row" style="margin-top:5px">${exe.fontes_carregadas.map(x => `<span class="file-chip">${esc(x)}</span>`).join('')}</div></div>` : ''}
-            ${(exe.fontes_omitidas || []).length ? `<div class="muted"><b>Fica de fora (evita poluição):</b> ${esc(exe.fontes_omitidas.join(' · '))}</div>` : ''}
+            ${(exe.fontes_carregadas || []).length ? `<div><b>Carregado na sessão:</b><div class="chip-row" style="margin-top:5px">${exe.fontes_carregadas.map(x => `<span class="file-chip">✓ ${esc(x)}</span>`).join('')}</div></div>` : ''}
+            ${(exe.fontes_omitidas || []).length ? `<div class="muted" style="font-size:12.5px"><b>Omitido de propósito:</b> ${esc(exe.fontes_omitidas.join(' · '))}</div>` : ''}
           </div>
         </div>
         ${UI.agentContextBundle ? `<pre class="wrap-any" style="margin:0;overflow:auto;max-height:240px;background:var(--surface-2);padding:12px;border-radius:10px;border:1px solid var(--line)">${esc(JSON.stringify(UI.agentContextBundle, null, 2))}</pre>` : ''}
       </div>`;
     } else if (active === 'componentes') {
-      detailHtml = `<div class="card">
-        <h3>Ferramentas, guias e integrações desta etapa</h3>
-        ${comps.length ? `<div style="overflow-x:auto"><table class="comp-table">
-          <thead><tr><th>Ferramenta</th><th>Tipo</th><th>Para que serve</th><th>Previsto</th><th>Instalado</th><th>Uso registrado</th></tr></thead>
-          <tbody>${comps.map(c => `<tr>
-            <td class="wrap-any"><b>${esc(baseName(c.nome))}</b>${c.mcp_server ? `<div class="muted" style="font-size:12px">Servidor: ${esc(c.mcp_server)}</div>` : ''}</td>
-            <td><span class="st-pill ${c.tipo === 'mcp_tool' ? 'st-code' : (c.tipo === 'skill' ? 'st-verificado' : 'st-em_curso')} nob">${esc(TIPO_COMP[c.tipo] || c.tipo)}</span></td>
-            <td class="wrap-any">${esc(c.funcao || '—')}${c.motivo_escolha ? `<div class="muted" style="font-size:12px">${esc(c.motivo_escolha)}</div>` : ''}</td>
-            <td>${c.planejado ? 'Sim' : '—'}</td>
-            <td>${c.configurado ? 'Sim' : 'Não'}</td>
-            <td>${c.observado && c.observado.estado === 'observado' ? `<span class="st-pill st-verificado">${esc(c.observado.label)}</span>` : '<span class="st-pill st-pendente nob">sem registro</span>'}</td>
-          </tr>`).join('')}</tbody>
-        </table></div>` : '<p class="muted">Nenhuma ferramenta cadastrada (uso: <b>sem registro</b>).</p>'}
-        ${(arq.linhagem || []).length ? `<div class="lineage">${arq.linhagem.map((s, i) => `${i ? '<span class="muted">→</span>' : ''}<div class="lin-node" title="${esc(s.artefato || '')}"><b>${esc(s.etapa_fluxo || '')}:</b> ${esc(baseName(s.artefato || ''))}</div>`).join('')}</div>` : ''}
+      detailHtml = `<div style="display:grid;gap:14px">
+        <div class="entity-section">
+          <div class="entity-head"><h3>📚 Skills desta etapa (${cSkills.length})</h3><span class="st-pill st-verificado nob">Guias</span></div>
+          ${cSkills.length ? `<div class="entity-grid">${cSkills.map(c => renderEntityCard(c, 'var(--ok)', 'Skill')).join('')}</div>` : '<p class="muted">Nenhuma skill específica nesta etapa (uso: <b>sem registro</b>).</p>'}
+        </div>
+        <div class="entity-section">
+          <div class="entity-head"><h3>🔌 Servidores MCP desta etapa (${cMcps.length})</h3><span class="st-pill st-code nob">Integrações</span></div>
+          ${cMcps.length ? `<div class="entity-grid">${cMcps.map(c => renderEntityCard(c, 'var(--pause)', 'MCP')).join('')}</div>` : '<p class="muted">Nenhum MCP usado nesta etapa (uso: <b>sem registro</b>).</p>'}
+        </div>
+        <div class="entity-section">
+          <div class="entity-head"><h3>🛠 Scripts & Ferramentas Locais (${cScripts.length})</h3><span class="st-pill st-em_curso nob">Determinístico</span></div>
+          ${cScripts.length ? `<div class="entity-grid">${cScripts.map(c => renderEntityCard(c, 'var(--run)', 'Script local')).join('')}</div>` : '<p class="muted">Nenhum script local cadastrado nesta etapa.</p>'}
+        </div>
+        ${(arq.linhagem || []).length ? `<div class="card">
+          <h4>Fluxo de arquivos nesta etapa</h4>
+          <div class="lineage">${arq.linhagem.map((s, i) => `${i ? '<span class="muted">→</span>' : ''}<div class="lin-node" title="${esc(s.artefato || '')}"><b>${esc(s.etapa_fluxo || '')}:</b> ${esc(baseName(s.artefato || ''))}</div>`).join('')}</div>
+        </div>` : ''}
       </div>`;
     } else if (active === 'guardrails') {
-      detailHtml = `<div class="card">
-        <h3>Proteções e limites desta etapa</h3>
-        <div class="ins-box"><b>Regra de aprovação humana (independente):</b> ${esc(POL_LABEL[(D.politica || {}).modo] || '')} — você pode mudar no topo da tela.</div>
-        ${guards.length ? `<div style="overflow-x:auto"><table class="comp-table">
-          <thead><tr><th>Tipo</th><th>Regra</th><th>Onde atua</th><th>O que acontece se falhar</th></tr></thead>
-          <tbody>${guards.map(g => `<tr>
-            <td><span class="st-pill ${g.natureza === 'codigo' ? 'st-code' : 'st-executado'} nob">${g.natureza === 'codigo' ? 'Automática (código)' : 'Orientação (texto)'}</span></td>
-            <td class="wrap-any"><b>${esc(g.regra)}</b></td>
-            <td class="muted wrap-any">${esc(g.onde_aplica || '—')}</td>
-            <td class="muted wrap-any">${esc(g.se_falhar || '—')}</td>
-          </tr>`).join('')}</tbody>
-        </table></div>` : '<p class="muted">Apenas as proteções padrão do SpecBoard estão ativas.</p>'}
+      detailHtml = `<div style="display:grid;gap:14px">
+        <div class="card">
+          <div class="ins-box"><b>🎛 Regra de aprovação humana (independente):</b> ${esc(POL_LABEL[(D.politica || {}).modo] || '')} — alterável no topo da tela.</div>
+        </div>
+        <div class="entity-section">
+          <div class="entity-head"><h3>🪝 Travas automáticas em código / Hooks (${gCode.length})</h3><span class="st-pill st-code nob">Impedem fisicamente</span></div>
+          ${gCode.length ? `<div class="entity-grid">${gCode.map(g => `<div class="entity-card" style="--ec:var(--accent)">
+            <div class="entity-name">${esc(g.regra)}</div>
+            <div class="entity-desc"><b>Onde atua:</b> ${esc(g.onde_aplica || '—')}</div>
+            <div class="muted" style="font-size:12px"><b>Se falhar:</b> ${esc(g.se_falhar || '—')}</div>
+          </div>`).join('')}</div>` : '<p class="muted">Apenas a trava nativa contra autovalidação (<code>block_verify_hook.py</code>) está ativa.</p>'}
+        </div>
+        <div class="entity-section">
+          <div class="entity-head"><h3>📋 Orientações em instrução / Prompt (${gText.length})</h3><span class="st-pill st-executado nob">Boas práticas</span></div>
+          ${gText.length ? `<div class="entity-grid">${gText.map(g => `<div class="entity-card" style="--ec:var(--exe)">
+            <div class="entity-name">${esc(g.regra)}</div>
+            <div class="entity-desc"><b>Onde atua:</b> ${esc(g.onde_aplica || '—')}</div>
+            <div class="muted" style="font-size:12px"><b>Ação esperada:</b> ${esc(g.se_falhar || '—')}</div>
+          </div>`).join('')}</div>` : '<p class="muted">Nenhuma orientação extra declarada.</p>'}
+        </div>
       </div>`;
     } else {
       detailHtml = `<div class="card">
-        <h3>Sua validação científica × Testes do agente</h3>
+        <h3>✅ Sua validação científica × Testes do agente</h3>
         <div class="bottom-two">
           <div class="ins-box">
-            <b>Sua validação científica</b>
+            <b>👤 Sua validação humana</b>
             <div><span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span></div>
             <div class="action-bar">${renderRowActions(e, 'ag-' + e.id)}</div>
           </div>
           <div class="ins-box">
-            <b>Testes técnicos do agente (separados da sua aprovação)</b>
+            <b>🤖 Testes técnicos do agente (separados da sua aprovação)</b>
             <p class="muted" style="font-size:13px">${esc(aval.nota_separacao || 'Testes automáticos checam o funcionamento do agente; a validação científica é sempre sua.')}</p>
             ${(aval.casos_referencia || []).map(c => `<div><b>${esc(c.titulo)}</b> — <span class="muted">${esc(c.qualidade_resultado || c.trajetoria_ferramentas || '')}</span></div>`).join('')}
           </div>
@@ -1324,6 +1765,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     }
 
     return `<div class="main full-bleed">
+      ${modeBar}
       <div class="agent-shell">
         <aside class="agent-rail" aria-label="Etapas do projeto">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
@@ -1338,8 +1780,9 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
           <div class="canvas-bar">
             <div class="canvas-bar-group" style="min-width:0">
               <span class="code-tag">${esc(e.id)}</span>
-              <h2 class="clamp1" style="font-size:16.5px" title="${esc(e.titulo)}">${esc(e.titulo)}</h2>
+              <h2 style="font-size:16.5px">${esc(e.titulo)}</h2>
               <span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span>
+              ${arq.papel ? `<span class="st-pill st-accent nob">🤖 ${esc(arq.papel)}</span>` : ''}
             </div>
             <div class="canvas-bar-group">
               <button type="button" class="btn btn-soft-accent btn-sm" data-open-review="${esc(e.id)}">Revisar evidências</button>
@@ -1350,8 +1793,8 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
             <svg class="arch-svg" id="agent-svg" aria-hidden="true"></svg>
             <div class="layer-grid">
               ${lBtn('contexto', 'Passo 1', 'Memória e regras', dur.protocolo && dur.protocolo.nome ? esc(dur.protocolo.nome) : 'O que o agente lembra', 'var(--accent)')}
-              ${lBtn('componentes', 'Passo 2', 'Ferramentas', comps.length + ' cadastrada(s)', 'var(--run)')}
-              ${lBtn('guardrails', 'Passo 3', 'Proteções', guards.length + ' regra(s) ativa(s)', 'var(--pause)')}
+              ${lBtn('componentes', 'Passo 2', 'Skills, MCPs & Scripts', `${cSkills.length} skill · ${cMcps.length} MCP · ${cScripts.length} script`, 'var(--run)')}
+              ${lBtn('guardrails', 'Passo 3', 'Hooks & Proteções', `${gCode.length} código · ${gText.length} regra`, 'var(--pause)')}
               ${lBtn('avaliacao', 'Passo 4', 'Qualidade e revisão', 'Sua revisão ≠ testes', 'var(--ok)')}
             </div>
           </div>
@@ -1447,12 +1890,24 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     bindEvents();
     renderToastOnly();
     if (UI.tab === 'projeto' && UI.projetoModo === 'fluxo' && !UI.reviewStageId) requestAnimationFrame(drawArchEdges);
-    if (UI.tab === 'agente' && !UI.reviewStageId) requestAnimationFrame(drawAgentEdges);
+    if (UI.tab === 'agente' && UI.agentView === 'etapa' && !UI.reviewStageId) requestAnimationFrame(drawAgentEdges);
   }
 
   function bindEvents(){
+    document.querySelectorAll('[data-go-home]').forEach(b => b.addEventListener('click', goHome));
     document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => { UI.openMenuId = null; UI.reviewStageId = null; UI.tab = b.dataset.tab; render(); }));
     document.querySelectorAll('[data-tab-jump]').forEach(b => b.addEventListener('click', () => { UI.openMenuId = null; UI.reviewStageId = null; UI.tab = b.dataset.tabJump; render(); }));
+
+    document.querySelectorAll('[data-scroll-sec]').forEach(b => b.addEventListener('click', () => {
+      const el = document.getElementById(b.dataset.scrollSec);
+      if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }));
+    document.querySelectorAll('[data-jump-phase]').forEach(b => b.addEventListener('click', () => {
+      focusWhereAmI(b.dataset.jumpPhase, b.dataset.jumpMod || null, null);
+    }));
+    const bHW = document.getElementById('btn-home-where'); if (bHW) bHW.addEventListener('click', () => focusWhereAmI());
+    const bKW = document.getElementById('btn-kpi-where'); if (bKW) bKW.addEventListener('click', () => focusWhereAmI());
+    const bWI = document.getElementById('btn-where-am-i'); if (bWI) bWI.addEventListener('click', () => focusWhereAmI());
 
     const qBtn = document.getElementById('btn-toggle-q'); if (qBtn) qBtn.addEventListener('click', () => { UI.showQuestion = !UI.showQuestion; render(); });
     const btnTheme = document.getElementById('btn-theme');
@@ -1497,12 +1952,11 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     }));
     document.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); triggerAction(b.dataset.sid, b.dataset.act); }));
     document.querySelectorAll('[data-open-review]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); openReview(b.dataset.openReview, b.dataset.qidxBtn !== undefined ? Number(b.dataset.qidxBtn) : null); }));
+    document.querySelectorAll('[data-open-review-ev]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); openReview(b.dataset.openReviewEv, null, Number(b.dataset.evOpenIdx || 0)); }));
     document.querySelectorAll('[data-goto-agent]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); jumpToAgent(b.dataset.gotoAgent); }));
     document.querySelectorAll('[data-goto-mod]').forEach(b => b.addEventListener('click', () => {
       const m = findMod(b.dataset.gotoMod);
-      UI.tab = 'projeto';
-      if (m) { UI.expandedPhases.add(m.fase || '—'); UI.expandedModules.add(m.id); UI.selectedModId = m.id; UI.selectedStageId = null; }
-      render();
+      if (m) focusWhereAmI(m.fase || '—', m.id, null);
     }));
     document.querySelectorAll('[data-lock-mod]').forEach(b => b.addEventListener('click', () => lockContractNow(b.dataset.lockMod)));
 
@@ -1558,20 +2012,15 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       render();
     }));
     document.querySelectorAll('[data-select-stage]').forEach(el => el.addEventListener('click', ev => {
-      if (ev.target.closest('button')) return;
+      if (ev.target.closest('button') && !el.matches('button')) return;
       const sid = el.dataset.selectStage, p = findStage(sid);
       if (UI.selectedStageId === sid) UI.selectedStageId = null;
-      else { UI.selectedStageId = sid; UI.selectedModId = p ? p.m.id : null; }
+      else { UI.selectedStageId = sid; if (p) { UI.selectedModId = p.m.id; UI.expandedModules.add(p.m.id); } }
       render();
     }));
-    document.querySelectorAll('[data-hover-mod]').forEach(el => {
-      el.addEventListener('mouseenter', () => { if (UI.hoverModId !== el.dataset.hoverMod) { UI.hoverModId = el.dataset.hoverMod; drawArchEdges(); } });
-      el.addEventListener('mouseleave', () => { if (UI.hoverModId) { UI.hoverModId = null; drawArchEdges(); } });
-    });
-    const bCIns = document.getElementById('btn-close-ins'); if (bCIns) bCIns.addEventListener('click', () => { UI.selectedStageId = null; UI.selectedModId = null; render(); });
+    const bCI = document.getElementById('btn-close-ins'); if (bCI) bCI.addEventListener('click', () => { UI.selectedStageId = null; UI.selectedModId = null; render(); });
 
     const bCR = document.getElementById('btn-close-rev'); if (bCR) bCR.addEventListener('click', closeReview);
-    const bDep = document.getElementById('btn-dec-depois'); if (bDep) bDep.addEventListener('click', closeReview);
     document.querySelectorAll('[data-ev-idx]').forEach(b => b.addEventListener('click', () => {
       UI.reviewEvIndex = Number(b.dataset.evIdx);
       const pair = findStage(UI.reviewStageId);
@@ -1579,25 +2028,45 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       render();
       if (ev && ev.estado === 'ok') loadEvidencePreview(ev.ref, ev.midia);
     }));
-    const runRevDec = acao => {
-      const rev = (document.getElementById('rev-revisor').value || '').trim();
-      const nota = (document.getElementById('rev-nota').value || '').trim();
-      if (!rev) { showToast('Informe seu nome.', true); return; }
-      if (ACAO_META[acao].exigeNota && !nota) { showToast('Informe brevemente o motivo.', true); return; }
-      setReviewer(rev);
-      executeAction(UI.reviewStageId, acao, rev, nota);
-    };
-    [['btn-dec-aprovar','verificado'],['btn-dec-correcao','pedir_correcao'],['btn-dec-aguardar','aguardar_decisao'],['btn-dec-bloquear','bloquear'],['btn-dec-desbloquear','desbloquear'],['btn-dec-revisado','revisado']].forEach(([id, ac]) => {
-      const el = document.getElementById(id); if (el) el.addEventListener('click', () => runRevDec(ac));
-    });
-
     document.querySelectorAll('[data-zoom-img]').forEach(img => img.addEventListener('click', () => { UI.lightboxSrc = img.dataset.zoomImg; render(); }));
     const lb = document.getElementById('lightbox'); if (lb) lb.addEventListener('click', () => { UI.lightboxSrc = ''; render(); });
 
+    function readRevForm(){
+      const rev = (document.getElementById('rev-revisor') && document.getElementById('rev-revisor').value || '').trim();
+      const nota = (document.getElementById('rev-nota') && document.getElementById('rev-nota').value || '').trim();
+      return {rev, nota};
+    }
+    const revAction = (acao, reqNota) => {
+      const {rev, nota} = readRevForm();
+      if (!rev) { showToast('Informe seu nome antes de salvar.', true); return; }
+      if (reqNota && !nota) { showToast('Escreva brevemente o motivo no campo de comentário.', true); return; }
+      setReviewer(rev);
+      executeAction(UI.reviewStageId, acao, rev, nota);
+    };
+    const bDA = document.getElementById('btn-dec-aprovar'); if (bDA) bDA.addEventListener('click', () => revAction('verificado', false));
+    const bDC = document.getElementById('btn-dec-correcao'); if (bDC) bDC.addEventListener('click', () => revAction('pedir_correcao', true));
+    const bDW = document.getElementById('btn-dec-aguardar'); if (bDW) bDW.addEventListener('click', () => revAction('aguardar_decisao', false));
+    const bDB = document.getElementById('btn-dec-bloquear'); if (bDB) bDB.addEventListener('click', () => revAction('bloquear', true));
+    const bDU = document.getElementById('btn-dec-desbloquear'); if (bDU) bDU.addEventListener('click', () => revAction('desbloquear', false));
+    const bDR = document.getElementById('btn-dec-revisado'); if (bDR) bDR.addEventListener('click', () => revAction('revisado', false));
+    const bDD = document.getElementById('btn-dec-depois'); if (bDD) bDD.addEventListener('click', closeReview);
+
+    // Eventos da aba Harness & Agente
+    document.querySelectorAll('[data-agent-view]').forEach(b => b.addEventListener('click', () => { UI.agentView = b.dataset.agentView; render(); }));
+    document.querySelectorAll('[data-harness-focus]').forEach(b => b.addEventListener('click', () => { UI.harnessFocus = b.dataset.harnessFocus; render(); }));
+    const bMS = document.getElementById('btn-mode-stage'); if (bMS) bMS.addEventListener('click', () => { UI.agentView = 'etapa'; render(); });
+    document.querySelectorAll('[data-pick-agent-jump]').forEach(b => b.addEventListener('click', () => {
+      UI.agentStageId = b.dataset.pickAgentJump; UI.agentView = 'etapa'; UI.agentContextBundle = null; render();
+    }));
+    document.querySelectorAll('[data-open-mod-agent]').forEach(b => b.addEventListener('click', () => {
+      const m = findMod(b.dataset.openModAgent);
+      if (m && m.etapas && m.etapas.length) { UI.agentStageId = m.etapas[0].id; UI.agentView = 'etapa'; UI.agentContextBundle = null; render(); }
+    }));
+
+    const agS = document.getElementById('agent-search'); if (agS) agS.addEventListener('input', () => { UI.agentSearch = agS.value; render(); document.getElementById('agent-search').focus(); });
     document.querySelectorAll('[data-pick-agent]').forEach(b => b.addEventListener('click', () => { UI.agentStageId = b.dataset.pickAgent; UI.agentContextBundle = null; render(); }));
     document.querySelectorAll('[data-pick-layer]').forEach(b => b.addEventListener('click', () => { UI.agentActiveLayer = b.dataset.pickLayer; render(); }));
-    const agS = document.getElementById('agent-search'); if (agS) agS.addEventListener('input', () => { UI.agentSearch = agS.value; render(); document.getElementById('agent-search').focus(); });
-    const bAgB = document.getElementById('btn-agent-back'); if (bAgB) bAgB.addEventListener('click', returnFromAgent);
+    const bAB = document.getElementById('btn-agent-back'); if (bAB) bAB.addEventListener('click', returnFromAgent);
     const bGC = document.getElementById('btn-gen-context');
     if (bGC) bGC.addEventListener('click', async () => {
       const sid = UI.agentStageId; if (!sid) return;
@@ -1613,7 +2082,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
   document.addEventListener('click', () => { if (UI.openMenuId) { UI.openMenuId = null; render(); } });
   window.addEventListener('resize', () => {
     if (UI.tab === 'projeto' && UI.projetoModo === 'fluxo' && !UI.reviewStageId) requestAnimationFrame(drawArchEdges);
-    if (UI.tab === 'agente' && !UI.reviewStageId) requestAnimationFrame(drawAgentEdges);
+    if (UI.tab === 'agente' && UI.agentView === 'etapa' && !UI.reviewStageId) requestAnimationFrame(drawAgentEdges);
   });
   document.addEventListener('keydown', ev => {
     if (ev.key === 'Escape') {
