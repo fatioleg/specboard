@@ -3,442 +3,1631 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mapa do Projeto</title>
+<title>SpecBoard</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230891b2'/%3E%3Cstop offset='100%25' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='%23fff' font-family='system-ui,sans-serif' font-size='14' font-weight='800'%3ESB%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
-/* Gerado por specboard a partir de .specboard/estado.json — não edite o HTML gerado.
-   Layout: "você está aqui" + progresso → mapa clicável (colunas = fases, setas = dependências) + painel de detalhe
-   → fila do que aguarda você → feito (linha do tempo) × falta (lista ordenada) → como ler. */
+/* SpecBoard v2 — Experiência calma, legível e direta (estilo Archify + Linear).
+   Gerado a partir de .specboard/estado.json — não edite o HTML gerado. */
 :root{
-  --bg:#f3f6f6; --surface:#ffffff; --fg:#17262a; --muted:#56696e; --line:#d3dfe1; --edge:#9fb3b7;
-  --accent:#0f6b73; --imid:#d9730d;
-  --ok:#23804a; --ok-bg:#e3f3e8; --rev:#3d6fb8; --rev-bg:#e4ecf8; --exe:#a15c00; --exe-bg:#fdf0dc;
-  --next:#1f5fbf; --next-bg:#e4edfb; --wait:#6b7a7e; --wait-bg:#eceff0; --block:#b3261e; --block-bg:#fbe5e3;
-  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
-  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --bg:#f8fafc; --canvas-dot:rgba(15,23,42,.075);
+  --surface:#ffffff; --surface-2:#f1f5f9; --surface-glass:rgba(255,255,255,.9);
+  --fg:#0f172a; --muted:#64748b; --line:#e2e8f0; --line-strong:#cbd5e1;
+  --accent:#0891b2; --accent-soft:rgba(8,145,178,.10); --accent-glow:rgba(8,145,178,.24);
+  --ok:#059669; --ok-soft:rgba(5,150,105,.11);
+  --exe:#d97706; --exe-soft:rgba(217,119,6,.12);
+  --rev:#2563eb; --rev-soft:rgba(37,99,235,.11);
+  --pause:#7c3aed; --pause-soft:rgba(124,58,237,.11);
+  --run:#2563eb; --run-soft:rgba(37,99,235,.11);
+  --block:#e11d48; --block-soft:rgba(225,29,72,.10);
+  --wait:#64748b; --wait-soft:rgba(100,116,139,.10);
+  --edge:#94a3b8;
+  --shadow:0 1px 2px rgba(15,23,42,.04), 0 6px 20px rgba(15,23,42,.04);
+  --shadow-lg:0 16px 40px rgba(15,23,42,.12);
+  --f-display:"Plus Jakarta Sans","Inter","Segoe UI",system-ui,sans-serif;
+  --f-body:"Inter","Segoe UI",system-ui,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0f1719; --surface:#172225; --fg:#e3ecee; --muted:#9db0b4; --line:#2b3b3f; --edge:#4a6166; --accent:#4fb3bb; --imid:#f09a45;
-  --ok:#6fcf8f; --ok-bg:#15301f; --rev:#8fb2ea; --rev-bg:#18253b; --exe:#f0b25a; --exe-bg:#33260f; --next:#8db4f2; --next-bg:#16233a;
-  --wait:#a3b1b4; --wait-bg:#212c2f; --block:#f08a82; --block-bg:#3a1714; color-scheme:dark}}
+  --bg:#0b101b; --canvas-dot:rgba(148,163,184,.10);
+  --surface:#121928; --surface-2:#182234; --surface-glass:rgba(18,25,40,.9);
+  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.14); --line-strong:rgba(148,163,184,.26);
+  --accent:#22d3ee; --accent-soft:rgba(34,211,238,.11); --accent-glow:rgba(34,211,238,.26);
+  --ok:#34d399; --ok-soft:rgba(52,211,153,.13);
+  --exe:#fbbf24; --exe-soft:rgba(251,191,36,.13);
+  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.13);
+  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.14);
+  --run:#60a5fa; --run-soft:rgba(96,165,250,.14);
+  --block:#fb7185; --block-soft:rgba(251,113,133,.13);
+  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.12);
+  --edge:#475569; --shadow:0 2px 10px rgba(0,0,0,.28); --shadow-lg:0 20px 48px rgba(0,0,0,.55);
+  color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0f1719; --surface:#172225; --fg:#e3ecee; --muted:#9db0b4; --line:#2b3b3f; --edge:#4a6166; --accent:#4fb3bb; --imid:#f09a45;
-  --ok:#6fcf8f; --ok-bg:#15301f; --rev:#8fb2ea; --rev-bg:#18253b; --exe:#f0b25a; --exe-bg:#33260f; --next:#8db4f2; --next-bg:#16233a;
-  --wait:#a3b1b4; --wait-bg:#212c2f; --block:#f08a82; --block-bg:#3a1714; color-scheme:dark}
+  --bg:#0b101b; --canvas-dot:rgba(148,163,184,.10);
+  --surface:#121928; --surface-2:#182234; --surface-glass:rgba(18,25,40,.9);
+  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.14); --line-strong:rgba(148,163,184,.26);
+  --accent:#22d3ee; --accent-soft:rgba(34,211,238,.11); --accent-glow:rgba(34,211,238,.26);
+  --ok:#34d399; --ok-soft:rgba(52,211,153,.13);
+  --exe:#fbbf24; --exe-soft:rgba(251,191,36,.13);
+  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.13);
+  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.14);
+  --run:#60a5fa; --run-soft:rgba(96,165,250,.14);
+  --block:#fb7185; --block-soft:rgba(251,113,133,.13);
+  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.12);
+  --edge:#475569; --shadow:0 2px 10px rgba(0,0,0,.28); --shadow-lg:0 20px 48px rgba(0,0,0,.55);
+  color-scheme:dark}
+
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--f-body);margin:0}
-.wrap{max-width:1240px;margin:0 auto;grid-template-columns:minmax(0,1fr);padding-inline:clamp(16px,3.5vw,36px);padding-block:28px 56px;display:grid;gap:34px}
-h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
-h1{font-size:clamp(1.7rem,3.6vw,2.4rem)} h2{font-size:1.35rem} h3{font-size:1.1rem}
-.eyebrow{font:500 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
-.eyebrow a{color:inherit}
-.muted{color:var(--muted)} code{font-family:var(--f-mono);font-size:.86em}
-button{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--next);outline-offset:2px}
-.q{border-left:4px solid var(--imid);padding:4px 0 4px 12px;font-size:.98rem;margin:0}
-.q b{color:var(--imid)}
-.err{background:var(--block-bg);border:1px solid var(--block);border-radius:12px;padding:12px 16px}
-.err ul{margin:6px 0 0;padding-left:20px}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:14.5px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;line-height:1.25;letter-spacing:-.015em}
+p{margin:0} code,pre{font-family:var(--f-mono);font-size:.84em}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.muted{color:var(--muted)} .mono{font-family:var(--f-mono);font-size:.82em}
+.clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.clamp1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrap-any{overflow-wrap:anywhere;word-break:break-word;min-width:0}
 
-/* faixa superior */
-.top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;align-items:stretch}
-.here{background:var(--next-bg);border:2px solid var(--next);border-radius:14px;padding:18px 20px;display:grid;gap:8px;align-content:start}
-.here .lab{font:600 .78rem var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--next)}
-.here .big{font:700 1.45rem var(--f-display)}
-.here p{margin:0}
-.here .gate{background:var(--exe-bg);color:var(--fg);border-left:4px solid var(--exe);border-radius:8px;padding:8px 12px;font-size:.93rem}
-.prog{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:12px;align-content:start}
-.bar{height:14px;border-radius:999px;background:var(--wait-bg);overflow:hidden;display:flex}
-.bar i{display:block;height:100%}
-.b-ok{background:var(--ok)} .b-rev{background:var(--rev)} .b-exe{background:var(--exe)} .b-run{background:var(--next)} .b-block{background:var(--block)}
-.kpis{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.93rem}
-.kpis b{font-variant-numeric:tabular-nums;font-size:1.15rem}
-.kpis .dot{margin-right:4px}
+/* === BARRA SUPERIOR === */
+.shell{min-height:100vh;display:flex;flex-direction:column}
+.nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:var(--surface-glass);border-bottom:1px solid var(--line);padding:10px clamp(16px,3vw,32px);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.nav-left{display:flex;align-items:center;gap:10px;min-width:0}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#6366f1);display:grid;place-items:center;color:#fff;font:700 13px var(--f-display);flex:none}
+.proj-title{font:700 15px var(--f-display);max-width:300px}
+.q-toggle{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.q-toggle:hover{border-color:var(--accent);color:var(--fg)}
+.q-drawer{background:var(--surface);border-bottom:1px solid var(--line);padding:12px clamp(16px,3vw,32px);font-size:14px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.q-drawer b{color:var(--accent)}
+.offline-tip{background:var(--accent-soft);border-bottom:1px solid var(--accent-glow);padding:8px clamp(16px,3vw,32px);font-size:12.5px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 
-/* filtros */
-.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:.85rem;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
-.chip[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);font-weight:600}
-.dot{width:9px;height:9px;border-radius:50%;display:inline-block;background:currentColor;flex:none}
-.c-verificado{color:var(--ok)} .c-aguarda{color:var(--exe)} .c-em_curso{color:var(--next)} .c-pendente{color:var(--wait)} .c-bloqueado{color:var(--block)}
+.seg-tabs{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+.seg-tab{border:0;background:transparent;border-radius:7px;padding:6px 15px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .14s}
+.seg-tab:hover{color:var(--fg)}
+.seg-tab[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.seg-badge{background:var(--exe-soft);color:var(--exe);font:700 11px var(--f-body);padding:1px 7px;border-radius:999px}
 
-/* mapa */
-/* mapa ocupa a largura toda (cabe 5–6 fases sem rolar); o detalhe vem logo abaixo, em duas colunas */
-.mapbox{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
-.map{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;overflow-x:auto}
-.cols{position:relative;display:grid;gap:26px;z-index:1}
-.col{display:grid;gap:14px;align-content:start}
-.colh{font:500 .7rem var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);min-height:2.4em}
-svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
-svg.edges path{fill:none;stroke:var(--edge);stroke-width:1.6}
-svg.edges path.hot{stroke:var(--accent);stroke-width:2.6}
-.node{position:relative;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px 10px 14px;cursor:pointer;display:grid;gap:4px;transition:transform .12s, box-shadow .12s, opacity .2s}
-.node::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 3px 3px 0;background:var(--st)}
-.node:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgb(0 0 0 / .08)}
-.node[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
-.node.final{border-style:double;border-width:3px}
-.node.dim{opacity:.28}
-.node .nc{font:500 .78rem var(--f-mono);color:var(--accent)}
-.node .nt{font-weight:600;line-height:1.25}
-.node .mini{height:6px;border-radius:999px;background:var(--wait-bg);overflow:hidden;display:flex}
-.node .mini i{display:block;height:100%}
-.node .ns{font-size:.78rem;color:var(--st);font-weight:600}
-.st-verificado{--st:var(--ok)} .st-aguarda{--st:var(--exe)} .st-em_curso{--st:var(--next)} .st-pendente{--st:var(--wait)} .st-bloqueado{--st:var(--block)}
-.node .you{position:absolute;top:-11px;right:10px;background:var(--next);color:#fff;font:600 .68rem var(--f-body);letter-spacing:.04em;padding:2px 8px;border-radius:999px}
-.hint{font-size:.85rem;margin:10px 0 0}
+.nav-right{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.pill-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .14s}
+.pill-btn:hover{border-color:var(--accent);background:var(--surface-2)}
+.dot-live{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.dot-static{width:7px;height:7px;border-radius:50%;background:var(--wait)}
+.icon-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer;display:grid;place-items:center;font-size:14px;color:var(--muted)}
+.icon-btn:hover{border-color:var(--accent);color:var(--fg)}
 
-/* painel */
-/* aba lateral: abre ao clicar num módulo; em tela larga o conteúdo encolhe para o mapa continuar visível */
-:root{--drawer:min(460px,100vw)}
-.panel{position:fixed;top:0;right:0;bottom:0;width:var(--drawer);z-index:30;background:var(--surface);border-left:3px solid var(--accent);
-  box-shadow:-10px 0 30px rgb(0 0 0 / .12);padding:16px 20px 28px;overflow-y:auto;overscroll-behavior:contain;display:grid;gap:12px;align-content:start;
-  transform:translateX(105%);transition:transform .22s ease;visibility:hidden}
-.panel.open{transform:none;visibility:visible}
-.panel .pa,.panel .pb{display:grid;gap:12px;min-width:0}
-.panel .x{position:sticky;top:0;justify-self:end;margin:-6px -8px 0 0;border:1px solid var(--line);background:var(--surface);border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:1.1rem;line-height:1;z-index:1}
-@media (min-width:1100px){body.drawer-open{padding-right:var(--drawer)} body.drawer-open .cols{gap:16px}}
-body{transition:padding-right .22s ease}
-.pill{display:inline-flex;align-items:center;gap:6px;font:600 .72rem var(--f-body);letter-spacing:.03em;padding:2px 10px;border-radius:999px;white-space:nowrap;width:max-content;max-width:100%}
-.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-.p-verificado{color:var(--ok);background:var(--ok-bg)} .p-revisado{color:var(--rev);background:var(--rev-bg)}
-.p-executado,.p-aguarda{color:var(--exe);background:var(--exe-bg)} .p-em_curso{color:var(--next);background:var(--next-bg)}
-.p-pendente{color:var(--wait);background:var(--wait-bg)} .p-bloqueado{color:var(--block);background:var(--block-bg)}
-.imp{font:600 .68rem var(--f-body);padding:1px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
-.imp.alto{border-color:var(--block);color:var(--block)}
-.panel p{margin:0} .kv{font-size:.9rem;display:grid;gap:4px}
-.kv b{font-weight:600}
-.box{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.9rem;display:grid;gap:6px}
-.box ul{margin:0;padding-left:18px}
-.amend{background:var(--exe-bg);border-left:4px solid var(--exe);border-radius:8px;padding:8px 10px;font-size:.88rem}
-.steps{list-style:none;margin:0;padding:0;display:grid}
-.steps li{border-top:1px dashed var(--line)}
-.steps details>summary{list-style:none;display:grid;grid-template-columns:16px 4.6rem minmax(0,1fr);gap:6px;align-items:start;padding:7px 0;cursor:pointer;font-size:.92rem}
-.steps details>summary::-webkit-details-marker{display:none}
-.steps .ic{width:12px;height:12px;border-radius:50%;margin-top:5px;border:2px solid var(--wait)}
-.s-verificado .ic{background:var(--ok);border-color:var(--ok)}
-.s-revisado .ic{background:var(--rev);border-color:var(--rev)}
-.s-executado .ic{background:var(--exe);border-color:var(--exe)}
-.s-em_curso .ic{background:var(--next);border-color:var(--next)}
-.s-bloqueado .ic{background:var(--block);border-color:var(--block)}
-.s-here .ic{box-shadow:0 0 0 3px var(--next-bg);border-color:var(--next)}
-.s-here summary{font-weight:600}
-.steps .n{font:500 .78rem var(--f-mono);color:var(--muted);padding-top:2px}
-.steps .d{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.78rem;color:var(--muted);margin-top:2px}
-.steps .body{padding:2px 0 10px 22px;font-size:.88rem;display:grid;gap:5px}
-.steps .body b{font-weight:600}
-.cmd{font:500 .78rem var(--f-mono);background:var(--wait-bg);border-radius:6px;padding:4px 8px;overflow-x:auto;white-space:nowrap}
+/* === BOTÕES E PILLS LIMPOS === */
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .12s;white-space:nowrap}
+.btn:hover:not(:disabled){border-color:var(--line-strong);background:var(--surface-2)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn-ok:hover:not(:disabled){filter:brightness(1.06);background:var(--ok)}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#041318}
+.btn-accent:hover:not(:disabled){filter:brightness(1.06);background:var(--accent)}
+.btn-soft-ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.btn-soft-ok:hover:not(:disabled){border-color:var(--ok)}
+.btn-soft-warn{background:var(--exe-soft);border-color:transparent;color:var(--exe)}
+.btn-soft-pause{background:var(--pause-soft);border-color:transparent;color:var(--pause)}
+.btn-soft-block{background:var(--block-soft);border-color:transparent;color:var(--block)}
+.btn-soft-accent{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.btn-soft-accent:hover:not(:disabled){border-color:var(--accent)}
+.btn-sm{padding:5px 11px;font-size:12.5px;border-radius:8px}
+.btn-xs{padding:4px 9px;font-size:12px;border-radius:7px}
+.btn-ghost{border-color:transparent;background:transparent;color:var(--muted)}
+.btn-ghost:hover:not(:disabled){color:var(--fg);background:var(--surface-2)}
 
-/* listas inferiores */
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:12px;align-content:start;min-width:0}
-.queue{list-style:none;margin:0;padding:0;display:grid}
-.queue li{display:grid;grid-template-columns:5.2rem minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-top:1px dashed var(--line);font-size:.93rem}
-.tl{list-style:none;margin:0;padding:0 0 0 14px;border-left:2px solid var(--line);display:grid;gap:12px}
-.tl li{position:relative;font-size:.93rem}
-.tl li::before{content:"";position:absolute;left:-21px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--tc,var(--exe));border:2px solid var(--surface)}
-.tl .dt{font:500 .78rem var(--f-mono);color:var(--muted);display:block}
-.todo{list-style:none;counter-reset:t;margin:0;padding:0;display:grid;gap:8px}
-.todo li{counter-increment:t;display:grid;grid-template-columns:2rem minmax(0,1fr) auto;gap:8px;align-items:start;font-size:.93rem;padding:8px 0;border-top:1px dashed var(--line)}
-.todo li::before{content:counter(t);font:600 .85rem var(--f-mono);color:var(--muted);padding-top:1px}
-.todo li.first{font-weight:600} .todo li.first::before{color:var(--next)}
-.who{font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
-.who-voce{color:var(--imid);background:color-mix(in srgb,var(--imid) 14%,transparent)}
-.who-agente{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
-.who-plan{color:var(--muted);background:var(--wait-bg)}
-.lk{background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;cursor:pointer;font:inherit;text-align:left}
-.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;font-size:.9rem}
-.gloss div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-.gloss b{font-family:var(--f-mono);font-weight:500;color:var(--accent)}
-footer{color:var(--muted);font-size:.85rem}
+/* Menu contextual "..." para ações secundárias sem poluição */
+.menu-wrap{position:relative;display:inline-flex}
+.menu-pop{position:absolute;right:0;top:calc(100% + 5px);z-index:55;background:var(--surface);border:1px solid var(--line-strong);border-radius:11px;padding:5px;min-width:190px;box-shadow:var(--shadow-lg);display:grid;gap:2px}
+.menu-item{border:0;background:transparent;border-radius:7px;padding:8px 10px;text-align:left;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;width:100%}
+.menu-item:hover{background:var(--surface-2)}
+.menu-item.danger{color:var(--block)}
+.menu-sep{height:1px;background:var(--line);margin:3px 6px}
 
-@media (max-width:760px){
-  .top,.two{grid-template-columns:minmax(0,1fr)}
-  .cols{grid-template-columns:minmax(0,1fr) !important;min-width:0 !important;gap:16px} .colh{min-height:0} svg.edges{display:none}
-  .todo li{grid-template-columns:1.6rem minmax(0,1fr)} .todo .who{grid-column:2;width:max-content}
-  .queue li{grid-template-columns:4.6rem minmax(0,1fr)} .queue .imp{grid-column:2;width:max-content}
+.st-pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.st-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.st-pill.nob::before{display:none}
+.st-verificado{color:var(--ok);background:var(--ok-soft)}
+.st-revisado{color:var(--rev);background:var(--rev-soft)}
+.st-executado,.st-aguarda{color:var(--exe);background:var(--exe-soft)}
+.st-aguardando_decisao{color:var(--pause);background:var(--pause-soft)}
+.st-em_curso{color:var(--run);background:var(--run-soft)}
+.st-bloqueado,.st-correcao_solicitada{color:var(--block);background:var(--block-soft)}
+.st-pendente,.st-parcial{color:var(--wait);background:var(--wait-soft)}
+.st-marco{color:var(--exe);background:var(--exe-soft)}
+.st-code{color:var(--pause);background:var(--pause-soft)}
+
+/* === LAYOUT PRINCIPAL === */
+.main{width:100%;max-width:1180px;margin:0 auto;padding:24px clamp(16px,3vw,32px) 56px;display:grid;gap:20px}
+.main.full-bleed{max-width:none;padding-inline:clamp(14px,2.2vw,28px)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px;box-shadow:var(--shadow);display:grid;gap:14px;min-width:0}
+.alert-strip{background:var(--block-soft);border:1px solid var(--block);border-radius:10px;padding:10px 14px;font-size:13px}
+.code-tag{display:inline-block;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;font:500 11.5px var(--f-mono);color:var(--muted)}
+
+/* === ABA AGORA (CALMA, HUMANA E RESPIRÁVEL) === */
+.kpi-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.kpi-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:grid;gap:6px;box-shadow:var(--shadow);min-width:0}
+.kpi-lbl{font-size:12px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:6px}
+.kpi-val{font:700 16px var(--f-display)}
+.bar-slim{height:7px;border-radius:999px;background:var(--surface-2);overflow:hidden;display:flex;margin-top:2px}
+.bar-slim i{display:block;height:100%}
+
+.focus-card{background:linear-gradient(135deg,var(--accent-soft),var(--surface) 60%);border:1px solid var(--accent-glow);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);display:grid;gap:12px}
+.focus-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.focus-eyebrow{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.02em}
+.focus-title{font:700 clamp(18px,2.2vw,22px) var(--f-display)}
+.action-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:4px}
+
+.queue-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:visible}
+.queue-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.qrows{display:grid}
+.qrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);transition:background .12s}
+.qrow:last-child{border-bottom:0}
+.qrow:hover{background:var(--surface-2)}
+.qrow-main{min-width:0;display:grid;gap:5px}
+.qrow-title{font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.qrow-sub{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12.5px;color:var(--muted)}
+.qrow-actions{display:flex;gap:6px;align-items:center;flex:none}
+
+.bottom-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.compact-list{display:grid;gap:8px}
+.compact-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);font-size:13px}
+.compact-row.is-block{border-left:3px solid var(--block)}
+
+/* === ABA PROJETO — CANVAS ARCHIFY LIMPO === */
+.canvas-shell{display:grid;gap:12px}
+.canvas-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.canvas-bar-group{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.search-in{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:6px 11px;font-size:13px;width:210px}
+.search-in:focus{border-color:var(--accent);outline:none;background:var(--surface)}
+
+.workspace-split{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+.workspace-split.with-inspector{grid-template-columns:minmax(0,1fr) 370px}
+
+.arch-viewport{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1px solid var(--line);border-radius:16px;overflow:auto;min-height:540px;max-height:76vh;padding:18px}
+.arch-world{position:relative;display:inline-flex;gap:22px;align-items:flex-start;transform-origin:0 0;min-width:max-content;padding:4px 8px 38px 4px}
+svg.arch-svg{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:visible}
+svg.arch-svg path{fill:none;transition:opacity .18s,stroke .18s,stroke-width .18s}
+svg.arch-svg path.e-seq{stroke:var(--edge);stroke-width:1.75}
+svg.arch-svg path.e-block{stroke:var(--block);stroke-width:2.25;stroke-dasharray:6 4}
+svg.arch-svg path.e-hot-up{stroke:var(--accent);stroke-width:2.8;stroke-dasharray:none}
+svg.arch-svg path.e-hot-down{stroke:var(--exe);stroke-width:2.8;stroke-dasharray:none}
+svg.arch-svg path.e-hot-block{stroke:var(--block);stroke-width:3;stroke-dasharray:none}
+svg.arch-svg path.e-dim{opacity:.14}
+
+.lane{position:relative;z-index:2;width:236px;flex:0 0 auto;display:grid;gap:14px}
+.lane-head{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 13px;cursor:pointer;display:grid;gap:4px;box-shadow:var(--shadow);transition:all .15s;text-align:left}
+.lane-head:hover{border-color:var(--accent)}
+.lane-head.is-current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent), 0 6px 20px var(--accent-soft)}
+.lane-head-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:600}
+.lane-title{font:700 14px var(--f-display)}
+
+.mod-node{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:13px;box-shadow:var(--shadow);display:grid;gap:8px;transition:all .14s}
+.mod-node::before{content:"";position:absolute;left:0;top:11px;bottom:11px;width:3.5px;border-radius:0 4px 4px 0;background:var(--node-accent,var(--wait))}
+.mod-node:hover{border-color:var(--line-strong);transform:translateY(-1px)}
+.mod-node.is-final{box-shadow:0 0 0 1.5px var(--accent), var(--shadow)}
+.mod-node.is-dim{opacity:.24}
+.mod-node.is-hot{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
+.mod-node.st-n-verificado{--node-accent:var(--ok)}
+.mod-node.st-n-aguarda{--node-accent:var(--exe)}
+.mod-node.st-n-em_curso{--node-accent:var(--run)}
+.mod-node.st-n-bloqueado{--node-accent:var(--block)}
+.mod-node.st-n-pendente,.mod-node.st-n-parcial{--node-accent:var(--wait)}
+
+.mod-head-btn{background:none;border:0;padding:0;text-align:left;cursor:pointer;display:grid;gap:5px;width:100%}
+.mod-meta{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.mod-title{font:700 13.5px var(--f-display);line-height:1.3}
+
+.stages-wrap{display:grid;gap:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.st-card{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;display:grid;gap:6px;cursor:pointer;transition:all .12s}
+.st-card:hover{border-color:var(--accent)}
+.st-card.is-sel{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 2px var(--accent-soft)}
+.st-card-top{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:nowrap}
+.st-card-top .st-pill{font-size:10.5px;padding:2px 7px;white-space:nowrap}
+.st-card-title{font-size:12.5px;font-weight:600;line-height:1.32}
+
+.mini-ced{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding-top:6px;border-top:1px solid var(--line)}
+.mini-ced-box{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:5px 7px;font-size:10.5px;display:grid;gap:2px}
+.mini-ced-box b{color:var(--accent);font-size:10px}
+
+/* Inspetor flutuante direito no Projeto */
+.inspector{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow-lg);display:grid;gap:14px;max-height:76vh;overflow-y:auto;position:sticky;top:72px;min-width:0}
+.ins-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.ins-sec{display:grid;gap:6px;font-size:13px;min-width:0}
+.ins-sec h4{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.ins-box{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;display:grid;gap:7px;min-width:0;overflow-wrap:anywhere;word-break:break-word}
+
+/* === REVISÃO CONTEXTUAL === */
+.rev-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
+.rev-rail{position:sticky;top:72px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow-lg);display:grid;gap:13px;min-width:0}
+.ev-stage{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:14px;display:grid;gap:10px;overflow-x:auto}
+.ev-img{max-width:100%;max-height:520px;object-fit:contain;border-radius:8px;background:#fff;border:1px solid var(--line);cursor:zoom-in}
+.ev-table-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.ev-table{border-collapse:collapse;width:100%;font-size:12.5px;font-family:var(--f-mono)}
+.ev-table th,.ev-table td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.ev-table th{position:sticky;top:0;background:var(--surface-2);font-weight:700}
+.ev-md{font-size:14px;line-height:1.6;display:grid;gap:8px}
+.ev-md pre{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;margin:0}
+.ev-md ul{margin:0;padding-left:18px}
+
+/* === ABA AGENTE (1 PAINEL POR VEZ, ZERO OVERFLOW, PORTUGUÊS CLARO) === */
+.agent-shell{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;align-items:start}
+.agent-rail{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:14px;box-shadow:var(--shadow);display:grid;gap:10px;max-height:78vh;overflow-y:auto;position:sticky;top:72px;min-width:0}
+.rail-phase{display:grid;gap:4px}
+.rail-phase-lbl{font-size:11px;font-weight:700;color:var(--muted);padding:6px 6px 2px;letter-spacing:.02em}
+.rail-item{border:1px solid transparent;background:transparent;border-radius:9px;padding:8px 10px;text-align:left;cursor:pointer;display:grid;gap:3px;transition:all .12s;width:100%;min-width:0}
+.rail-item:hover{background:var(--surface-2);border-color:var(--line)}
+.rail-item.is-active{background:var(--accent-soft);border-color:var(--accent)}
+.rail-item-title{font-size:13px;font-weight:600;line-height:1.3}
+.agent-main{display:grid;gap:16px;min-width:0}
+.agent-canvas{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1px solid var(--line);border-radius:16px;padding:18px;overflow:hidden}
+.layer-grid{position:relative;display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:24px;z-index:2}
+.layer-node{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:pointer;text-align:left;display:grid;gap:5px;box-shadow:var(--shadow);transition:all .14s;position:relative;min-width:0}
+.layer-node::before{content:"";position:absolute;top:0;left:12px;right:12px;height:3px;border-radius:0 0 3px 3px;background:var(--layer-c,var(--accent))}
+.layer-node:hover{border-color:var(--accent);transform:translateY(-1px)}
+.layer-node.open{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
+.clean-list{margin:0;padding-left:18px;display:grid;gap:6px}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px}
+.file-chip{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:12px;max-width:100%}
+.comp-table{width:100%;border-collapse:collapse;font-size:13px}
+.comp-table th,.comp-table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.comp-table th{background:var(--surface-2);font-size:11.5px;font-weight:700;color:var(--muted)}
+.lineage{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.lin-node{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:12.5px}
+
+/* === MODAIS, TOAST E FORMULÁRIOS === */
+.input,.textarea{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:9px;padding:9px 11px;font-size:13.5px}
+.input:focus,.textarea:focus{border-color:var(--accent);outline:none;background:var(--surface)}
+.textarea{min-height:76px;resize:vertical}
+.modal-bg{position:fixed;inset:0;background:rgba(2,6,23,.58);backdrop-filter:blur(4px);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;display:grid;gap:14px;box-shadow:var(--shadow-lg)}
+.toast{position:fixed;right:20px;bottom:20px;z-index:90;background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:11px 16px;box-shadow:var(--shadow-lg);font-size:13.5px;font-weight:600;max-width:420px}
+.toast.err{border-color:var(--block);color:var(--block)}
+.lightbox{position:fixed;inset:0;background:rgba(2,6,23,.88);z-index:95;display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+.lightbox img{max-width:95vw;max-height:92vh;background:#fff;border-radius:10px}
+
+/* === RESPONSIVO === */
+@media (max-width:1024px){
+  .workspace-split.with-inspector,.rev-grid,.agent-shell{grid-template-columns:minmax(0,1fr)}
+  .inspector,.rev-rail,.agent-rail{position:static;max-height:none}
+  .layer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media (prefers-reduced-motion:reduce){.node,.panel,body{transition:none}}
+@media (max-width:760px){
+  .kpi-strip,.bottom-two,.layer-grid{grid-template-columns:minmax(0,1fr)}
+  .qrow{grid-template-columns:minmax(0,1fr);gap:8px}
+  .arch-world{flex-direction:column;gap:20px;min-width:0;width:100%;padding:4px}
+  .lane{width:100%}
+  .proj-title{max-width:180px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
 </head>
 <body>
-<div class="wrap" id="app"></div>
+<div class="shell" id="app"></div>
 <script>
-const D = /*__DADOS__*/null;
+let D = /*__DADOS__*/null;
 (function(){
+  if (!D || !D.estado) {
+    document.getElementById('app').innerHTML = '<div class="main"><div class="alert-strip">Nenhum dado carregado. Abra com <code>python specboard.py serve --open</code>.</div></div>';
+    return;
+  }
+
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const E = D.estado, P = E.projeto || {}, R = D.resumo || {}, mods = E.modulos || [];
-  const byId = Object.fromEntries(mods.map(m => [m.id, m]));
-  const SB = P.comando_humano || 'python specboard.py';
-  // rótulos de etapa (nível vindo do agente ou do humano)
-  const RE = {verificado:'verificado por você', revisado:'revisado por você', executado:'executado · aguarda você',
-              em_curso:'em curso', bloqueado:'bloqueado', pendente:'por fazer'};
-  // rótulos de módulo
-  const RM = {verificado:'verificado', aguarda:'feito · aguarda você', em_curso:'em curso', pendente:'não começou', bloqueado:'bloqueado'};
-  const FEITO = s => s === 'executado' || s === 'revisado' || s === 'verificado';
+  const baseName = p => String(p || '').split(/[\\/]/).pop() || String(p || '');
+  const POL_LABEL = {acompanhamento_livre:'Livre (sem travas)', so_marcos:'Só nos marcos', por_etapa:'Etapa por etapa'};
+  const ST_LABEL = {
+    verificado:'Aprovado', revisado:'Lido', executado:'Aguarda sua decisão',
+    aguardando_decisao:'Em espera', em_curso:'Em andamento',
+    bloqueado:'Pausado', correcao_solicitada:'Ajuste solicitado',
+    pendente:'Próximo', aguarda:'Aguarda decisão', parcial:'Em andamento'
+  };
+  const ATIV_LABEL = {
+    executando:'Trabalhando agora', aguardando_humano:'Aguardando você',
+    aguardando_correcao:'Aguardando retomada', ocioso:'Parado', sem_dados:'Sem atividade informada'
+  };
+  const TIPO_COMP = {skill:'Guia (Skill)', local_tool:'Script local', mcp_tool:'Integração (MCP)'};
 
-  function stMod(m){
-    const ss = (m.etapas||[]).map(e => e._status);
-    if (m.bloqueio || ss.includes('bloqueado')) return 'bloqueado';
-    if (ss.length && ss.every(s => s === 'verificado')) return 'verificado';
-    if (ss.length && ss.every(FEITO)) return 'aguarda';
-    if (ss.some(s => s !== 'pendente')) return 'em_curso';
-    return 'pendente';
+  const UI = {
+    tab: 'agora',
+    showQuestion: false,
+    queueFilter: 'pendentes',
+    showAllBlockers: false,
+    openMenuId: null, // controla qual menu "⋯" está aberto
+    projetoModo: 'fluxo',
+    projetoFiltro: 'todos',
+    projetoSearch: '',
+    zoom: 1,
+    expandedPhases: new Set(),
+    expandedModules: new Set(),
+    selectedStageId: null,
+    selectedModId: null,
+    hoverModId: null,
+    returnAfterReview: null,
+    reviewStageId: null,
+    reviewEvIndex: 0,
+    reviewEvidenceCache: {},
+    reviewConflictMsg: '',
+    reviewBusy: false,
+    agentStageId: null,
+    agentReturnStageId: null,
+    agentSearch: '',
+    agentActiveLayer: 'contexto', // 1 painel focado por vez (zero sobrecarga!)
+    agentContextBundle: null,
+    showPolicyModal: false,
+    policyBusy: false,
+    policyError: '',
+    actionModal: null,
+    actionBusy: false,
+    actionError: '',
+    reviewerModal: false,
+    toast: null,
+    lightboxSrc: ''
+  };
+
+  let toastTimer = null;
+  function showToast(text, isErr){
+    UI.toast = {text, err: !!isErr};
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { UI.toast = null; renderToastOnly(); }, 4200);
+    renderToastOnly();
   }
-  // ordem topológica, priorizando o caminho até o(s) resultado(s) final(is)
-  const ordem = (() => { const vis = new Set(), out = [];
-    const go = id => { if (vis.has(id) || !byId[id]) return; vis.add(id); (byId[id].depende_de||[]).forEach(go); out.push(byId[id]); };
-    mods.filter(m => m.resultado_final).forEach(m => go(m.id)); mods.forEach(m => go(m.id)); return out; })();
-  const naRota = new Set(); (function(){ const go = id => { if (naRota.has(id) || !byId[id]) return; naRota.add(id); (byId[id].depende_de||[]).forEach(go); };
-    mods.filter(m => m.resultado_final).forEach(m => go(m.id)); })();
-
-  // "você está aqui": override explícito, senão etapa em curso, senão próxima por fazer num módulo aberto
-  const todas = ordem.flatMap(m => (m.etapas||[]).map(e => ({m, e})));
-  const aberto = m => (m.etapas||[]).some(e => e._status !== 'pendente');
-  const here = todas.find(x => x.e.id === P.voce_esta_aqui)
-    || todas.find(x => x.e._status === 'em_curso')
-    || todas.find(x => x.e._status === 'pendente' && aberto(x.m) && naRota.has(x.m.id))
-    || todas.find(x => x.e._status === 'pendente' && aberto(x.m))
-    || todas.find(x => x.e._status === 'pendente');
-  const fila = D.fila || [];
-  const LIM = P.limite_fila ?? 5;
-
-  let h = '';
-  // cabeçalho
-  h += `<header style="display:grid;gap:8px">
-    <div class="eyebrow">${esc(P.nome)}${P.subtitulo?' · '+esc(P.subtitulo):''} · gerado em ${esc(D.gerado_em)} ·
-      <a href="#live" id="lv">${location.hash==='#live'?'ao vivo (recarrega a cada 10 s)':'ativar ao vivo'}</a></div>
-    <h1>${esc(P.titulo || 'Mapa do projeto')}</h1>
-    <p class="q"><b>Pergunta central:</b> ${esc(P.pergunta_central)}</p></header>`;
-  if ((D.erros||[]).length || (D.avisos||[]).length)
-    h += `<div class="err"><b>${D.erros.length} erro(s) e ${D.avisos.length} aviso(s) no estado do projeto</b><ul>
-      ${D.erros.map(x=>`<li>⛔ ${esc(x)}</li>`).join('')}${D.avisos.map(x=>`<li>⚠ ${esc(x)}</li>`).join('')}</ul></div>`;
-
-  // você está aqui + progresso
-  const c = R.contagem || {}, tot = R.total || 0, w = n => tot ? 100*(n||0)/tot : 0;
-  const nEst = Math.max(0, tot - mods.reduce((a,m)=>a+(m.etapas||[]).length,0));
-  h += `<section class="top" aria-label="Situação atual"><div class="here"><span class="lab">Você está aqui</span>`;
-  if (here) {
-    h += `<span class="big">${esc(here.e.id)} · ${esc(here.e.titulo)}</span>
-      <p>${esc(here.e.descricao || here.m.objetivo || '')}</p>
-      <p style="font-size:.95rem">Módulo <button class="lk" type="button" data-sel="${esc(here.m.id)}">${esc(here.m.id)} · ${esc(here.m.titulo)}</button>
-      ${here.e.quem?` · próxima ação: ${esc(here.e.quem)}`:''}</p>`;
-  } else h += `<span class="big">Nenhuma etapa por fazer</span>`;
-  if (fila.length) h += `<p class="gate"><b>${fila.length} etapa(s) aguardam a sua verificação.</b> ${fila.length > LIM
-      ? `Acima de ${LIM}, o agente não abre etapas novas de impacto alto: produzir mais do que você consegue conferir só acumula.`
-      : 'Elas estão listadas abaixo, em ordem de impacto.'}</p>`;
-  h += `</div><div class="prog">
-      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h2 style="font-size:1.1rem">Progresso verificado</h2>
-      <b style="font-size:1.15rem">${tot?Math.round(100*(R.verificadas||0)/tot):0} %</b></div>
-      <div class="bar" aria-hidden="true"><i class="b-ok" style="width:${w(c.verificado)}%"></i><i class="b-rev" style="width:${w(c.revisado)}%"></i>
-        <i class="b-exe" style="width:${w(c.executado)}%"></i><i class="b-run" style="width:${w(c.em_curso)}%"></i><i class="b-block" style="width:${w(c.bloqueado)}%"></i></div>
-      <div class="kpis">
-        <span><span class="dot c-verificado"></span><b>${c.verificado||0}</b> verificadas por você</span>
-        <span><span class="dot c-aguarda"></span><b>${(c.executado||0)+(c.revisado||0)}</b> feitas pelo agente, aguardando você</span>
-        <span><span class="dot c-pendente"></span><b>${(c.pendente||0)+(c.em_curso||0)+nEst}</b> por fazer</span>
-        ${c.bloqueado?`<span><span class="dot c-bloqueado"></span><b>${c.bloqueado}</b> bloqueadas</span>`:''}</div>
-      <p class="muted" style="margin:0;font-size:.88rem">Total de ${tot} etapas${nEst?`, das quais ${nEst} são estimativas de módulos ainda sem contrato`:''}.
-        Só conta como progresso o que <b>você</b> verificou; executado pelo agente ainda não é progresso.</p></div></section>`;
-
-  // mapa
-  h += `<section style="display:grid;gap:12px" aria-label="Mapa dos módulos">
-    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:end">
-      <h2>Mapa: clique num módulo para ver o detalhe</h2><div class="filters" role="group" aria-label="Filtrar por status" id="filters"></div></div>
-    <div class="mapbox"><div class="map" id="map"><svg class="edges" id="edges" aria-hidden="true"></svg><div class="cols" id="cols"></div></div>
-      <aside class="panel" id="panel" aria-live="polite"></aside></div>
-    <p class="hint muted">Seta A → B: B usa o resultado de A. Borda dupla: módulo que responde a pergunta central. Linhas em destaque: dependências do módulo selecionado. 🔒 contrato travado · ✎ emendas.</p></section>`;
-
-  // fila
-  h += `<section class="card"><h2>Aguardando a sua verificação <span class="muted" style="font-size:1rem">(${fila.length}, por impacto na resposta)</span></h2>`;
-  h += fila.length ? `<ol class="queue">${fila.map(f => `<li><button class="lk" type="button" data-step="${esc(f.id)}"><code>${esc(f.id)}</code></button>
-      <span>${esc(f.titulo)}${f.exp?' · <b style="color:var(--block)">verificação expirada: a etapa mudou depois</b>':''}
-        <span class="muted" style="font-size:.82rem"> · ${esc(RE[f.status]||f.status)}${f.revisao==='amostragem'?' · revisão por amostragem':''}</span></span>
-      <span class="imp ${esc(f.impacto)}">impacto ${esc(f.impacto)}</span></li>`).join('')}</ol>
-      <p class="muted" style="margin:0;font-size:.88rem">No seu terminal: <code>${esc(SB)} verify &lt;ETAPA&gt;</code> (ou <code>review</code>, se só leu o resumo).</p>`
-    : `<p class="muted" style="margin:0">Nada aguardando você.</p>`;
-  h += `</section>`;
-
-  // feito / falta
-  h += `<section class="two"><div class="card"><h2>O que já foi feito</h2><ol class="tl" id="done"></ol></div>
-    <div class="card"><h2>O que falta, em ordem</h2><ol class="todo" id="todo"></ol></div></section>`;
-
-  // como ler
-  const gl = (P.glossario||[]).map(([t,d]) => `<div><b>${esc(t)}</b> ${esc(d)}</div>`).join('');
-  h += `<section style="display:grid;gap:10px"><h2>Como ler este painel</h2><div class="gloss">
-    <div><b>executado</b> o agente terminou e diz o que estabeleceu; ainda não vale como progresso.</div>
-    <div><b>revisado</b> você leu a afirmação e o resumo.</div>
-    <div><b>verificado</b> você conferiu a evidência. Se a etapa mudar depois, a verificação expira.</div>
-    <div><b>impacto alto</b> se esta etapa estiver errada, a resposta à pergunta central muda.</div>
-    <div><b>🔒 contrato</b> critérios de aceitação e abandono travados antes de ver resultados; mudar exige emenda visível.</div>
-    ${gl}</div></section>`;
-  h += `<footer>${P.fontes?'Fonte: '+esc(P.fontes)+' · ':''}gerado por specboard a partir de <code>.specboard/estado.json</code> em ${esc(D.gerado_em)}.</footer>`;
-  document.getElementById('app').innerHTML = h;
-
-  // colunas e nós
-  const fases = (E.fases && E.fases.length) ? E.fases : [...new Set(mods.map(m => m.fase || '—'))];
-  const cols = document.getElementById('cols');
-  cols.style.gridTemplateColumns = `repeat(${fases.length}, minmax(136px, 1fr))`;
-  cols.style.minWidth = (fases.length * 152) + 'px';
-  fases.forEach(f => {
-    const col = document.createElement('div'); col.className = 'col';
-    col.innerHTML = `<div class="colh">${esc(f)}</div>`;
-    mods.filter(m => (m.fase || '—') === f).forEach(m => {
-      const s = stMod(m), et = m.etapas || [], n = et.length;
-      const cnt = k => et.filter(e => e._status === k).length;
-      const ct = m.contrato || {};
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = `node st-${s}${m.resultado_final?' final':''}`; b.id = 'n-'+m.id; b.dataset.st = s;
-      b.setAttribute('aria-pressed','false');
-      const ns = n ? `${cnt('verificado')}/${n} verificadas${(cnt('executado')+cnt('revisado'))?` · ${cnt('executado')+cnt('revisado')} aguardam você`:''}`
-                   : (m.bloqueio ? 'bloqueado' : (m.etapas_estimadas ? `~${m.etapas_estimadas} etapas (estimativa)` : RM[s]));
-      b.innerHTML = (here && here.m.id === m.id ? '<span class="you">você está aqui</span>' : '') +
-        `<span class="nc">${esc(m.id)}${ct.hash?' · 🔒':''}${(m.emendas||[]).length?' · ✎'+m.emendas.length:''}</span><span class="nt">${esc(m.titulo)}</span>` +
-        (n ? `<span class="mini" aria-hidden="true"><i class="b-ok" style="width:${100*cnt('verificado')/n}%"></i><i class="b-rev" style="width:${100*cnt('revisado')/n}%"></i><i class="b-exe" style="width:${100*cnt('executado')/n}%"></i><i class="b-run" style="width:${100*cnt('em_curso')/n}%"></i></span>` : '') +
-        `<span class="ns">${esc(ns)}</span>`;
-      b.addEventListener('click', () => select(m.id));
-      col.appendChild(b);
-    });
-    cols.appendChild(col);
-  });
-
-  // setas
-  const svg = document.getElementById('edges'), map = document.getElementById('map');
-  const EDGES = []; mods.forEach(m => (m.depende_de||[]).forEach(d => byId[d] && EDGES.push([d, m.id])));
-  let cur = null;
-  function draw(){
-    const r0 = map.getBoundingClientRect();
-    svg.setAttribute('width', map.scrollWidth); svg.setAttribute('height', map.scrollHeight);
-    let s = `<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--edge);stroke:none"/></marker>`+
-            `<marker id="ahh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent);stroke:none"/></marker></defs>`;
-    EDGES.forEach(([a, b]) => {
-      const A = document.getElementById('n-'+a).getBoundingClientRect(), B = document.getElementById('n-'+b).getBoundingClientRect();
-      const hot = cur && (a === cur || b === cur);
-      let x1, y1, x2, y2, d;
-      if (B.left >= A.right - 4) {            // colunas diferentes: da direita de A para a esquerda de B
-        x1 = A.right - r0.left + map.scrollLeft; y1 = A.top + A.height/2 - r0.top + map.scrollTop;
-        x2 = B.left - r0.left + map.scrollLeft - 2; y2 = B.top + B.height/2 - r0.top + map.scrollTop;
-        const mx = (x1 + x2)/2; d = `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
-      } else {                                // mesma coluna: arco pela direita
-        x1 = A.right - r0.left + map.scrollLeft; y1 = A.top + A.height/2 - r0.top + map.scrollTop;
-        x2 = B.right - r0.left + map.scrollLeft + 2; y2 = B.top + B.height/2 - r0.top + map.scrollTop;
-        const bx = Math.max(x1, x2) + 18; d = `M${x1},${y1} C${bx},${y1} ${bx},${y2} ${x2},${y2}`;
-      }
-      s += `<path class="${hot?'hot':''}" marker-end="url(#${hot?'ahh':'ah'})" d="${d}"/>`;
-    });
-    svg.innerHTML = s;
+  function renderToastOnly(){
+    const old = document.getElementById('sb-toast');
+    if (old) old.remove();
+    if (!UI.toast) return;
+    const div = document.createElement('div');
+    div.id = 'sb-toast';
+    div.className = 'toast' + (UI.toast.err ? ' err' : '');
+    div.textContent = UI.toast.text;
+    document.body.appendChild(div);
   }
 
-  // painel de detalhe
-  const panel = document.getElementById('panel');
-  const largo = () => matchMedia('(min-width:1100px)').matches;
-  const redraw = () => { draw(); setTimeout(draw, 260); };
-  function openDrawer(){ panel.classList.add('open'); document.body.classList.add('drawer-open'); redraw(); }
-  function closeDrawer(){ panel.classList.remove('open'); document.body.classList.remove('drawer-open'); cur = null;
-    document.querySelectorAll('.node').forEach(n => n.setAttribute('aria-pressed','false')); redraw(); }
-  document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && panel.classList.contains('open')) closeDrawer(); });
-  function stepHTML(m, e){
-    const isHere = here && here.e.id === e.id;
-    const regs = (e._regs||[]).map(r => `<div class="muted">↳ ${esc(r.nivel)} por ${esc(r.revisor)} em ${esc(r.data)}${r.nota?': '+esc(r.nota):''}</div>`).join('');
-    const body = [
-      e.descricao && !e.afirmacao ? `<div>${esc(e.descricao)}</div>` : '',
-      e.afirmacao ? `<div><b>Afirma:</b> ${esc(e.afirmacao)}</div>` : '',
-      e.verificacao ? `<div><b>Como você confere:</b> ${esc(e.verificacao)}</div>` : '',
-      (e.evidencia||[]).length ? `<div><b>Evidência:</b> ${e.evidencia.map(esc).join(', ')}</div>` : '',
-      e.bloqueio ? `<div style="color:var(--block)"><b>Bloqueio:</b> ${esc(e.bloqueio)}</div>` : '',
-      e._exp ? `<div style="color:var(--block)"><b>Verificação expirada:</b> a etapa mudou depois que você a conferiu.</div>` : '',
-      regs,
-      (e._status === 'executado' || e._status === 'revisado') ? `<div class="cmd">${esc(SB)} verify ${esc(e.id)}</div>` : ''
-    ].join('');
-    return `<li class="s-${esc(e._status)}${isHere?' s-here':''}" id="st-${esc(e.id)}"><details${isHere?' open':''}><summary>
-      <span class="ic" aria-hidden="true"></span><span class="n">${esc(e.id)}</span>
-      <span>${esc(e.titulo)}<span class="d">${isHere?'<b style="color:var(--next)">você está aqui</b> · ':''}${esc(RE[e._status]||e._status)}${e.data?' · '+esc(e.data):''}
-        <span class="imp ${esc(e.impacto)}">${esc(e.impacto)}</span></span></span></summary>
-      ${body?`<div class="body">${body}</div>`:''}</details></li>`;
-  }
-  function select(id, step){
-    cur = id; const m = byId[id]; if (!m) return;
-    document.querySelectorAll('.node').forEach(n => n.setAttribute('aria-pressed', n.id === 'n-'+id ? 'true' : 'false'));
-    const s = stMod(m), ct = m.contrato || {};
-    const deps = (m.depende_de||[]).join(', ') || 'nenhuma (é a base)';
-    const libera = mods.filter(x => (x.depende_de||[]).includes(id)).map(x => x.id).join(', ') || 'nenhum (fim da cadeia)';
-    let p = `<button class="x" type="button" aria-label="Fechar detalhe" title="Fechar (Esc)">×</button><div class="pa"><div class="eyebrow">${esc(m.id)}${m.resultado_final?' · responde a pergunta central':''}</div><h3>${esc(m.titulo)}</h3>
-      <span class="pill p-${s}">${esc(RM[s])}${m.quando?' · '+esc(m.quando):''}</span>
-      <p>${esc(m.objetivo)}</p>
-      ${m.bloqueio?`<p style="color:var(--block)"><b>Bloqueio:</b> ${esc(m.bloqueio)}</p>`:''}
-      <div class="kv">${m.responde?`<div><b>Responde:</b> ${esc(m.responde)}</div>`:''}<div><b>Depende de:</b> ${esc(deps)}</div><div><b>Libera:</b> ${esc(libera)}</div>
-      ${m.registro?`<div><b>Registro:</b> ${esc(m.registro)}</div>`:''}</div>`;
-    if (!m._contrato_ok) p += `<div class="amend" style="border-color:var(--block)">⛔ O contrato travado foi alterado sem emenda.</div>`;
-    if (ct.pergunta || (ct.criterios_aceitacao||[]).length || ct.criterio_abandono) {
-      p += `<details class="box"><summary><b>Contrato</b> ${ct.hash?`🔒 travado em ${esc(ct.travado_em)}`:'<span class="muted">(ainda não travado)</span>'}</summary>
-        ${ct.pergunta?`<div><b>Pergunta:</b> ${esc(ct.pergunta)}</div>`:''}
-        ${(ct.criterios_aceitacao||[]).length?`<div><b>Aceita se:</b><ul>${ct.criterios_aceitacao.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
-        <div><b>Abandona ou revê o plano se:</b> ${ct.criterio_abandono?esc(ct.criterio_abandono):'<span style="color:var(--block)">não definido</span>'}</div></details>`;
+  function projectKey(k){ return 'specboard.v2.' + ((D.estado.projeto && D.estado.projeto.nome) || 'p') + '.' + k; }
+  function getReviewer(){ try { return localStorage.getItem(projectKey('revisor')) || ''; } catch(e) { return ''; } }
+  function setReviewer(v){ try { localStorage.setItem(projectKey('revisor'), (v || '').trim()); } catch(e) {} }
+  function canWrite(){ return !!(D.modo_servidor && !(D.servidor && D.servidor.readonly)); }
+
+  function findStage(sid){
+    for (const m of (D.estado.modulos || [])) {
+      for (const e of (m.etapas || [])) if (e.id === sid) return {m, e};
     }
-    (m.emendas||[]).forEach(a => p += `<div class="amend">✎ <b>Emenda de ${esc(a.data)}:</b> ${esc(a.justificativa)}</div>`);
-    const et = m.etapas || [];
-    p += `</div><div class="pb"><h3 style="font-size:1rem">Etapas${et.length?` <span class="muted" style="font-weight:400">· clique para abrir</span>`:''}</h3>`;
-    p += et.length ? `<ul class="steps">${et.map(e => stepHTML(m, e)).join('')}</ul>`
-      : `<p class="muted" style="font-size:.9rem">As etapas deste módulo são definidas no contrato, quando ele for aberto.${m.etapas_estimadas?` Estimativa: ~${m.etapas_estimadas} etapas.`:''}</p>`;
-    panel.innerHTML = p + '</div>';
-    panel.querySelector('.x').addEventListener('click', closeDrawer);
-    openDrawer();
-    panel.scrollTop = 0;
-    draw();
-    try { localStorage.setItem('specboard.sel.' + (P.nome||''), id); } catch(e) {}
-    if (step) { const li = document.getElementById('st-'+step); if (li) { li.querySelector('details').open = true; li.scrollIntoView({behavior:'smooth', block:'nearest'}); } }
+    return null;
+  }
+  function findMod(mid){ return (D.estado.modulos || []).find(m => m.id === mid) || null; }
+  function allStages(){
+    const out = [];
+    for (const m of (D.estado.modulos || [])) for (const e of (m.etapas || [])) out.push({m, e});
+    return out;
+  }
+  function fasesList(){
+    const mods = D.estado.modulos || [];
+    return (D.estado.fases && D.estado.fases.length) ? D.estado.fases : [...new Set(mods.map(m => m.fase || '—'))];
+  }
+  function formatUnlocks(list){
+    if (!list || !list.length) return '';
+    const mods = list.filter(x => x.tipo === 'modulo').map(x => x.titulo || x.id);
+    const arr = mods.length ? mods : list.map(x => x.titulo || x.id);
+    return arr.slice(0, 2).join(', ') + (arr.length > 2 ? ` (+${arr.length - 2})` : '');
   }
 
-  // filtros
-  const F = document.getElementById('filters');
-  [['todos','Todos'],['verificado','Verificado'],['aguarda','Aguarda você'],['em_curso','Em curso'],['pendente','Não começou'],['bloqueado','Bloqueado']].forEach(([k, l], i) => {
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.setAttribute('aria-pressed', i ? 'false' : 'true');
-    b.innerHTML = (i ? `<span class="dot c-${k}"></span>` : '') + l;
-    b.addEventListener('click', () => {
-      F.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true');
-      document.querySelectorAll('.node').forEach(n => n.classList.toggle('dim', k !== 'todos' && n.dataset.st !== k));
+  (function init(){
+    const sit = D.situacao_atual || {};
+    fasesList().forEach(f => UI.expandedPhases.add(f));
+    if (sit.modulo_atual_id) UI.expandedModules.add(sit.modulo_atual_id);
+    const stages = allStages();
+    const emCurso = stages.find(s => s.e._status === 'em_curso' && s.e._agente && s.e._agente.possui_definicao);
+    const primeiraComArq = stages.find(s => s.e._agente && s.e._agente.possui_definicao);
+    UI.agentStageId = (emCurso && emCurso.e.id) || (primeiraComArq && primeiraComArq.e.id) || sit.etapa_foco_id || (stages[0] && stages[0].e.id) || null;
+  })();
+
+  function getEffectiveMudancas(){
+    if (D.modo_servidor && D.mudancas) return D.mudancas;
+    try {
+      const raw = localStorage.getItem(projectKey('visita'));
+      if (!raw) return {referencia_confiavel:false, referencia_em:'', novos:[]};
+      const v = JSON.parse(raw);
+      if (!v || !Array.isArray(v.event_ids)) return {referencia_confiavel:false, referencia_em:'', novos:[]};
+      const seen = new Set(v.event_ids);
+      return {referencia_confiavel:true, referencia_em:v.registrada_em || '', novos:(D.eventos || []).filter(e => !seen.has(e.id))};
+    } catch(e) { return {referencia_confiavel:false, referencia_em:'', novos:[]}; }
+  }
+
+  async function apiPost(url, body){
+    const token = (D.servidor && D.servidor.token) || '';
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'X-Specboard-Token': token},
+      body: JSON.stringify(body)
     });
-    F.appendChild(b);
+    const data = await res.json().catch(() => ({}));
+    return {status: res.status, data};
+  }
+
+  const ACAO_META = {
+    verificado:       {lbl:'Aprovar entrega',     okMsg:'aprovada e salva',            exigeNota:false},
+    revisado:         {lbl:'Marcar como lido',    okMsg:'marcada como lida',           exigeNota:false},
+    aguardar_decisao: {lbl:'Deixar em espera',    okMsg:'colocada em espera',          exigeNota:false},
+    pedir_correcao:   {lbl:'Pedir ajuste',        okMsg:'devolvida para ajuste',       exigeNota:true},
+    bloquear:         {lbl:'Pausar / bloquear',   okMsg:'pausada manualmente',         exigeNota:true},
+    desbloquear:      {lbl:'Retomar etapa',       okMsg:'retomada para o fluxo',       exigeNota:false}
+  };
+
+  async function triggerAction(etapaId, acao, notaDireta){
+    UI.openMenuId = null;
+    if (!canWrite()) {
+      showToast('Você abriu a cópia offline. Para salvar decisões, use o painel aberto pelo servidor local.', true);
+      return;
+    }
+    const meta = ACAO_META[acao];
+    if (!meta) return;
+    const rev = getReviewer();
+    const pair = findStage(etapaId);
+    if (!pair) return;
+
+    if ((meta.exigeNota && notaDireta === undefined) || !rev) {
+      UI.actionModal = {etapaId, acao, titulo: pair.e.titulo, exigeNota: meta.exigeNota, precisaRevisor: !rev, notaInicial: notaDireta || ''};
+      UI.actionError = '';
+      render();
+      setTimeout(() => {
+        const inp = document.getElementById(!rev ? 'act-revisor' : 'act-nota');
+        if (inp) inp.focus();
+      }, 20);
+      return;
+    }
+    await executeAction(etapaId, acao, rev, notaDireta || '');
+  }
+
+  async function executeAction(etapaId, acao, revisor, nota){
+    const pair = findStage(etapaId);
+    if (!pair) return;
+    const fp = pair.e._snapshot && pair.e._snapshot.fingerprint_total;
+    UI.actionBusy = true; UI.reviewBusy = true; UI.actionError = ''; UI.reviewConflictMsg = '';
+    render();
+    const {status, data} = await apiPost('/api/decisao', {
+      etapa_id: etapaId, acao, revisor, nota, observed_fingerprint: fp
+    });
+    UI.actionBusy = false; UI.reviewBusy = false;
+    if (status === 200 && data.payload) {
+      D = data.payload;
+      UI.actionModal = null;
+      render();
+      showToast(`✓ ${pair.e.titulo.slice(0, 42)} — ${ACAO_META[acao].okMsg}.`);
+    } else if (status === 409 && data.payload) {
+      D = data.payload;
+      UI.actionModal = null;
+      UI.reviewEvidenceCache = {};
+      UI.reviewConflictMsg = data.erro || 'Um arquivo desta entrega mudou enquanto você revisava.';
+      if (!UI.reviewStageId) openReview(etapaId, null); else render();
+      showToast('Os arquivos mudaram no disco — confira novamente antes de aprovar.', true);
+    } else {
+      const msg = data.erro || 'Não foi possível salvar a decisão.';
+      UI.actionError = msg;
+      render();
+      showToast(msg, true);
+    }
+  }
+
+  async function lockContractNow(modId){
+    if (!canWrite()) { showToast('Abra pelo servidor local para travar critérios.', true); return; }
+    const {status, data} = await apiPost('/api/contrato/lock', {modulo_id: modId});
+    if (status === 200 && data.payload) { D = data.payload; render(); showToast(`🔒 Critérios de ${modId} travados.`); }
+    else showToast(data.erro || 'Erro ao travar critérios.', true);
+  }
+
+  // Botões limpos e legíveis: Revisar + Aprovar + menu "⋯" com ações secundárias
+  function renderRowActions(e, menuKey, qidx){
+    const s = e._status;
+    const w = canWrite();
+    const canApprove = w && s !== 'verificado' && ['executado','revisado','aguardando_decisao','correcao_solicitada'].includes(s);
+    const isPaused = ['bloqueado','aguardando_decisao','correcao_solicitada'].includes(s);
+    const isOpen = UI.openMenuId === menuKey;
+
+    const menuItems = [];
+    if (w && (s === 'executado' || s === 'revisado')) {
+      menuItems.push(`<button type="button" class="menu-item" data-act="aguardar_decisao" data-sid="${esc(e.id)}">⏸ Deixar em espera</button>`);
+      menuItems.push(`<button type="button" class="menu-item" data-act="pedir_correcao" data-sid="${esc(e.id)}">↺ Pedir ajuste</button>`);
+      menuItems.push(`<button type="button" class="menu-item" data-act="revisado" data-sid="${esc(e.id)}">📖 Marcar só como lido</button>`);
+    }
+    if (w && isPaused) {
+      menuItems.push(`<button type="button" class="menu-item" data-act="desbloquear" data-sid="${esc(e.id)}">▶ Retomar etapa</button>`);
+    }
+    if (w && s !== 'bloqueado') {
+      menuItems.push(`<button type="button" class="menu-item danger" data-act="bloquear" data-sid="${esc(e.id)}">⛔ Pausar / bloquear</button>`);
+    }
+    if (menuItems.length) menuItems.push('<div class="menu-sep"></div>');
+    menuItems.push(`<button type="button" class="menu-item" data-goto-agent="${esc(e.id)}">⚙ Ver detalhes do agente</button>`);
+
+    return `<button type="button" class="btn btn-sm" data-open-review="${esc(e.id)}"${qidx !== undefined ? ` data-qidx-btn="${qidx}"` : ''}>Revisar</button>
+      ${canApprove ? `<button type="button" class="btn btn-soft-ok btn-sm" data-act="verificado" data-sid="${esc(e.id)}">✓ Aprovar</button>` : ''}
+      ${w && isPaused ? `<button type="button" class="btn btn-soft-accent btn-sm" data-act="desbloquear" data-sid="${esc(e.id)}">▶ Retomar</button>` : ''}
+      <div class="menu-wrap">
+        <button type="button" class="btn btn-ghost btn-sm" data-toggle-menu="${esc(menuKey)}" aria-expanded="${isOpen ? 'true' : 'false'}" title="Mais ações">⋯</button>
+        ${isOpen ? `<div class="menu-pop">${menuItems.join('')}</div>` : ''}
+      </div>`;
+  }
+
+  async function loadEvidencePreview(ref, midia){
+    if (!D.modo_servidor || !ref || midia === 'imagem') return;
+    if (UI.reviewEvidenceCache[ref]) return;
+    UI.reviewEvidenceCache[ref] = {loading: true};
+    render();
+    try {
+      const res = await fetch('/api/evidencia?ref=' + encodeURIComponent(ref));
+      const data = await res.json();
+      UI.reviewEvidenceCache[ref] = res.ok ? data : {erro: data.erro || 'Erro ao carregar'};
+    } catch(err) { UI.reviewEvidenceCache[ref] = {erro: String(err)}; }
+    render();
+  }
+
+  function openReview(etapaId, qIdx){
+    UI.openMenuId = null;
+    const pair = findStage(etapaId);
+    if (!pair) return;
+    UI.returnAfterReview = {tab: UI.tab, scrollY: window.scrollY, qIdx: typeof qIdx === 'number' ? qIdx : null, stageId: UI.selectedStageId};
+    UI.reviewStageId = etapaId;
+    UI.reviewEvIndex = 0;
+    UI.reviewEvidenceCache = {};
+    render();
+    window.scrollTo({top: 0, behavior: 'instant'});
+    const evs = (pair.e._snapshot && pair.e._snapshot.evidencias) || [];
+    if (evs[0] && evs[0].estado === 'ok') loadEvidencePreview(evs[0].ref, evs[0].midia);
+  }
+  function closeReview(){
+    const ret = UI.returnAfterReview;
+    UI.reviewStageId = null; UI.reviewConflictMsg = '';
+    if (ret) { UI.tab = ret.tab; UI.selectedStageId = ret.stageId; }
+    render();
+    if (ret) setTimeout(() => window.scrollTo({top: ret.scrollY || 0, behavior: 'instant'}), 15);
+  }
+  function jumpToAgent(etapaId){
+    UI.openMenuId = null;
+    UI.agentReturnStageId = etapaId;
+    UI.agentStageId = etapaId;
+    UI.agentContextBundle = null;
+    UI.reviewStageId = null;
+    UI.tab = 'agente';
+    render();
+    window.scrollTo({top: 0, behavior: 'instant'});
+  }
+  function returnFromAgent(){
+    const sid = UI.agentReturnStageId || UI.agentStageId;
+    const pair = sid ? findStage(sid) : null;
+    UI.tab = 'projeto';
+    if (pair) {
+      UI.expandedPhases.add(pair.m.fase || '—');
+      UI.expandedModules.add(pair.m.id);
+      UI.selectedModId = pair.m.id;
+      UI.selectedStageId = pair.e.id;
+    }
+    render();
+  }
+
+  function renderMarkdownSafe(md){
+    const lines = String(md || '').split(/\r?\n/);
+    let html = '', inCode = false, inList = false;
+    const inl = s => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+    for (const raw of lines) {
+      if (raw.trim().startsWith('```')) {
+        if (inList) { html += '</ul>'; inList = false; }
+        html += inCode ? '</code></pre>' : '<pre><code>';
+        inCode = !inCode; continue;
+      }
+      if (inCode) { html += esc(raw) + '\n'; continue; }
+      const t = raw.trim();
+      if (!t) { if (inList) { html += '</ul>'; inList = false; } continue; }
+      const hm = t.match(/^(#{1,4})\s+(.*)$/);
+      if (hm) { if (inList) { html += '</ul>'; inList = false; } html += `<h${Math.min(4, hm[1].length + 1)}>${inl(hm[2])}</h${Math.min(4, hm[1].length + 1)}>`; }
+      else if (/^[-*]\s+/.test(t)) { if (!inList) { html += '<ul>'; inList = true; } html += `<li>${inl(t.replace(/^[-*]\s+/, ''))}</li>`; }
+      else { if (inList) { html += '</ul>'; inList = false; } html += `<p>${inl(t)}</p>`; }
+    }
+    if (inList) html += '</ul>';
+    if (inCode) html += '</code></pre>';
+    return html || '<p class="muted">(vazio)</p>';
+  }
+
+  // ==================== BARRA SUPERIOR ====================
+  function renderNav(){
+    const P = D.estado.projeto || {};
+    const pol = D.politica || {};
+    const filaN = (D.fila || []).length;
+    const rev = getReviewer();
+    return `<header class="nav">
+      <div class="nav-left">
+        <div class="logo-mark" aria-hidden="true">SB</div>
+        <div class="proj-title clamp1" title="${esc(P.titulo || P.nome)}">${esc(P.nome || P.titulo || 'SpecBoard')}</div>
+        <button type="button" class="q-toggle" id="btn-toggle-q">${UI.showQuestion ? 'Ocultar objetivo ▴' : 'Objetivo central ▾'}</button>
+      </div>
+      <div class="seg-tabs" role="tablist" aria-label="Navegação principal">
+        <button type="button" role="tab" class="seg-tab" data-tab="agora" aria-selected="${UI.tab === 'agora' && !UI.reviewStageId ? 'true' : 'false'}">
+          Agora ${filaN ? `<span class="seg-badge">${filaN}</span>` : ''}
+        </button>
+        <button type="button" role="tab" class="seg-tab" data-tab="projeto" aria-selected="${UI.tab === 'projeto' && !UI.reviewStageId ? 'true' : 'false'}">
+          Projeto
+        </button>
+        <button type="button" role="tab" class="seg-tab" data-tab="agente" aria-selected="${UI.tab === 'agente' && !UI.reviewStageId ? 'true' : 'false'}">
+          Agente
+        </button>
+      </div>
+      <div class="nav-right">
+        <button type="button" class="pill-btn" id="btn-reviewer" title="Seu nome para aprovar em 1 clique">
+          👤 ${rev ? esc(rev) : '<span class="muted">Seu nome</span>'}
+        </button>
+        <button type="button" class="pill-btn" id="btn-policy" title="Regra de aprovação do projeto">
+          ${esc(POL_LABEL[pol.modo] || pol.modo)} ▾
+        </button>
+        <span class="pill-btn" style="cursor:default">
+          <span class="${canWrite() ? 'dot-live' : 'dot-static'}"></span>
+          ${canWrite() ? 'Interativo' : 'Só leitura'}
+        </span>
+        ${D.modo_servidor ? '<button type="button" class="icon-btn" id="btn-refresh" title="Atualizar dados">↻</button>' : ''}
+        <button type="button" class="icon-btn" id="btn-theme" title="Tema claro / escuro">◐</button>
+      </div>
+    </header>
+    ${UI.showQuestion ? `<div class="q-drawer"><span><b>Pergunta central:</b> ${esc(P.pergunta_central)}</span><span class="muted" style="font-size:12px">Atualizado em ${esc(D.gerado_em)}</span></div>` : ''}
+    ${!canWrite() ? `<div class="offline-tip"><span><b>Modo somente leitura:</b> para aprovar, pausar ou pedir ajustes diretamente aqui, abra o painel com o comando <code>serve --open</code> no terminal.</span></div>` : ''}`;
+  }
+
+  // ==================== ABA 1: AGORA ====================
+  function renderAgora(){
+    const sit = D.situacao_atual || {};
+    const marco = sit.marco_atual || {};
+    const ativ = sit.atividade_agente || {};
+    const bloqs = sit.bloqueios_sistema || [];
+    const prox = sit.proxima_acao || {};
+    const R = D.resumo || {};
+    const c = R.contagem || {};
+    const tot = R.total || 0;
+    const pct = tot ? Math.round(100 * (R.verificadas || 0) / tot) : 0;
+    const w = n => tot ? (100 * (n || 0) / tot) : 0;
+    const mud = getEffectiveMudancas();
+
+    const focusPair = prox.etapa_id ? findStage(prox.etapa_id) : null;
+    const filaBloq = D.fila || [];
+    const filaTodas = D.fila_todos || [];
+    const stagesAll = allStages();
+    let listItems = [];
+    if (UI.queueFilter === 'pendentes') listItems = filaBloq.map(x => ({item: x, pair: findStage(x.id)}));
+    else if (UI.queueFilter === 'todas') listItems = filaTodas.map(x => ({item: x, pair: findStage(x.id)}));
+    else if (UI.queueFilter === 'aguardando') listItems = stagesAll.filter(p => p.e._status === 'aguardando_decisao').map(pair => ({item: {id:pair.e.id, titulo:pair.e.titulo, fase:pair.m.fase, eh_marco:pair.e._eh_marco, bloqueia_agora:pair.e._bloqueia_agora}, pair}));
+    else if (UI.queueFilter === 'bloqueadas') listItems = stagesAll.filter(p => p.e._status === 'bloqueado' || p.e._status === 'correcao_solicitada').map(pair => ({item: {id:pair.e.id, titulo:pair.e.titulo, fase:pair.m.fase, eh_marco:pair.e._eh_marco, bloqueia_agora:pair.e._bloqueia_agora}, pair}));
+
+    const bloqVisiveis = UI.showAllBlockers ? bloqs : bloqs.slice(0, 4);
+    const nPause = stagesAll.filter(p => p.e._status === 'aguardando_decisao').length;
+    const nBlk = stagesAll.filter(p => p.e._status === 'bloqueado' || p.e._status === 'correcao_solicitada').length;
+
+    return `<div class="main">
+      <section class="kpi-strip" aria-label="Resumo do momento">
+        <div class="kpi-box">
+          <div class="kpi-lbl"><span>Onde o projeto está</span><button type="button" class="btn btn-ghost btn-xs" data-goto-mod="${esc(sit.modulo_atual_id || '')}">Ver no mapa →</button></div>
+          <div class="kpi-val clamp1">${esc(sit.fase_atual || '—')}</div>
+          <div class="muted clamp1" style="font-size:12.5px">Ponto atual: ${esc(marco.titulo || '—')}</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-lbl"><span>O que o agente está fazendo</span><span class="st-pill st-em_curso nob">Informado pelo agente</span></div>
+          <div class="kpi-val clamp1">${esc(ATIV_LABEL[ativ.estado] || ativ.estado || 'Sem atividade')}</div>
+          <div class="muted clamp1" style="font-size:12.5px" title="${esc(ativ.resumo || '')}">${esc(ativ.resumo || 'Nenhuma tarefa ativa no momento.')}</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-lbl"><span>Aprovado por você</span><b style="color:var(--ok);font-size:14px">${pct}%</b></div>
+          <div class="bar-slim" aria-hidden="true">
+            <i style="width:${w(c.verificado)}%;background:var(--ok)"></i>
+            <i style="width:${w(c.revisado)}%;background:var(--rev)"></i>
+            <i style="width:${w(c.executado)}%;background:var(--exe)"></i>
+            <i style="width:${w(c.aguardando_decisao)}%;background:var(--pause)"></i>
+            <i style="width:${w(c.em_curso)}%;background:var(--run)"></i>
+            <i style="width:${w((c.bloqueado || 0) + (c.correcao_solicitada || 0))}%;background:var(--block)"></i>
+          </div>
+          <div class="muted" style="font-size:12.5px"><b>${c.verificado || 0} de ${tot}</b> aprovadas · ${(c.executado || 0) + (c.revisado || 0)} feitas pelo agente</div>
+        </div>
+      </section>
+
+      <section class="focus-card" aria-label="Sua próxima ação">
+        <div class="focus-top">
+          <span class="focus-eyebrow">SUA VEZ AGORA</span>
+          ${focusPair ? `<span class="st-pill st-${esc(focusPair.e._status)}">${esc(ST_LABEL[focusPair.e._status] || focusPair.e._status)}</span>` : ''}
+        </div>
+        <div class="focus-title">${esc(prox.titulo || 'Tudo em dia')}</div>
+        <p class="muted" style="font-size:14px">${esc(prox.detalhe || '')}</p>
+        <div class="action-bar">
+          ${focusPair ? `
+            <button type="button" class="btn btn-accent" data-open-review="${esc(focusPair.e.id)}" data-qidx-btn="0">Revisar evidências</button>
+            ${canWrite() && focusPair.e._status !== 'verificado' ? `<button type="button" class="btn btn-ok" data-act="verificado" data-sid="${esc(focusPair.e.id)}">✓ Aprovar direto</button>` : ''}
+            ${canWrite() ? `
+              <button type="button" class="btn" data-act="aguardar_decisao" data-sid="${esc(focusPair.e.id)}">Deixar em espera</button>
+              <button type="button" class="btn" data-act="pedir_correcao" data-sid="${esc(focusPair.e.id)}">Pedir ajuste</button>
+              <button type="button" class="btn btn-ghost" data-act="bloquear" data-sid="${esc(focusPair.e.id)}">Pausar etapa</button>
+            ` : ''}
+          ` : `<button type="button" class="btn btn-accent" data-tab-jump="projeto">Abrir mapa do Projeto →</button>`}
+        </div>
+      </section>
+
+      <section class="queue-card" aria-label="Entregas aguardando decisão">
+        <div class="queue-head">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <h3>Aguardando sua decisão</h3>
+            <div class="seg-tabs">
+              <button type="button" class="seg-tab" data-qfilter="pendentes" aria-selected="${UI.queueFilter === 'pendentes' ? 'true' : 'false'}">Marcos (${filaBloq.length})</button>
+              ${filaTodas.length !== filaBloq.length ? `<button type="button" class="seg-tab" data-qfilter="todas" aria-selected="${UI.queueFilter === 'todas' ? 'true' : 'false'}">Todas (${filaTodas.length})</button>` : ''}
+              <button type="button" class="seg-tab" data-qfilter="aguardando" aria-selected="${UI.queueFilter === 'aguardando' ? 'true' : 'false'}">Em espera (${nPause})</button>
+              <button type="button" class="seg-tab" data-qfilter="bloqueadas" aria-selected="${UI.queueFilter === 'bloqueadas' ? 'true' : 'false'}">Pausadas (${nBlk})</button>
+            </div>
+          </div>
+        </div>
+        <div class="qrows">
+          ${listItems.length ? listItems.map(({item, pair}, idx) => {
+            if (!pair) return '';
+            const unlockStr = formatUnlocks(item.bloqueia_agora);
+            return `<div class="qrow" data-qidx="${idx}">
+              <div class="qrow-main">
+                <div class="qrow-title">
+                  <span>${esc(item.titulo)}</span>
+                  <span class="code-tag">${esc(item.id)}</span>
+                </div>
+                <div class="qrow-sub">
+                  <span class="st-pill st-${esc(pair.e._status)}">${esc(ST_LABEL[pair.e._status] || pair.e._status)}</span>
+                  ${item.eh_marco ? '<span class="st-pill st-marco nob">Marco principal</span>' : ''}
+                  ${pair.e._exp ? `<span class="st-pill st-bloqueado">Arquivo alterado</span>` : ''}
+                  ${unlockStr ? `<span>Libera: <b>${esc(unlockStr)}</b></span>` : `<span>${esc(item.fase || '')}</span>`}
+                </div>
+              </div>
+              <div class="qrow-actions">${renderRowActions(pair.e, 'q-' + item.id, idx)}</div>
+            </div>`;
+          }).join('') : `<div style="padding:24px;text-align:center" class="muted">Nada pendente nesta aba.</div>`}
+        </div>
+      </section>
+
+      <section class="bottom-two">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+            <h3>Pontos travados ou aguardando autorização <span class="muted" style="font-weight:500">(${bloqs.length})</span></h3>
+            ${bloqs.length > 4 ? `<button type="button" class="btn btn-ghost btn-xs" id="btn-all-bloqs">${UI.showAllBlockers ? 'Mostrar menos' : 'Ver todos'}</button>` : ''}
+          </div>
+          ${bloqVisiveis.length ? `<div class="compact-list">${bloqVisiveis.map(b => {
+            const pOrig = b.origem_id ? findStage(b.origem_id) : null;
+            return `<div class="compact-row is-block">
+              <div class="wrap-any">
+                <div style="font-weight:600">${esc(b.titulo)}</div>
+                <div class="muted" style="font-size:12px">${esc(b.detalhe)}</div>
+              </div>
+              <div style="display:flex;gap:5px;flex:none">
+                ${pOrig ? `<button type="button" class="btn btn-xs" data-open-review="${esc(pOrig.e.id)}">Abrir</button>` : ''}
+              </div>
+            </div>`;
+          }).join('')}</div>` : '<p class="muted">Nenhum ponto travado fora da fila acima.</p>'}
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+            <h3>Novidades desde sua última visita</h3>
+            <button type="button" class="btn btn-xs" id="btn-mark-visit">${mud.referencia_confiavel ? 'Marcar como visto' : 'Marcar ponto inicial'}</button>
+          </div>
+          ${mud.referencia_confiavel ? (
+            mud.novos.length
+              ? `<div class="compact-list">${mud.novos.slice(0, 5).map(ev => `<div class="compact-row"><span class="wrap-any">${esc(ev.texto)}</span><span class="muted" style="font-size:11.5px;flex:none">${esc(ev.data)}</span></div>`).join('')}</div>`
+              : `<p class="muted">Nenhuma novidade desde ${esc(mud.referencia_em)}.</p>`
+          ) : '<p class="muted">Clique em <b>Marcar ponto inicial</b> para acompanhar o que mudar a partir de hoje.</p>'}
+        </div>
+      </section>
+    </div>`;
+  }
+
+  // ==================== ABA 2: PROJETO (CANVAS ARCHIFY LIMPO) ====================
+  function getConnectedModSet(mid){
+    const up = new Set(), down = new Set();
+    if (!mid) return {up, down};
+    for (const r of (D.relacoes_mapa || [])) {
+      if (r.para === mid) up.add(r.de);
+      if (r.de === mid) down.add(r.para);
+    }
+    return {up, down};
+  }
+
+  function renderInspector(){
+    const pair = UI.selectedStageId ? findStage(UI.selectedStageId) : null;
+    const mod = pair ? pair.m : (UI.selectedModId ? findMod(UI.selectedModId) : null);
+    if (!mod) return '';
+    const ct = mod.contrato || {};
+    const canLock = !ct.hash && ct.pergunta && (ct.criterios_aceitacao || []).length && ct.criterio_abandono;
+
+    if (pair) {
+      const {m, e} = pair;
+      const evs = (e._snapshot && e._snapshot.evidencias) || [];
+      const unlockStr = formatUnlocks(e._libera) || 'fim do ciclo';
+      const w = canWrite();
+      return `<aside class="inspector" aria-label="Detalhes da etapa">
+        <div class="ins-head">
+          <div class="wrap-any">
+            <span class="code-tag">${esc(e.id)}</span>
+            <h3 style="margin-top:6px">${esc(e.titulo)}</h3>
+          </div>
+          <button type="button" class="icon-btn" id="btn-close-ins" title="Fechar">×</button>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span>
+          ${e._eh_marco ? '<span class="st-pill st-marco nob">Marco principal</span>' : ''}
+        </div>
+        <div class="action-bar">
+          <button type="button" class="btn btn-accent btn-sm" data-open-review="${esc(e.id)}">Revisar evidências</button>
+          ${w && e._status !== 'verificado' && ['executado','revisado','aguardando_decisao','correcao_solicitada'].includes(e._status)
+            ? `<button type="button" class="btn btn-ok btn-sm" data-act="verificado" data-sid="${esc(e.id)}">✓ Aprovar</button>` : ''}
+          ${w ? `
+            <button type="button" class="btn btn-sm" data-act="aguardar_decisao" data-sid="${esc(e.id)}">Em espera</button>
+            <button type="button" class="btn btn-sm" data-act="pedir_correcao" data-sid="${esc(e.id)}">Pedir ajuste</button>
+            <button type="button" class="btn btn-sm btn-soft-block" data-act="bloquear" data-sid="${esc(e.id)}">Pausar</button>
+          ` : ''}
+          ${w && ['bloqueado','aguardando_decisao','correcao_solicitada'].includes(e._status)
+            ? `<button type="button" class="btn btn-sm btn-soft-accent" data-act="desbloquear" data-sid="${esc(e.id)}">▶ Retomar</button>` : ''}
+          <button type="button" class="btn btn-ghost btn-sm" data-goto-agent="${esc(e.id)}">⚙ Ver detalhes do agente</button>
+        </div>
+        <div class="ins-sec">
+          <h4>Resumo da entrega</h4>
+          <div class="ins-box">${esc(e.afirmacao || e.descricao || 'Sem resumo registrado.')}</div>
+        </div>
+        <div class="ins-sec">
+          <h4>Como conferir</h4>
+          <div class="ins-box">
+            <div>${esc(e.verificacao || '—')}</div>
+            <div class="muted" style="font-size:12px">Libera: <b>${esc(unlockStr)}</b></div>
+          </div>
+        </div>
+        <div class="ins-sec">
+          <h4>Arquivos anexados (${evs.length})</h4>
+          <div class="ins-box">
+            ${evs.length ? evs.map(ev => `<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span title="${esc(ev.ref)}">📄 ${esc(baseName(ev.ref))}</span><span class="st-pill ${ev.estado === 'ok' ? 'st-verificado' : 'st-bloqueado'} nob">${ev.estado === 'ok' ? 'Pronto' : esc(ev.estado)}</span></div>`).join('') : '<span class="muted">Nenhum arquivo anexado ainda.</span>'}
+          </div>
+        </div>
+      </aside>`;
+    }
+
+    return `<aside class="inspector" aria-label="Detalhes do bloco">
+      <div class="ins-head">
+        <div class="wrap-any">
+          <span class="code-tag">${esc(mod.id)}</span>
+          <h3 style="margin-top:6px">${esc(mod.titulo)}</h3>
+        </div>
+        <button type="button" class="icon-btn" id="btn-close-ins" title="Fechar">×</button>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="st-pill st-${esc(mod._status_mod)}">${esc(ST_LABEL[mod._status_mod] || mod._status_mod)}</span>
+        ${ct.hash ? `<span class="st-pill st-verificado nob">🔒 Critérios travados</span>` : (canLock && canWrite() ? `<button type="button" class="btn btn-soft-accent btn-xs" data-lock-mod="${esc(mod.id)}">🔒 Travar critérios</button>` : '')}
+      </div>
+      <div class="ins-sec"><h4>Objetivo</h4><div class="ins-box">${esc(mod.objetivo || '—')}</div></div>
+      ${ct.pergunta || (ct.criterios_aceitacao || []).length ? `<div class="ins-sec"><h4>Critérios de aprovação</h4><div class="ins-box">
+        ${ct.pergunta ? `<div><b>Pergunta:</b> ${esc(ct.pergunta)}</div>` : ''}
+        ${(ct.criterios_aceitacao || []).length ? `<ul class="clean-list">${ct.criterios_aceitacao.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+        ${ct.criterio_abandono ? `<div class="muted"><b>Quando parar / rever:</b> ${esc(ct.criterio_abandono)}</div>` : ''}
+      </div></div>` : ''}
+    </aside>`;
+  }
+
+  function renderProjeto(){
+    const fases = fasesList();
+    const mods = D.estado.modulos || [];
+    const sit = D.situacao_atual || {};
+    const q = UI.projetoSearch.trim().toLowerCase();
+    const activeMod = UI.hoverModId || UI.selectedModId;
+    const conn = getConnectedModSet(activeMod);
+    const hasInspector = !!(UI.selectedStageId || UI.selectedModId);
+
+    function modMatches(m){
+      const fOk = UI.projetoFiltro === 'todos'
+        || (UI.projetoFiltro === 'bloqueado' && (m._status_mod === 'bloqueado' || (m._bloqueios_sistema || []).length > 0))
+        || (UI.projetoFiltro === 'aguarda' && (m._status_mod === 'aguarda' || (m.etapas || []).some(e => ['executado','revisado','aguardando_decisao'].includes(e._status))))
+        || m._status_mod === UI.projetoFiltro;
+      if (!fOk) return false;
+      if (!q) return true;
+      return (m.id + ' ' + m.titulo + ' ' + (m.etapas || []).map(e => e.id + ' ' + e.titulo).join(' ')).toLowerCase().includes(q);
+    }
+
+    const toolbar = `<div class="canvas-bar">
+      <div class="canvas-bar-group">
+        <input class="search-in" id="proj-search" type="search" value="${esc(UI.projetoSearch)}" placeholder="Buscar etapa...">
+        ${[['todos','Todos'],['aguarda','Para decidir'],['bloqueado','Pausados'],['verificado','Aprovados']].map(([k, l]) =>
+          `<button type="button" class="btn btn-xs ${UI.projetoFiltro === k ? 'btn-soft-accent' : ''}" data-pfilter="${k}">${l}</button>`
+        ).join('')}
+      </div>
+      <div class="canvas-bar-group">
+        ${UI.projetoModo === 'fluxo' ? `
+          <button type="button" class="btn btn-xs" id="btn-z-out" title="Diminuir zoom">−</button>
+          <span class="muted" style="font-size:12px;min-width:40px;text-align:center">${Math.round(UI.zoom * 100)}%</span>
+          <button type="button" class="btn btn-xs" id="btn-z-in" title="Aumentar zoom">+</button>
+          <button type="button" class="btn btn-xs" id="btn-z-reset">Ajustar</button>
+        ` : ''}
+        <button type="button" class="btn btn-xs" id="btn-exp-all">${UI.expandedModules.size >= mods.length ? 'Recolher detalhes' : 'Abrir etapas'}</button>
+        <button type="button" class="btn btn-xs btn-soft-accent" id="btn-proj-mode">${UI.projetoModo === 'fluxo' ? 'Ver em lista' : 'Ver mapa'}</button>
+      </div>
+    </div>`;
+
+    if (UI.projetoModo === 'lista') {
+      const listHtml = fases.map(f => {
+        const fMods = mods.filter(m => (m.fase || '—') === f && modMatches(m));
+        if (!fMods.length) return '';
+        return `<div class="card">
+          <h3>${esc(f)}</h3>
+          ${fMods.map(m => `<div class="qrows" style="border:1px solid var(--line);border-radius:12px">
+            <div style="padding:10px 14px;background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;gap:8px;border-radius:12px 12px 0 0">
+              <b>${esc(m.titulo)}</b>
+              <span class="st-pill st-${esc(m._status_mod)}">${esc(ST_LABEL[m._status_mod] || m._status_mod)}</span>
+            </div>
+            ${(m.etapas || []).map(e => `<div class="qrow">
+              <div class="qrow-main"><div class="qrow-title"><span>${esc(e.titulo)}</span><span class="code-tag">${esc(e.id)}</span></div><div class="qrow-sub"><span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span></div></div>
+              <div class="qrow-actions">${renderRowActions(e, 'l-' + e.id)}</div>
+            </div>`).join('')}
+          </div>`).join('')}
+        </div>`;
+      }).join('');
+      return `<div class="main">${toolbar}${listHtml}</div>`;
+    }
+
+    const lanesHtml = fases.map((f, idx) => {
+      const fMods = mods.filter(m => (m.fase || '—') === f);
+      const isExpPhase = UI.expandedPhases.has(f);
+      const isCur = f === sit.fase_atual;
+      const totF = fMods.reduce((a, m) => a + ((m.etapas || []).length || m.etapas_estimadas || 0), 0);
+      const verF = fMods.reduce((a, m) => a + (m.etapas || []).filter(e => e._status === 'verificado').length, 0);
+
+      const modsHtml = isExpPhase ? fMods.map(m => {
+        const mOpen = UI.expandedModules.has(m.id);
+        const dim = !modMatches(m) || (activeMod && activeMod !== m.id && !conn.up.has(m.id) && !conn.down.has(m.id));
+        const hot = activeMod && (activeMod === m.id || conn.up.has(m.id) || conn.down.has(m.id));
+        const ets = m.etapas || [];
+        const verM = ets.filter(e => e._status === 'verificado').length;
+        return `<div class="mod-node st-n-${esc(m._status_mod)} ${m.resultado_final ? 'is-final' : ''} ${dim ? 'is-dim' : ''} ${hot ? 'is-hot' : ''}" id="node-mod-${esc(m.id)}" data-hover-mod="${esc(m.id)}">
+          <button type="button" class="mod-head-btn" data-toggle-mod="${esc(m.id)}" aria-expanded="${mOpen ? 'true' : 'false'}">
+            <div class="mod-meta">
+              <span class="code-tag">${esc(m.id)}${m._eh_marco ? ' ★' : ''}${m.resultado_final ? ' ◎' : ''}</span>
+              <span class="st-pill st-${esc(m._status_mod)}">${esc(ST_LABEL[m._status_mod] || m._status_mod)}</span>
+            </div>
+            <div class="mod-title clamp2" title="${esc(m.titulo)}">${esc(m.titulo)}</div>
+            <div class="muted" style="font-size:12px;display:flex;justify-content:space-between">
+              <span>${ets.length ? `${verM} de ${ets.length} aprovadas` : `~${m.etapas_estimadas || 0} previstas`}</span>
+              <span>${mOpen ? 'Recolher ▴' : 'Ver etapas ▾'}</span>
+            </div>
+          </button>
+          ${mOpen ? `<div class="stages-wrap">
+            ${ets.length ? ets.map(e => {
+              const isSel = UI.selectedStageId === e.id;
+              const evN = (e._snapshot && e._snapshot.evidencias && e._snapshot.evidencias.length) || 0;
+              return `<div class="st-card ${isSel ? 'is-sel' : ''}" id="stage-node-${esc(e.id)}" data-select-stage="${esc(e.id)}">
+                <div class="st-card-top">
+                  <span class="muted mono" style="font-weight:600;white-space:nowrap;flex-shrink:0">${esc(e.id)}${e._eh_marco ? ' ★' : ''}</span>
+                  <span class="st-pill st-${esc(e._status)}">${esc(e._status === 'executado' ? 'Decidir' : (ST_LABEL[e._status] || e._status))}</span>
+                </div>
+                <div class="st-card-title clamp2" title="${esc(e.titulo)}">${esc(e.titulo)}</div>
+                ${isSel ? `<div class="mini-ced">
+                  <div class="mini-ced-box"><b>Critério</b><span class="clamp2">${esc(e.verificacao || '—')}</span></div>
+                  <div class="mini-ced-box"><b>Arquivos</b><span>${evN} anexo(s)</span></div>
+                  <div class="mini-ced-box"><b>Status</b><span>${esc(ST_LABEL[e._status] || e._status)}</span></div>
+                </div>` : ''}
+              </div>`;
+            }).join('') : `<div class="muted" style="font-size:12px">Etapas detalhadas ao abrir esta fase.</div>`}
+          </div>` : ''}
+        </div>`;
+      }).join('') : '';
+
+      return `<div class="lane" data-lane="${idx}">
+        <button type="button" class="lane-head ${isCur ? 'is-current' : ''}" data-toggle-phase="${esc(f)}" aria-expanded="${isExpPhase ? 'true' : 'false'}">
+          <div class="lane-head-top">
+            <span>Fase ${idx + 1}${isCur ? ' · Atual' : ''}</span>
+            <span>${verF}/${totF} ${isExpPhase ? '▾' : '▸'}</span>
+          </div>
+          <div class="lane-title clamp1" title="${esc(f)}">${esc(f.replace(/^Fase \d+\s*·\s*/, ''))}</div>
+        </button>
+        ${modsHtml}
+      </div>`;
+    }).join('');
+
+    return `<div class="main full-bleed">
+      <div class="canvas-shell">
+        ${toolbar}
+        <div class="workspace-split ${hasInspector ? 'with-inspector' : ''}">
+          <div class="arch-viewport" id="arch-viewport">
+            <div class="arch-world" id="arch-world" style="transform:scale(${UI.zoom})">
+              <svg class="arch-svg" id="arch-svg" aria-hidden="true"></svg>
+              ${lanesHtml}
+            </div>
+          </div>
+          ${renderInspector()}
+        </div>
+        <div class="muted" style="font-size:12px;display:flex;gap:16px;flex-wrap:wrap">
+          <span>Clique em qualquer bloco ou etapa para abrir ações e detalhes à direita.</span>
+          <span><b style="color:var(--edge)">━━▶</b> Sequência</span>
+          <span><b style="color:var(--block)">┅┅▶</b> Depende de aprovação</span>
+          <span><b>★</b> Marco · <b>◎</b> Resultado final</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function drawArchEdges(){
+    const svg = document.getElementById('arch-svg');
+    const world = document.getElementById('arch-world');
+    if (!svg || !world) return;
+    const z = UI.zoom || 1;
+    const wr = world.getBoundingClientRect();
+    svg.setAttribute('width', world.scrollWidth);
+    svg.setAttribute('height', world.scrollHeight);
+
+    const activeMod = UI.hoverModId || UI.selectedModId;
+    const isMobile = window.innerWidth <= 760;
+    let defs = `<defs>
+      <marker id="ar-seq" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="var(--edge)"/></marker>
+      <marker id="ar-blk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="var(--block)"/></marker>
+      <marker id="ar-up"  viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="var(--accent)"/></marker>
+      <marker id="ar-dn"  viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="var(--exe)"/></marker>
+    </defs>`;
+
+    let paths = '';
+    for (const rel of (D.relacoes_mapa || [])) {
+      const elA = document.getElementById('node-mod-' + rel.de);
+      const elB = document.getElementById('node-mod-' + rel.para);
+      if (!elA || !elB) continue;
+      const A = elA.getBoundingClientRect(), B = elB.getBoundingClientRect();
+      const axL = (A.left - wr.left) / z, axR = (A.right - wr.left) / z, axC = (axL + axR) / 2;
+      const ayT = (A.top - wr.top) / z, ayB = (A.bottom - wr.top) / z, ayC = (ayT + ayB) / 2;
+      const bxL = (B.left - wr.left) / z, bxR = (B.right - wr.left) / z, bxC = (bxL + bxR) / 2;
+      const byT = (B.top - wr.top) / z, byB = (B.bottom - wr.top) / z, byC = (byT + byB) / 2;
+
+      let d = '';
+      if (isMobile || Math.abs(axC - bxC) < 40) {
+        const x1 = axC, y1 = ayB + 2, x2 = bxC, y2 = byT - 4, my = (y1 + y2) / 2;
+        d = `M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`;
+      } else if (bxL >= axR - 6) {
+        const span = bxL - axR;
+        if (span > 140) {
+          const x1 = axC, y1 = ayB + 2, x2 = bxL - 4, y2 = byC, lowY = Math.max(ayB, byB) + 26;
+          d = `M${x1},${y1} C${x1},${lowY} ${x2 - 54},${lowY} ${x2},${y2}`;
+        } else {
+          const x1 = axR + 2, y1 = ayC, x2 = bxL - 4, y2 = byC, dx = Math.max(24, span * 0.5);
+          d = `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`;
+        }
+      } else {
+        const x1 = axR + 2, y1 = ayC, x2 = bxR + 4, y2 = byC, cx = Math.max(x1, x2) + 28;
+        d = `M${x1},${y1} C${cx},${y1} ${cx},${y2} ${x2},${y2}`;
+      }
+      const isBlk = rel.ativa || rel.tipo === 'bloqueante';
+      let cls = isBlk ? 'e-block' : 'e-seq', mk = isBlk ? 'ar-blk' : 'ar-seq';
+      if (activeMod) {
+        if (rel.para === activeMod) { cls = isBlk ? 'e-hot-block' : 'e-hot-up'; mk = isBlk ? 'ar-blk' : 'ar-up'; }
+        else if (rel.de === activeMod) { cls = isBlk ? 'e-hot-block' : 'e-hot-down'; mk = isBlk ? 'ar-blk' : 'ar-dn'; }
+        else cls += ' e-dim';
+      }
+      paths += `<path class="${cls}" d="${d}" marker-end="url(#${mk})"/>`;
+    }
+    svg.innerHTML = defs + paths;
+  }
+
+  // ==================== REVISÃO CONTEXTUAL ====================
+  function renderEvidenceBody(ev){
+    if (!ev) return '<p class="muted">Nenhum arquivo anexado.</p>';
+    if (ev.estado === 'ausente') return `<div class="alert-strip">Arquivo não encontrado no disco: <code>${esc(ev.ref)}</code>.</div>`;
+    if (ev.estado === 'caminho_invalido') return `<div class="alert-strip">Caminho fora da pasta do projeto: <code>${esc(ev.ref)}</code>.</div>`;
+    if (ev.tipo === 'remota') return `<div class="ins-box"><b>Link externo:</b> <a href="${esc(ev.ref)}" target="_blank" rel="noopener">${esc(ev.ref)}</a><div class="muted">${ev.versao ? 'Versão: ' + esc(ev.versao) : 'Alterações externas não são detectadas automaticamente.'}</div></div>`;
+    if (ev.tipo === 'referencia_logica') return `<div class="ins-box"><b>Referência:</b> ${esc(ev.ref)} ${esc(ev.descricao || '')}</div>`;
+
+    const meta = `<div class="muted" style="font-size:12px" title="${esc(ev.ref)}">📄 <b>${esc(baseName(ev.ref))}</b> · ${ev.bytes != null ? (ev.bytes / 1024).toFixed(1) + ' KB' : ''} · integridade verificada</div>`;
+    if (!D.modo_servidor) return `${meta}<div class="ins-box">Abra pelo servidor local (<code>serve --open</code>) para visualizar figuras, tabelas e relatórios diretamente aqui.</div>`;
+
+    if (ev.midia === 'imagem') {
+      const src = '/api/evidencia?ref=' + encodeURIComponent(ev.ref) + '&v=' + encodeURIComponent(ev.sha256 || '');
+      return `${meta}<img class="ev-img" src="${src}" alt="${esc(baseName(ev.ref))}" data-zoom-img="${src}">`;
+    }
+    const cached = UI.reviewEvidenceCache[ev.ref];
+    if (!cached || cached.loading) return `${meta}<p class="muted">Carregando visualização...</p>`;
+    if (cached.erro) return `${meta}<div class="alert-strip">${esc(cached.erro)}</div>`;
+    if (cached.midia === 'tabela') {
+      return `${meta}<div class="ev-table-wrap"><table class="ev-table"><thead><tr>${(cached.headers || []).map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${(cached.rows || []).map(r => `<tr>${r.map(v => `<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${cached.truncado ? `<span class="muted" style="font-size:12px">Mostrando as primeiras ${cached.max_linhas} linhas.</span>` : ''}`;
+    }
+    if (cached.midia === 'markdown') return `${meta}<div class="ev-md">${renderMarkdownSafe(cached.conteudo)}</div>`;
+    return `${meta}<pre style="margin:0;overflow:auto;max-height:400px;background:var(--surface);padding:12px;border-radius:8px;border:1px solid var(--line)">${esc(cached.conteudo || '')}</pre>`;
+  }
+
+  function renderRevisao(){
+    const pair = findStage(UI.reviewStageId);
+    if (!pair) return `<div class="main"><div class="alert-strip">Etapa não encontrada. <button type="button" class="btn btn-sm" id="btn-close-rev">Voltar</button></div></div>`;
+    const {m, e} = pair;
+    const snap = e._snapshot || {};
+    const evs = snap.evidencias || [];
+    const activeEv = evs[UI.reviewEvIndex] || evs[0] || null;
+    const ct = m.contrato || {};
+    const w = canWrite();
+    const hasMissing = evs.some(x => x.estado === 'ausente' && x.obrigatoria !== false);
+    const liberaTxt = formatUnlocks(e._libera) || 'nenhuma fase bloqueada diretamente';
+
+    return `<div class="main">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <button type="button" class="btn btn-sm" id="btn-close-rev">← Voltar</button>
+          <span class="code-tag">${esc(e.id)}</span>
+          <h2 style="font-size:18px">${esc(e.titulo)}</h2>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span>
+          <button type="button" class="btn btn-sm btn-ghost" data-goto-agent="${esc(e.id)}">⚙ Detalhes do agente</button>
+        </div>
+      </div>
+
+      ${UI.reviewConflictMsg ? `<div class="alert-strip"><b>Arquivo alterado durante a revisão:</b> ${esc(UI.reviewConflictMsg)} Recarregamos o conteúdo abaixo para nova conferência.</div>` : ''}
+      ${e._exp ? `<div class="alert-strip"><b>Nova conferência necessária:</b> houve alteração após a aprovação anterior${e._arquivos_alterados && e._arquivos_alterados.length ? ` (${esc(e._arquivos_alterados.map(baseName).join(', '))})` : ''}.</div>` : ''}
+
+      <div class="rev-grid">
+        <div style="display:grid;gap:16px">
+          <div class="card">
+            <span class="kpi-lbl">1. O que foi entregue</span>
+            <p style="font-size:15px">${esc(e.afirmacao || e.descricao || 'Sem resumo registrado.')}</p>
+            <span class="muted" style="font-size:12.5px">${esc(m.titulo)} · ${esc(m.fase || '')}</span>
+          </div>
+
+          <div class="card">
+            <span class="kpi-lbl">2. Critério de verificação e contrato</span>
+            <div><b>Como conferir:</b> ${esc(e.verificacao || '—')}</div>
+            ${ct.pergunta || (ct.criterios_aceitacao || []).length ? `<div class="ins-box">
+              <div><b>Critérios do bloco</b> ${ct.hash ? '🔒 travados' : ''}</div>
+              ${(ct.criterios_aceitacao || []).length ? `<ul class="clean-list">${ct.criterios_aceitacao.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+              ${ct.criterio_abandono ? `<div class="muted"><b>Quando parar ou rever:</b> ${esc(ct.criterio_abandono)}</div>` : ''}
+            </div>` : ''}
+          </div>
+
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <span class="kpi-lbl">3. Evidência (${evs.length} arquivo${evs.length === 1 ? '' : 's'})</span>
+              ${evs.length > 1 ? `<div style="display:flex;gap:6px;flex-wrap:wrap">${evs.map((ev, i) => `
+                <button type="button" class="btn btn-xs ${i === UI.reviewEvIndex ? 'btn-soft-accent' : ''}" data-ev-idx="${i}">${esc(baseName(ev.ref))} ${ev.estado === 'ok' ? '✓' : '!'}</button>
+              `).join('')}</div>` : ''}
+            </div>
+            <div class="ev-stage">${renderEvidenceBody(activeEv)}</div>
+          </div>
+        </div>
+
+        <aside class="rev-rail">
+          <span class="kpi-lbl">4. Decisão e efeito nas etapas dependentes</span>
+          <div class="ins-box" style="font-size:13px">
+            <div><b style="color:var(--ok)">✓ Aprovar:</b> libera ${esc(liberaTxt)}.</div>
+            <div><b style="color:var(--block)">↺ Pedir ajuste / ⛔ Pausar:</b> segura as próximas etapas.</div>
+          </div>
+          ${w ? `
+            <div style="display:grid;gap:8px">
+              <input id="rev-revisor" class="input" type="text" value="${esc(getReviewer())}" placeholder="Seu nome ou iniciais *">
+              <textarea id="rev-nota" class="textarea" placeholder="Comentário (opcional ao aprovar; obrigatório ao pedir ajuste ou pausar)..."></textarea>
+            </div>
+            <div style="display:grid;gap:7px">
+              <button type="button" class="btn btn-ok" id="btn-dec-aprovar" ${UI.reviewBusy || hasMissing ? 'disabled' : ''}>${UI.reviewBusy ? 'Salvando...' : '✓ Aprovar entrega'}</button>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+                <button type="button" class="btn btn-soft-warn" id="btn-dec-correcao" ${UI.reviewBusy ? 'disabled' : ''}>↺ Pedir correção</button>
+                <button type="button" class="btn btn-soft-pause" id="btn-dec-aguardar" ${UI.reviewBusy ? 'disabled' : ''}>⏸ Em espera</button>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+                <button type="button" class="btn btn-soft-block" id="btn-dec-bloquear" ${UI.reviewBusy ? 'disabled' : ''}>⛔ Pausar</button>
+                <button type="button" class="btn" id="btn-dec-depois" ${UI.reviewBusy ? 'disabled' : ''}>Deixar para depois</button>
+              </div>
+              ${['bloqueado','aguardando_decisao','correcao_solicitada'].includes(e._status)
+                ? `<button type="button" class="btn btn-soft-accent" id="btn-dec-desbloquear" ${UI.reviewBusy ? 'disabled' : ''}>▶ Retomar etapa</button>` : ''}
+              <button type="button" class="btn btn-ghost btn-xs" id="btn-dec-revisado" ${UI.reviewBusy ? 'disabled' : ''}>Marcar apenas como lido</button>
+            </div>
+          ` : `<div class="ins-box">Abra pelo servidor local (<code>serve --open</code>) para salvar sua decisão diretamente no painel.</div>`}
+          <div class="ins-sec">
+            <h4>Histórico (${(e._regs || []).length})</h4>
+            ${(e._regs || []).length ? `<div class="ins-box">${e._regs.slice().reverse().map(r => `<div><b>${esc(ST_LABEL[r.nivel] || r.acao || r.nivel)}</b> por ${esc(r.revisor)} <span class="muted">(${esc(r.data)})</span>${r.nota ? `<div class="muted">${esc(r.nota)}</div>` : ''}</div>`).join('')}</div>` : '<span class="muted">Nenhuma decisão registrada ainda.</span>'}
+          </div>
+        </aside>
+      </div>
+    </div>`;
+  }
+
+  // ==================== ABA 3: AGENTE (CALMA, 1 PAINEL POR VEZ, PORTUGUÊS CLARO) ====================
+  function renderAgente(){
+    const stages = allStages();
+    const pair = findStage(UI.agentStageId) || stages[0];
+    if (!pair) return `<div class="main"><div class="card"><p class="muted">Nenhuma etapa cadastrada.</p></div></div>`;
+    const {m, e} = pair;
+    const arq = e._agente || {};
+    const dur = arq.contexto_duravel || {};
+    const exe = arq.contexto_execucao || {};
+    const comps = arq.componentes || [];
+    const guards = arq.guardrails || [];
+    const aval = arq.avaliacao || {};
+    const active = UI.agentActiveLayer || 'contexto';
+    const q = UI.agentSearch.trim().toLowerCase();
+
+    const lBtn = (k, num, title, sub, col) => `<button type="button" class="layer-node ${active === k ? 'open' : ''}" id="ag-layer-${k}" style="--layer-c:${col}" data-pick-layer="${k}">
+      <span style="color:${col};font-size:11.5px;font-weight:700">${num}</span>
+      <h3 style="font-size:14px">${title}</h3>
+      <span class="muted clamp1" style="font-size:12px">${sub}</span>
+    </button>`;
+
+    const fases = fasesList();
+    const railHtml = fases.map((f, fIdx) => {
+      const stInPhase = stages.filter(s => (s.m.fase || '—') === f && (!q || (s.e.id + ' ' + s.e.titulo + ' ' + (s.e._agente && s.e._agente.papel || '')).toLowerCase().includes(q)));
+      if (!stInPhase.length) return '';
+      return `<div class="rail-phase">
+        <div class="rail-phase-lbl">Fase ${fIdx + 1} · ${esc(f.replace(/^Fase \d+\s*·\s*/, ''))}</div>
+        ${stInPhase.map(s => `<button type="button" class="rail-item ${s.e.id === e.id ? 'is-active' : ''}" data-pick-agent="${esc(s.e.id)}">
+          <div class="rail-item-title clamp2" title="${esc(s.e.titulo)}">${esc(s.e.titulo)}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)">
+            <span>${esc(s.e.id)}</span>
+            <span>${esc(ST_LABEL[s.e._status] || s.e._status)}</span>
+          </div>
+        </button>`).join('')}
+      </div>`;
+    }).join('');
+
+    let detailHtml = '';
+    if (active === 'contexto') {
+      detailHtml = `<div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <h3>O que o agente precisa lembrar nesta etapa</h3>
+          <button type="button" class="btn btn-soft-accent btn-sm" id="btn-gen-context">Gerar resumo para nova sessão</button>
+        </div>
+        <div class="bottom-two">
+          <div class="ins-box">
+            <b>Base fixa do projeto</b>
+            <div><b>Objetivo:</b> ${esc(dur.objetivo || m.objetivo || '—')}</div>
+            ${dur.protocolo && dur.protocolo.nome ? `<div><b>Protocolo:</b> ${esc(dur.protocolo.nome)} (${esc(dur.protocolo.versao || '')})</div>` : ''}
+            ${dur.janela_analise ? `<div><b>Recorte:</b> ${esc(dur.janela_analise)}</div>` : ''}
+            ${(dur.decisoes_aceitas || []).length ? `<div><b>Decisões já tomadas:</b><ul class="clean-list" style="margin-top:4px">${dur.decisoes_aceitas.map(d => `<li>${esc(d)}</li>`).join('')}</ul></div>` : ''}
+            ${(dur.artefatos_referencia || []).length ? `<div><b>Arquivos de referência:</b><div class="chip-row" style="margin-top:6px">${dur.artefatos_referencia.map(r => `<span class="file-chip" title="${esc(r.caminho || r.nome)}">📄 ${esc(r.nome || baseName(r.caminho))}</span>`).join('')}</div></div>` : ''}
+          </div>
+          <div class="ins-box">
+            <b>Como retomar em uma nova conversa</b>
+            <div>${esc(exe.estrategia_retomada || 'Carregue apenas o protocolo, os arquivos de referência e o último ponto aprovado.')}</div>
+            ${(exe.fontes_carregadas || []).length ? `<div><b>Incluído ao retomar:</b><div class="chip-row" style="margin-top:5px">${exe.fontes_carregadas.map(x => `<span class="file-chip">${esc(x)}</span>`).join('')}</div></div>` : ''}
+            ${(exe.fontes_omitidas || []).length ? `<div class="muted"><b>Fica de fora (evita poluição):</b> ${esc(exe.fontes_omitidas.join(' · '))}</div>` : ''}
+          </div>
+        </div>
+        ${UI.agentContextBundle ? `<pre class="wrap-any" style="margin:0;overflow:auto;max-height:240px;background:var(--surface-2);padding:12px;border-radius:10px;border:1px solid var(--line)">${esc(JSON.stringify(UI.agentContextBundle, null, 2))}</pre>` : ''}
+      </div>`;
+    } else if (active === 'componentes') {
+      detailHtml = `<div class="card">
+        <h3>Ferramentas, guias e integrações desta etapa</h3>
+        ${comps.length ? `<div style="overflow-x:auto"><table class="comp-table">
+          <thead><tr><th>Ferramenta</th><th>Tipo</th><th>Para que serve</th><th>Previsto</th><th>Instalado</th><th>Uso registrado</th></tr></thead>
+          <tbody>${comps.map(c => `<tr>
+            <td class="wrap-any"><b>${esc(baseName(c.nome))}</b>${c.mcp_server ? `<div class="muted" style="font-size:12px">Servidor: ${esc(c.mcp_server)}</div>` : ''}</td>
+            <td><span class="st-pill ${c.tipo === 'mcp_tool' ? 'st-code' : (c.tipo === 'skill' ? 'st-verificado' : 'st-em_curso')} nob">${esc(TIPO_COMP[c.tipo] || c.tipo)}</span></td>
+            <td class="wrap-any">${esc(c.funcao || '—')}${c.motivo_escolha ? `<div class="muted" style="font-size:12px">${esc(c.motivo_escolha)}</div>` : ''}</td>
+            <td>${c.planejado ? 'Sim' : '—'}</td>
+            <td>${c.configurado ? 'Sim' : 'Não'}</td>
+            <td>${c.observado && c.observado.estado === 'observado' ? `<span class="st-pill st-verificado">${esc(c.observado.label)}</span>` : '<span class="st-pill st-pendente nob">sem registro</span>'}</td>
+          </tr>`).join('')}</tbody>
+        </table></div>` : '<p class="muted">Nenhuma ferramenta cadastrada (uso: <b>sem registro</b>).</p>'}
+        ${(arq.linhagem || []).length ? `<div class="lineage">${arq.linhagem.map((s, i) => `${i ? '<span class="muted">→</span>' : ''}<div class="lin-node" title="${esc(s.artefato || '')}"><b>${esc(s.etapa_fluxo || '')}:</b> ${esc(baseName(s.artefato || ''))}</div>`).join('')}</div>` : ''}
+      </div>`;
+    } else if (active === 'guardrails') {
+      detailHtml = `<div class="card">
+        <h3>Proteções e limites desta etapa</h3>
+        <div class="ins-box"><b>Regra de aprovação humana (independente):</b> ${esc(POL_LABEL[(D.politica || {}).modo] || '')} — você pode mudar no topo da tela.</div>
+        ${guards.length ? `<div style="overflow-x:auto"><table class="comp-table">
+          <thead><tr><th>Tipo</th><th>Regra</th><th>Onde atua</th><th>O que acontece se falhar</th></tr></thead>
+          <tbody>${guards.map(g => `<tr>
+            <td><span class="st-pill ${g.natureza === 'codigo' ? 'st-code' : 'st-executado'} nob">${g.natureza === 'codigo' ? 'Automática (código)' : 'Orientação (texto)'}</span></td>
+            <td class="wrap-any"><b>${esc(g.regra)}</b></td>
+            <td class="muted wrap-any">${esc(g.onde_aplica || '—')}</td>
+            <td class="muted wrap-any">${esc(g.se_falhar || '—')}</td>
+          </tr>`).join('')}</tbody>
+        </table></div>` : '<p class="muted">Apenas as proteções padrão do SpecBoard estão ativas.</p>'}
+      </div>`;
+    } else {
+      detailHtml = `<div class="card">
+        <h3>Sua validação científica × Testes do agente</h3>
+        <div class="bottom-two">
+          <div class="ins-box">
+            <b>Sua validação científica</b>
+            <div><span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span></div>
+            <div class="action-bar">${renderRowActions(e, 'ag-' + e.id)}</div>
+          </div>
+          <div class="ins-box">
+            <b>Testes técnicos do agente (separados da sua aprovação)</b>
+            <p class="muted" style="font-size:13px">${esc(aval.nota_separacao || 'Testes automáticos checam o funcionamento do agente; a validação científica é sempre sua.')}</p>
+            ${(aval.casos_referencia || []).map(c => `<div><b>${esc(c.titulo)}</b> — <span class="muted">${esc(c.qualidade_resultado || c.trajetoria_ferramentas || '')}</span></div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+    }
+
+    return `<div class="main full-bleed">
+      <div class="agent-shell">
+        <aside class="agent-rail" aria-label="Etapas do projeto">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+            <b style="font-size:13.5px">Etapas (${stages.length})</b>
+            <button type="button" class="btn btn-xs" id="btn-agent-back" title="Voltar à etapa no Projeto">← Voltar ao mapa</button>
+          </div>
+          <input id="agent-search" class="search-in" style="width:100%" type="search" value="${esc(UI.agentSearch)}" placeholder="Buscar etapa...">
+          ${railHtml || '<p class="muted" style="font-size:12.5px">Nenhuma etapa encontrada.</p>'}
+        </aside>
+
+        <div class="agent-main">
+          <div class="canvas-bar">
+            <div class="canvas-bar-group" style="min-width:0">
+              <span class="code-tag">${esc(e.id)}</span>
+              <h2 class="clamp1" style="font-size:16.5px" title="${esc(e.titulo)}">${esc(e.titulo)}</h2>
+              <span class="st-pill st-${esc(e._status)}">${esc(ST_LABEL[e._status] || e._status)}</span>
+            </div>
+            <div class="canvas-bar-group">
+              <button type="button" class="btn btn-soft-accent btn-sm" data-open-review="${esc(e.id)}">Revisar evidências</button>
+            </div>
+          </div>
+
+          <div class="agent-canvas" id="agent-canvas">
+            <svg class="arch-svg" id="agent-svg" aria-hidden="true"></svg>
+            <div class="layer-grid">
+              ${lBtn('contexto', 'Passo 1', 'Memória e regras', dur.protocolo && dur.protocolo.nome ? esc(dur.protocolo.nome) : 'O que o agente lembra', 'var(--accent)')}
+              ${lBtn('componentes', 'Passo 2', 'Ferramentas', comps.length + ' cadastrada(s)', 'var(--run)')}
+              ${lBtn('guardrails', 'Passo 3', 'Proteções', guards.length + ' regra(s) ativa(s)', 'var(--pause)')}
+              ${lBtn('avaliacao', 'Passo 4', 'Qualidade e revisão', 'Sua revisão ≠ testes', 'var(--ok)')}
+            </div>
+          </div>
+
+          ${detailHtml}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function drawAgentEdges(){
+    const svg = document.getElementById('agent-svg');
+    const box = document.getElementById('agent-canvas');
+    if (!svg || !box) return;
+    const br = box.getBoundingClientRect();
+    svg.setAttribute('width', box.clientWidth);
+    svg.setAttribute('height', box.clientHeight);
+    const keys = ['contexto', 'componentes', 'guardrails', 'avaliacao'];
+    let out = '<defs><marker id="ag-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="var(--accent)"/></marker></defs>';
+    for (let i = 0; i < keys.length - 1; i++) {
+      const a = document.getElementById('ag-layer-' + keys[i]);
+      const b = document.getElementById('ag-layer-' + keys[i + 1]);
+      if (!a || !b) continue;
+      const A = a.getBoundingClientRect(), B = b.getBoundingClientRect();
+      if (B.left >= A.right - 4) {
+        const x1 = A.right - br.left + 2, y1 = A.top + A.height / 2 - br.top;
+        const x2 = B.left - br.left - 4, y2 = B.top + B.height / 2 - br.top;
+        const mx = (x1 + x2) / 2;
+        out += `<path class="e-hot-up" d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" marker-end="url(#ag-ar)"/>`;
+      }
+    }
+    svg.innerHTML = out;
+  }
+
+  // ==================== MODAIS ====================
+  function renderModals(){
+    let html = '';
+    if (UI.actionModal) {
+      const m = UI.actionModal;
+      const meta = ACAO_META[m.acao];
+      html += `<div class="modal-bg"><div class="modal-box" role="dialog" aria-modal="true">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3>${esc(meta.lbl)}</h3>
+          <button type="button" class="icon-btn" id="btn-close-act">×</button>
+        </div>
+        <p class="muted">${esc(m.titulo)}</p>
+        ${UI.actionError ? `<div class="alert-strip">${esc(UI.actionError)}</div>` : ''}
+        ${m.precisaRevisor ? `<input id="act-revisor" class="input" type="text" placeholder="Seu nome ou iniciais (salvo para 1 clique) *">` : ''}
+        <textarea id="act-nota" class="textarea" placeholder="${m.exigeNota ? 'Explique brevemente o motivo (obrigatório) *' : 'Comentário opcional...'}">${esc(m.notaInicial || '')}</textarea>
+        <div style="display:flex;justify-content:flex-end;gap:8px">
+          <button type="button" class="btn" id="btn-cancel-act">Cancelar</button>
+          <button type="button" class="btn btn-accent" id="btn-confirm-act" ${UI.actionBusy ? 'disabled' : ''}>${UI.actionBusy ? 'Salvando...' : 'Confirmar'}</button>
+        </div>
+      </div></div>`;
+    }
+    if (UI.reviewerModal) {
+      html += `<div class="modal-bg"><div class="modal-box" role="dialog" aria-modal="true">
+        <div style="display:flex;justify-content:space-between;align-items:center"><h3>Seu nome para aprovações</h3><button type="button" class="icon-btn" id="btn-close-revr">×</button></div>
+        <p class="muted">Fica salvo no navegador para você aprovar em um clique sem redigitar.</p>
+        <input id="revr-input" class="input" type="text" value="${esc(getReviewer())}" placeholder="Ex.: Ana Silva ou AS">
+        <div style="display:flex;justify-content:flex-end"><button type="button" class="btn btn-accent" id="btn-save-revr">Salvar</button></div>
+      </div></div>`;
+    }
+    if (UI.showPolicyModal) {
+      const pol = D.politica || {};
+      const w = canWrite();
+      html += `<div class="modal-bg"><div class="modal-box" role="dialog" aria-modal="true">
+        <div style="display:flex;justify-content:space-between;align-items:center"><h3>Regra de aprovação do projeto</h3><button type="button" class="icon-btn" id="btn-close-pol">×</button></div>
+        ${UI.policyError ? `<div class="alert-strip">${esc(UI.policyError)}</div>` : ''}
+        ${[
+          ['acompanhamento_livre','Livre (sem travas)','O agente avança sem bloqueios; o que ele faz continua separado do que você aprovou.'],
+          ['so_marcos','Só nos marcos','Apenas os marcos principais precisam da sua aprovação para liberar a próxima fase.'],
+          ['por_etapa','Etapa por etapa','Cada etapa precisa da sua aprovação individual antes de seguir.']
+        ].map(([k, t, d]) => `<label class="ins-box" style="cursor:pointer;display:flex;gap:10px;align-items:flex-start"><input type="radio" name="pol-m" value="${k}" ${pol.modo === k ? 'checked' : ''} ${w ? '' : 'disabled'}><span><b>${t}</b><div class="muted" style="font-size:12.5px">${d}</div></span></label>`).join('')}
+        ${w ? `<input id="pol-rev" class="input" value="${esc(getReviewer())}" placeholder="Seu nome *">
+          <input id="pol-just" class="input" placeholder="Por que está mudando a regra? *">
+          <div style="display:flex;justify-content:flex-end"><button type="button" class="btn btn-accent" id="btn-save-pol" ${UI.policyBusy ? 'disabled' : ''}>Salvar regra</button></div>` : ''}
+      </div></div>`;
+    }
+    if (UI.lightboxSrc) html += `<div class="lightbox" id="lightbox"><img src="${esc(UI.lightboxSrc)}" alt="Figura ampliada"></div>`;
+    return html;
+  }
+
+  // ==================== RENDER PRINCIPAL ====================
+  function render(){
+    let body = '';
+    if (UI.reviewStageId) body = renderRevisao();
+    else if (UI.tab === 'agora') body = renderAgora();
+    else if (UI.tab === 'projeto') body = renderProjeto();
+    else body = renderAgente();
+
+    document.getElementById('app').innerHTML = renderNav() + body + renderModals();
+    bindEvents();
+    renderToastOnly();
+    if (UI.tab === 'projeto' && UI.projetoModo === 'fluxo' && !UI.reviewStageId) requestAnimationFrame(drawArchEdges);
+    if (UI.tab === 'agente' && !UI.reviewStageId) requestAnimationFrame(drawAgentEdges);
+  }
+
+  function bindEvents(){
+    document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => { UI.openMenuId = null; UI.reviewStageId = null; UI.tab = b.dataset.tab; render(); }));
+    document.querySelectorAll('[data-tab-jump]').forEach(b => b.addEventListener('click', () => { UI.openMenuId = null; UI.reviewStageId = null; UI.tab = b.dataset.tabJump; render(); }));
+
+    const qBtn = document.getElementById('btn-toggle-q'); if (qBtn) qBtn.addEventListener('click', () => { UI.showQuestion = !UI.showQuestion; render(); });
+    const btnTheme = document.getElementById('btn-theme');
+    if (btnTheme) btnTheme.addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const isDark = cur ? cur === 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const next = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('specboard.theme', next); } catch(e) {}
+    });
+    const btnRef = document.getElementById('btn-refresh');
+    if (btnRef) btnRef.addEventListener('click', async () => {
+      const r = await fetch('/api/estado');
+      if (r.ok) { D = await r.json(); UI.reviewEvidenceCache = {}; render(); showToast('Painel atualizado.'); }
+    });
+
+    const btnRevr = document.getElementById('btn-reviewer'); if (btnRevr) btnRevr.addEventListener('click', () => { UI.reviewerModal = true; render(); });
+    const btnCloseRevr = document.getElementById('btn-close-revr'); if (btnCloseRevr) btnCloseRevr.addEventListener('click', () => { UI.reviewerModal = false; render(); });
+    const btnSaveRevr = document.getElementById('btn-save-revr');
+    if (btnSaveRevr) btnSaveRevr.addEventListener('click', () => { setReviewer(document.getElementById('revr-input').value); UI.reviewerModal = false; render(); showToast('Nome salvo.'); });
+
+    const btnPol = document.getElementById('btn-policy'); if (btnPol) btnPol.addEventListener('click', () => { UI.showPolicyModal = true; UI.policyError = ''; render(); });
+    const btnClosePol = document.getElementById('btn-close-pol'); if (btnClosePol) btnClosePol.addEventListener('click', () => { UI.showPolicyModal = false; render(); });
+    const btnSavePol = document.getElementById('btn-save-pol');
+    if (btnSavePol) btnSavePol.addEventListener('click', async () => {
+      const ch = document.querySelector('input[name="pol-m"]:checked');
+      const rev = (document.getElementById('pol-rev').value || '').trim();
+      const just = (document.getElementById('pol-just').value || '').trim();
+      if (!ch || !rev || !just) { UI.policyError = 'Preencha seu nome e o motivo.'; render(); return; }
+      setReviewer(rev); UI.policyBusy = true; render();
+      const {status, data} = await apiPost('/api/politica', {modo: ch.value, revisor: rev, justificativa: just});
+      UI.policyBusy = false;
+      if (status === 200 && data.payload) { D = data.payload; UI.showPolicyModal = false; render(); showToast('Regra de aprovação atualizada.'); }
+      else { UI.policyError = data.erro || 'Erro ao salvar.'; render(); }
+    });
+
+    document.querySelectorAll('[data-toggle-menu]').forEach(b => b.addEventListener('click', ev => {
+      ev.stopPropagation();
+      const k = b.dataset.toggleMenu;
+      UI.openMenuId = UI.openMenuId === k ? null : k;
+      render();
+    }));
+    document.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); triggerAction(b.dataset.sid, b.dataset.act); }));
+    document.querySelectorAll('[data-open-review]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); openReview(b.dataset.openReview, b.dataset.qidxBtn !== undefined ? Number(b.dataset.qidxBtn) : null); }));
+    document.querySelectorAll('[data-goto-agent]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); jumpToAgent(b.dataset.gotoAgent); }));
+    document.querySelectorAll('[data-goto-mod]').forEach(b => b.addEventListener('click', () => {
+      const m = findMod(b.dataset.gotoMod);
+      UI.tab = 'projeto';
+      if (m) { UI.expandedPhases.add(m.fase || '—'); UI.expandedModules.add(m.id); UI.selectedModId = m.id; UI.selectedStageId = null; }
+      render();
+    }));
+    document.querySelectorAll('[data-lock-mod]').forEach(b => b.addEventListener('click', () => lockContractNow(b.dataset.lockMod)));
+
+    const closeAct = () => { UI.actionModal = null; render(); };
+    const bCA = document.getElementById('btn-close-act'); if (bCA) bCA.addEventListener('click', closeAct);
+    const bCnA = document.getElementById('btn-cancel-act'); if (bCnA) bCnA.addEventListener('click', closeAct);
+    const bCfA = document.getElementById('btn-confirm-act');
+    if (bCfA) bCfA.addEventListener('click', () => {
+      const m = UI.actionModal; if (!m) return;
+      const revEl = document.getElementById('act-revisor');
+      const rev = revEl ? revEl.value.trim() : getReviewer();
+      const nota = (document.getElementById('act-nota').value || '').trim();
+      if (!rev) { UI.actionError = 'Informe seu nome.'; render(); return; }
+      if (m.exigeNota && !nota) { UI.actionError = 'Informe brevemente o motivo.'; render(); return; }
+      setReviewer(rev);
+      executeAction(m.etapaId, m.acao, rev, nota);
+    });
+
+    document.querySelectorAll('[data-qfilter]').forEach(b => b.addEventListener('click', () => { UI.openMenuId = null; UI.queueFilter = b.dataset.qfilter; render(); }));
+    const bAllB = document.getElementById('btn-all-bloqs'); if (bAllB) bAllB.addEventListener('click', () => { UI.showAllBlockers = !UI.showAllBlockers; render(); });
+    const bVis = document.getElementById('btn-mark-visit');
+    if (bVis) bVis.addEventListener('click', async () => {
+      if (canWrite()) {
+        const {status, data} = await apiPost('/api/visita', {revisor: getReviewer()});
+        if (status === 200 && data.payload) { D = data.payload; render(); showToast('Ponto de visita salvo.'); return; }
+      }
+      try { localStorage.setItem(projectKey('visita'), JSON.stringify({event_ids:(D.eventos || []).map(x => x.id), registrada_em: new Date().toLocaleString('pt-BR')})); } catch(e) {}
+      render(); showToast('Ponto de visita salvo.');
+    });
+
+    const ps = document.getElementById('proj-search'); if (ps) ps.addEventListener('input', () => { UI.projetoSearch = ps.value; render(); document.getElementById('proj-search').focus(); });
+    document.querySelectorAll('[data-pfilter]').forEach(b => b.addEventListener('click', () => { UI.projetoFiltro = b.dataset.pfilter; render(); }));
+    const bzOut = document.getElementById('btn-z-out'); if (bzOut) bzOut.addEventListener('click', () => { UI.zoom = Math.max(0.65, +(UI.zoom - 0.1).toFixed(2)); render(); });
+    const bzIn = document.getElementById('btn-z-in'); if (bzIn) bzIn.addEventListener('click', () => { UI.zoom = Math.min(1.35, +(UI.zoom + 0.1).toFixed(2)); render(); });
+    const bzRes = document.getElementById('btn-z-reset'); if (bzRes) bzRes.addEventListener('click', () => { UI.zoom = 1; UI.hoverModId = null; render(); });
+    const bExpAll = document.getElementById('btn-exp-all');
+    if (bExpAll) bExpAll.addEventListener('click', () => {
+      const mods = D.estado.modulos || [];
+      if (UI.expandedModules.size >= mods.length) UI.expandedModules.clear();
+      else { fasesList().forEach(f => UI.expandedPhases.add(f)); mods.forEach(m => UI.expandedModules.add(m.id)); }
+      render();
+    });
+    const bPM = document.getElementById('btn-proj-mode'); if (bPM) bPM.addEventListener('click', () => { UI.projetoModo = UI.projetoModo === 'fluxo' ? 'lista' : 'fluxo'; render(); });
+    document.querySelectorAll('[data-toggle-phase]').forEach(b => b.addEventListener('click', () => {
+      const f = b.dataset.togglePhase;
+      if (UI.expandedPhases.has(f)) UI.expandedPhases.delete(f); else UI.expandedPhases.add(f);
+      render();
+    }));
+    document.querySelectorAll('[data-toggle-mod]').forEach(b => b.addEventListener('click', () => {
+      const mid = b.dataset.toggleMod;
+      if (UI.expandedModules.has(mid)) { UI.expandedModules.delete(mid); if (UI.selectedModId === mid && !UI.selectedStageId) UI.selectedModId = null; }
+      else { UI.expandedModules.add(mid); UI.selectedModId = mid; UI.selectedStageId = null; }
+      render();
+    }));
+    document.querySelectorAll('[data-select-stage]').forEach(el => el.addEventListener('click', ev => {
+      if (ev.target.closest('button')) return;
+      const sid = el.dataset.selectStage, p = findStage(sid);
+      if (UI.selectedStageId === sid) UI.selectedStageId = null;
+      else { UI.selectedStageId = sid; UI.selectedModId = p ? p.m.id : null; }
+      render();
+    }));
+    document.querySelectorAll('[data-hover-mod]').forEach(el => {
+      el.addEventListener('mouseenter', () => { if (UI.hoverModId !== el.dataset.hoverMod) { UI.hoverModId = el.dataset.hoverMod; drawArchEdges(); } });
+      el.addEventListener('mouseleave', () => { if (UI.hoverModId) { UI.hoverModId = null; drawArchEdges(); } });
+    });
+    const bCIns = document.getElementById('btn-close-ins'); if (bCIns) bCIns.addEventListener('click', () => { UI.selectedStageId = null; UI.selectedModId = null; render(); });
+
+    const bCR = document.getElementById('btn-close-rev'); if (bCR) bCR.addEventListener('click', closeReview);
+    const bDep = document.getElementById('btn-dec-depois'); if (bDep) bDep.addEventListener('click', closeReview);
+    document.querySelectorAll('[data-ev-idx]').forEach(b => b.addEventListener('click', () => {
+      UI.reviewEvIndex = Number(b.dataset.evIdx);
+      const pair = findStage(UI.reviewStageId);
+      const ev = pair && pair.e._snapshot && pair.e._snapshot.evidencias[UI.reviewEvIndex];
+      render();
+      if (ev && ev.estado === 'ok') loadEvidencePreview(ev.ref, ev.midia);
+    }));
+    const runRevDec = acao => {
+      const rev = (document.getElementById('rev-revisor').value || '').trim();
+      const nota = (document.getElementById('rev-nota').value || '').trim();
+      if (!rev) { showToast('Informe seu nome.', true); return; }
+      if (ACAO_META[acao].exigeNota && !nota) { showToast('Informe brevemente o motivo.', true); return; }
+      setReviewer(rev);
+      executeAction(UI.reviewStageId, acao, rev, nota);
+    };
+    [['btn-dec-aprovar','verificado'],['btn-dec-correcao','pedir_correcao'],['btn-dec-aguardar','aguardar_decisao'],['btn-dec-bloquear','bloquear'],['btn-dec-desbloquear','desbloquear'],['btn-dec-revisado','revisado']].forEach(([id, ac]) => {
+      const el = document.getElementById(id); if (el) el.addEventListener('click', () => runRevDec(ac));
+    });
+
+    document.querySelectorAll('[data-zoom-img]').forEach(img => img.addEventListener('click', () => { UI.lightboxSrc = img.dataset.zoomImg; render(); }));
+    const lb = document.getElementById('lightbox'); if (lb) lb.addEventListener('click', () => { UI.lightboxSrc = ''; render(); });
+
+    document.querySelectorAll('[data-pick-agent]').forEach(b => b.addEventListener('click', () => { UI.agentStageId = b.dataset.pickAgent; UI.agentContextBundle = null; render(); }));
+    document.querySelectorAll('[data-pick-layer]').forEach(b => b.addEventListener('click', () => { UI.agentActiveLayer = b.dataset.pickLayer; render(); }));
+    const agS = document.getElementById('agent-search'); if (agS) agS.addEventListener('input', () => { UI.agentSearch = agS.value; render(); document.getElementById('agent-search').focus(); });
+    const bAgB = document.getElementById('btn-agent-back'); if (bAgB) bAgB.addEventListener('click', returnFromAgent);
+    const bGC = document.getElementById('btn-gen-context');
+    if (bGC) bGC.addEventListener('click', async () => {
+      const sid = UI.agentStageId; if (!sid) return;
+      if (D.modo_servidor) {
+        const r = await fetch('/api/contexto/' + encodeURIComponent(sid));
+        if (r.ok) { UI.agentContextBundle = await r.json(); render(); return; }
+      }
+      const p = findStage(sid);
+      if (p) { UI.agentContextBundle = {etapa: p.e.id, titulo: p.e.titulo, agente: p.e._agente || {}}; render(); }
+    });
+  }
+
+  document.addEventListener('click', () => { if (UI.openMenuId) { UI.openMenuId = null; render(); } });
+  window.addEventListener('resize', () => {
+    if (UI.tab === 'projeto' && UI.projetoModo === 'fluxo' && !UI.reviewStageId) requestAnimationFrame(drawArchEdges);
+    if (UI.tab === 'agente' && !UI.reviewStageId) requestAnimationFrame(drawAgentEdges);
+  });
+  document.addEventListener('keydown', ev => {
+    if (ev.key === 'Escape') {
+      if (UI.lightboxSrc) { UI.lightboxSrc = ''; render(); }
+      else if (UI.actionModal) { UI.actionModal = null; render(); }
+      else if (UI.reviewerModal) { UI.reviewerModal = false; render(); }
+      else if (UI.showPolicyModal) { UI.showPolicyModal = false; render(); }
+      else if (UI.openMenuId) { UI.openMenuId = null; render(); }
+      else if (UI.reviewStageId) closeReview();
+    }
   });
 
-  // o que já foi feito: etapas feitas agrupadas por data
-  const feitos = todas.filter(x => FEITO(x.e._status));
-  const grupos = {}; feitos.forEach(x => { const k = x.e.data || 'sem data'; (grupos[k] = grupos[k] || []).push(x); });
-  const chaves = Object.keys(grupos).sort((a, b) => a === 'sem data' ? 1 : b === 'sem data' ? -1 : a.localeCompare(b));
-  document.getElementById('done').innerHTML = chaves.length ? chaves.map(k => {
-    const xs = grupos[k], allV = xs.every(x => x.e._status === 'verificado');
-    return `<li style="--tc:${allV?'var(--ok)':'var(--exe)'}"><span class="dt">${esc(k)}</span>${xs.map(x =>
-      `<button class="lk" type="button" data-sel="${esc(x.m.id)}" data-step="${esc(x.e.id)}">${esc(x.e.id)}</button> ${esc(x.e.titulo)}${x.e._status==='verificado'?' ✓':''}`).join('<br>')}</li>`;
-  }).join('') : '<li class="muted">Nada concluído ainda.</li>';
-
-  // o que falta: você está aqui → pendências suas → próximas etapas dos módulos abertos → módulos a planejar
-  const T = [];
-  if (here) T.push([here.m.id, here.e.id, `${here.e.id} · ${here.e.titulo}`, here.e.quem || 'agente', 'agente']);
-  (P.pendencias_humanas||[]).forEach(x => T.push([x.modulo || '', '', `${x.id ? x.id+' · ' : ''}${x.texto}${x.bloqueia?' (trava '+x.bloqueia+')':''}`, 'você', 'voce']));
-  if (fila.length) T.push(['', '', `Verificar as ${fila.length} etapa(s) da fila acima`, 'você', 'voce']);
-  todas.filter(x => x.e._status === 'pendente' && (!here || x.e.id !== here.e.id) && aberto(x.m))
-    .forEach(x => T.push([x.m.id, x.e.id, `${x.e.id} · ${x.e.titulo}`, x.e.quem || 'agente', 'agente']));
-  ordem.filter(m => !aberto(m)).forEach(m => T.push([m.id, '', `${m.id} · ${m.titulo}`, m.bloqueio ? 'bloqueado' : 'a planejar', 'plan']));
-  document.getElementById('todo').innerHTML = T.map(([mid, sid, t, who, cls], i) =>
-    `<li class="${i===0?'first':''}">${mid?`<button class="lk" type="button" data-sel="${esc(mid)}"${sid?` data-step="${esc(sid)}"`:''}>${esc(t)}</button>`:`<span>${esc(t)}</span>`}
-      <span class="who who-${cls}">${esc(who)}</span></li>`).join('');
-
-  // ligações clicáveis
-  document.querySelectorAll('[data-sel],[data-step]').forEach(b => b.addEventListener('click', () => {
-    let mid = b.dataset.sel, sid = b.dataset.step;
-    if (!mid && sid) { const x = todas.find(y => y.e.id === sid); mid = x && x.m.id; }
-    if (!mid) return;
-    select(mid, sid); document.getElementById('n-'+mid).scrollIntoView({behavior:'smooth', block:'nearest', inline:'nearest'});
-  }));
-  document.getElementById('lv').addEventListener('click', ev => { ev.preventDefault(); location.hash = location.hash === '#live' ? '' : 'live'; location.reload(); });
-
-  let start = here ? here.m.id : (ordem[0] || {}).id;
-  try { const s = localStorage.getItem('specboard.sel.' + (P.nome||'')); if (s && byId[s]) start = s; } catch(e) {}
-  if (start && largo()) select(start);
-  window.addEventListener('resize', draw);
-  map.addEventListener('scroll', draw);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
-  if (location.hash === '#live') setTimeout(() => location.reload(), 10000);
+  try { const th = localStorage.getItem('specboard.theme'); if (th) document.documentElement.setAttribute('data-theme', th); } catch(e) {}
+  render();
 })();
 </script>
 </body>
