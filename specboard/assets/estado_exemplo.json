@@ -1,8 +1,23 @@
 {
   "projeto": {
     "nome": "Projeto exemplo",
+    "titulo": "Painel do Projeto",
+    "subtitulo": "Spec-Driven Modular",
     "pergunta_central": "Qual pergunta este projeto precisa responder, em uma frase?",
-    "atualizado_em": ""
+    "atualizado_em": "",
+    "politica_aprovacao": {
+      "modo": "so_marcos",
+      "canal_padrao": "painel",
+      "definida_em": "",
+      "definida_por": "criação do projeto"
+    },
+    "atividade_agente": {
+      "estado": "executando",
+      "etapa_id": "M0.2",
+      "resumo": "Executando inventário e conferência de consistência das entradas.",
+      "sessao_id": "",
+      "atualizado_em": ""
+    }
   },
   "fases": ["Base", "Frentes em paralelo", "Consolidação", "Resultado"],
   "modulos": [
@@ -25,6 +40,7 @@
           "status": "executado",
           "impacto": "medio",
           "revisao": "completa",
+          "marco": false,
           "afirmacao": "Originais copiados sem alteração.",
           "verificacao": "Checksums dos originais e cópias coincidem.",
           "evidencia": ["E-001"]
@@ -35,6 +51,8 @@
           "status": "em_curso",
           "impacto": "alto",
           "revisao": "completa",
+          "marco": true,
+          "descricao": "Validar integridade das entradas antes de abrir o método principal.",
           "afirmacao": "",
           "verificacao": "",
           "evidencia": []
@@ -48,6 +66,7 @@
       "fase": "Frentes em paralelo",
       "objetivo": "Aplicar e calibrar o método.",
       "depende_de": ["M0"],
+      "marco": true,
       "contrato": {},
       "etapas_estimadas": 6,
       "etapas": [],
@@ -60,6 +79,7 @@
       "objetivo": "Responder à pergunta central.",
       "depende_de": ["M1"],
       "resultado_final": true,
+      "marco": true,
       "contrato": {},
       "etapas_estimadas": 4,
       "etapas": [],

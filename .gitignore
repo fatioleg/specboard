@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+**/.specboard/.hash_cache.json
+**/.specboard/visita.json
+.omc/

@@ -1,0 +1,12 @@
+time_ns,rmsd_core_angstrom,rmsd_surface_angstrom,ring_integrity_ok
+0.0,0.00,0.00,true
+1.0,0.28,0.61,true
+2.0,0.34,0.79,true
+3.0,0.39,0.92,true
+4.0,0.41,1.04,true
+5.0,0.42,1.11,true
+6.0,0.43,1.15,true
+7.0,0.41,1.18,true
+8.0,0.44,1.14,true
+9.0,0.42,1.19,true
+10.0,0.43,1.16,true

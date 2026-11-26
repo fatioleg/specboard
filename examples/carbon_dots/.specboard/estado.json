@@ -1,0 +1,373 @@
+{
+  "projeto": {
+    "nome": "Carbon Dots — Estabilidade Estrutural",
+    "titulo": "Estabilidade Térmica de Carbon Dots Funcionalizados",
+    "subtitulo": "exemplo científico v2 (política só nos marcos + aba Agente)",
+    "pergunta_central": "O núcleo grafítico de carbon dots funcionalizados mantém integridade estrutural a 400 K sem reconstrução de borda antes de avançar para simulações a 450 K?",
+    "atualizado_em": "2026-11-26 08:30",
+    "limite_fila": 5,
+    "politica_aprovacao": {
+      "modo": "so_marcos",
+      "canal_padrao": "painel",
+      "definida_em": "2026-11-24 09:00",
+      "definida_por": "Pesquisador responsável"
+    },
+    "atividade_agente": {
+      "estado": "aguardando_humano",
+      "etapa_id": "M2.3",
+      "resumo": "Figura e relatório de estabilidade estrutural (M2.3) gerados; aguardando aprovação do marco para liberar a Fase 3.",
+      "sessao_id": "sess-cd-04",
+      "atualizado_em": "2026-11-26 07:45"
+    },
+    "fontes": "examples/carbon_dots/reports/relatorio_m2.md, protocolo-md-cd v2.1"
+  },
+  "fases": [
+    "Fase 1 · Preparo",
+    "Fase 2 · Análise Estrutural",
+    "Fase 3 · Simulação 450 K",
+    "Fase 4 · Síntese"
+  ],
+  "modulos": [
+    {
+      "id": "M1",
+      "titulo": "Geometria de referência e protocolo",
+      "fase": "Fase 1 · Preparo",
+      "objetivo": "Fixar estrutura de referência do núcleo grafítico e parâmetros do protocolo MD v2.1.",
+      "depende_de": [],
+      "marco": false,
+      "contrato": {
+        "pergunta": "As estruturas de entrada e o protocolo estão íntegros e versionados?",
+        "criterios_aceitacao": [
+          "Estrutura core_ref.xyz com checksum registrado",
+          "Protocolo v2.1 travado antes da análise"
+        ],
+        "criterio_abandono": "Se houver distorção inicial na minimização, revisar topologia antes de rodar dinâmica.",
+        "parametros": {
+          "protocolo": "protocolo-md-cd v2.1",
+          "unidade_distancia": "Angstrom"
+        },
+        "travado_em": "2026-11-24 09:30",
+        "hash": "c1b5ba82ad4a"
+      },
+      "etapas": [
+        {
+          "id": "M1.1",
+          "titulo": "Validação da estrutura de referência (core_ref.xyz)",
+          "status": "executado",
+          "impacto": "alto",
+          "revisao": "completa",
+          "marco": true,
+          "data": "2026-11-24",
+          "afirmacao": "Geometria de referência do núcleo grafítico auditada sem contatos espúrios.",
+          "verificacao": "Conferir data/core_ref.xyz (6 átomos de referência sintéticos em Å).",
+          "evidencia": [
+            "data/core_ref.xyz"
+          ]
+        }
+      ],
+      "emendas": []
+    },
+    {
+      "id": "M2",
+      "titulo": "Estabilidade estrutural a 400 K",
+      "fase": "Fase 2 · Análise Estrutural",
+      "objetivo": "Calcular desvio estrutural (RMSD) do núcleo e da superfície na janela equilibrada (5–10 ns) e consolidar o marco de liberação da Fase 3.",
+      "responde": "Determina se o modelo é estruturalmente estável a 400 K antes de investir custo computacional em 450 K.",
+      "depende_de": [
+        "M1"
+      ],
+      "marco": true,
+      "contrato": {
+        "pergunta": "O núcleo grafítico permanece com RMSD <= 0.80 Å em 5–10 ns a 400 K?",
+        "criterios_aceitacao": [
+          "RMSD médio e máximo do núcleo <= 0.80 Å na janela 5–10 ns",
+          "100% de integridade dos anéis aromáticos",
+          "Checagens determinísticas de unidades (Å) e máscara de átomos aprovadas"
+        ],
+        "criterio_abandono": "Se RMSD do núcleo > 1.20 Å ou houver ruptura de anel, interromper e revisar campo de força antes da Fase 3.",
+        "parametros": {
+          "temperatura_K": 400,
+          "janela_ns": "5-10",
+          "limiar_rmsd_A": 0.8
+        },
+        "travado_em": "2026-11-24 09:30",
+        "hash": "b5ba46ffa1bb"
+      },
+      "etapas": [
+        {
+          "id": "M2.1",
+          "titulo": "Seleção de máscara de átomos e janela de equilíbrio",
+          "status": "executado",
+          "impacto": "medio",
+          "revisao": "completa",
+          "marco": false,
+          "data": "2026-11-25",
+          "afirmacao": "Máscara do núcleo grafítico separada dos grupos funcionais de borda; janela equilibrada definida em 5–10 ns.",
+          "verificacao": "Conferir script scripts/calc_rmsd.py e máscara em data/core_ref.xyz.",
+          "evidencia": [
+            "data/core_ref.xyz",
+            "scripts/calc_rmsd.py"
+          ]
+        },
+        {
+          "id": "M2.2",
+          "titulo": "Cálculo determinístico de desvio estrutural (RMSD)",
+          "status": "executado",
+          "impacto": "alto",
+          "revisao": "completa",
+          "marco": false,
+          "data": "2026-11-26",
+          "afirmacao": "RMSD do núcleo calculado em 0.425 Å (máximo 0.440 Å) na janela 5–10 ns; checagens determinísticas de unidades e integridade aprovadas.",
+          "verificacao": "Conferir série temporal em data/rmsd_cd_400k.csv e executar scripts/calc_rmsd.py.",
+          "evidencia": [
+            "data/rmsd_cd_400k.csv",
+            "scripts/calc_rmsd.py"
+          ],
+          "arquitetura_agente": {
+            "papel": "Analista de trajetórias MD (cálculo determinístico auditável)",
+            "contexto_duravel": {
+              "objetivo": "Calcular RMSD do núcleo grafítico a 400 K com verificação determinística de unidades, máscara e integridade.",
+              "decisoes_aceitas": [
+                "D-01: usar janela equilibrada 5–10 ns",
+                "D-02: reportar distâncias exclusivamente em Angstrom (Å)"
+              ],
+              "protocolo": {
+                "nome": "protocolo-md-cd",
+                "versao": "v2.1",
+                "caminho": "reports/relatorio_m2.md"
+              },
+              "janela_analise": "5.0–10.0 ns (passo 1.0 ns)",
+              "artefatos_referencia": [
+                {
+                  "nome": "Estrutura de referência do núcleo",
+                  "caminho": "data/core_ref.xyz",
+                  "papel": "alinhamento RMSD"
+                },
+                {
+                  "nome": "Script determinístico de RMSD",
+                  "caminho": "scripts/calc_rmsd.py",
+                  "papel": "execução e validação"
+                }
+              ]
+            },
+            "contexto_execucao": {
+              "fontes_carregadas": [
+                "protocolo-md-cd v2.1",
+                "data/core_ref.xyz",
+                "contrato M2",
+                "checkpoint M1.1"
+              ],
+              "fontes_omitidas": [
+                "logs brutos de minimização da Fase 1",
+                "trajetórias de sistemas descartados"
+              ],
+              "estrategia_retomada": "Em sessão limpa ou troca de agente, rodar `python specboard.py context M2.2` para carregar apenas protocolo v2.1, estrutura de referência, janela 5–10 ns e guardrails."
+            },
+            "componentes": [
+              {
+                "id": "cd-rmsd-analysis",
+                "nome": "cd-rmsd-analysis",
+                "tipo": "skill",
+                "versao_origem": "skills/cd-rmsd-analysis v1.2",
+                "funcao": "Padroniza alinhamento de núcleo grafítico, extração de janela equilibrada e checagem de unidades.",
+                "motivo_escolha": "Evita erros recorrentes de mistura Å/nm e inclusão indevida de grupos de borda.",
+                "planejado": true,
+                "configurado": true
+              },
+              {
+                "id": "calc_rmsd.py",
+                "nome": "calc_rmsd.py",
+                "tipo": "local_tool",
+                "versao_origem": "scripts/calc_rmsd.py (local)",
+                "funcao": "Calcula média/máximo de RMSD e executa validações determinísticas de entrada.",
+                "motivo_escolha": "Reprodutível offline sem depender de cálculo simbólico pelo LLM.",
+                "planejado": true,
+                "configurado": true
+              },
+              {
+                "id": "pubchem-mcp",
+                "nome": "pubchem-mcp",
+                "tipo": "mcp_tool",
+                "mcp_server": "pubchem-reference",
+                "versao_origem": "mcp:pubchem-reference v0.4 (opcional)",
+                "funcao": "Consulta externa opcional a parâmetros de literatura; entra apenas se houver recurso externo pertinente.",
+                "motivo_escolha": "Não necessário quando os dados locais estão completos.",
+                "planejado": false,
+                "configurado": true
+              }
+            ],
+            "guardrails": [
+              {
+                "id": "G-01",
+                "regra": "Conferir unidade explícita em Angstrom (Å)",
+                "natureza": "codigo",
+                "onde_aplica": "pré-cálculo em scripts/calc_rmsd.py",
+                "verifica": "Presença da coluna rmsd_core_angstrom e rejeição de entradas em nm sem conversão.",
+                "se_falhar": "Aborta com exit code 1 e bloqueia geração de evidência.",
+                "referencia_codigo": "scripts/calc_rmsd.py::analisar_rmsd"
+              },
+              {
+                "id": "G-02",
+                "regra": "Validar máscara de átomos e integridade do XYZ",
+                "natureza": "codigo",
+                "onde_aplica": "leitura de data/core_ref.xyz",
+                "verifica": "Contagem de átomos consistente com cabeçalho XYZ e SHA-256 íntegro.",
+                "se_falhar": "Levanta ValueError e impede cálculo silencioso com máscara errada.",
+                "referencia_codigo": "scripts/calc_rmsd.py::validar_xyz"
+              },
+              {
+                "id": "G-03",
+                "regra": "Nunca sobrescrever arquivos originais de entrada",
+                "natureza": "instrucao",
+                "onde_aplica": "SKILL.md / prompt do agente",
+                "verifica": "Disciplina operacional do agente durante análise.",
+                "se_falhar": "Detectado posteriormente via divergência de SHA-256 no SpecBoard."
+              }
+            ],
+            "linhagem": [
+              {
+                "etapa_fluxo": "Script local",
+                "artefato": "scripts/calc_rmsd.py",
+                "detalhe": "Validação determinística Å + máscara"
+              },
+              {
+                "etapa_fluxo": "Resultado",
+                "artefato": "data/rmsd_cd_400k.csv",
+                "detalhe": "RMSD núcleo 0.425 Å (5–10 ns)"
+              },
+              {
+                "etapa_fluxo": "Evidência",
+                "artefato": "figs/estabilidade_cd_400k.png",
+                "detalhe": "Figura revisada no marco M2.3"
+              }
+            ],
+            "avaliacao": {
+              "nota_separacao": "Casos de referência medem confiabilidade do fluxo do agente (trajetória de ferramentas e aderência ao protocolo); não substituem a aprovação científica humana do marco M2.3.",
+              "casos_referencia": [
+                {
+                  "id": "EVAL-CD-01",
+                  "titulo": "Rejeição de tabela em nm sem conversão",
+                  "qualidade_resultado": "100% de detecção antes do gráfico",
+                  "trajetoria_ferramentas": "cd-rmsd-analysis → calc_rmsd.py (erro capturado)",
+                  "tempo_ou_chamadas": "2 chamadas · 1.4 s",
+                  "status": "passou"
+                },
+                {
+                  "id": "EVAL-CD-02",
+                  "titulo": "Retomada em sessão limpa sem ler Fase 1",
+                  "qualidade_resultado": "Reproduziu RMSD 0.425 Å idêntico",
+                  "trajetoria_ferramentas": "context M2.2 → calc_rmsd.py",
+                  "tempo_ou_chamadas": "2 chamadas · 1.1 s",
+                  "status": "passou"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "M2.3",
+          "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)",
+          "status": "executado",
+          "impacto": "alto",
+          "revisao": "completa",
+          "marco": true,
+          "depende_de": [
+            "M2.2"
+          ],
+          "data": "2026-11-26",
+          "afirmacao": "Núcleo grafítico permanece estável a 400 K (RMSD médio 0.425 Å, máx 0.440 Å <= 0.80 Å) sem ruptura de anel.",
+          "verificacao": "Revisar a figura figs/estabilidade_cd_400k.png, a tabela data/rmsd_cd_400k.csv e reports/relatorio_m2.md antes de liberar a Fase 3.",
+          "evidencia": [
+            {
+              "id": "FIG-2",
+              "caminho": "figs/estabilidade_cd_400k.png",
+              "tipo": "arquivo_local",
+              "descricao": "Curvas de RMSD (núcleo vs superfície) a 400 K com limiar de 0.80 Å"
+            },
+            {
+              "id": "TAB-2",
+              "caminho": "data/rmsd_cd_400k.csv",
+              "tipo": "arquivo_local",
+              "descricao": "Série temporal completa de RMSD (0–10 ns)"
+            },
+            {
+              "id": "REL-M2",
+              "caminho": "reports/relatorio_m2.md",
+              "tipo": "arquivo_local",
+              "descricao": "Relatório consolidado e checagens determinísticas"
+            }
+          ]
+        }
+      ],
+      "emendas": []
+    },
+    {
+      "id": "M2-B",
+      "titulo": "Ramo paralelo: espectro vibracional a 300 K",
+      "fase": "Fase 2 · Análise Estrutural",
+      "objetivo": "Caracterizar modos vibracionais de superfície a 300 K de forma independente do marco de 400 K.",
+      "depende_de": [
+        "M1"
+      ],
+      "marco": false,
+      "contrato": {},
+      "etapas": [
+        {
+          "id": "M2-B.1",
+          "titulo": "Cálculo de modos IR de referência (300 K)",
+          "status": "pendente",
+          "impacto": "medio",
+          "revisao": "completa",
+          "marco": false,
+          "descricao": "Ramo independente de M2.3 — permanece liberado mesmo enquanto M2.3 aguarda aprovação.",
+          "afirmacao": "",
+          "verificacao": "",
+          "evidencia": []
+        }
+      ],
+      "emendas": []
+    },
+    {
+      "id": "M3",
+      "titulo": "Simulação de produção a 450 K",
+      "fase": "Fase 3 · Simulação 450 K",
+      "objetivo": "Executar dinâmica molecular a 450 K somente após aprovação humana do marco M2.3.",
+      "depende_de": [
+        "M2"
+      ],
+      "marco": true,
+      "contrato": {},
+      "etapas": [
+        {
+          "id": "M3.1",
+          "titulo": "Equilibração e produção 450 K (50 ns)",
+          "status": "pendente",
+          "impacto": "alto",
+          "revisao": "completa",
+          "marco": true,
+          "descricao": "Bloqueada pelo sistema até aprovação humana do marco M2.3.",
+          "afirmacao": "",
+          "verificacao": "",
+          "evidencia": []
+        }
+      ],
+      "emendas": []
+    },
+    {
+      "id": "M4",
+      "titulo": "Resposta à pergunta central",
+      "fase": "Fase 4 · Síntese",
+      "objetivo": "Integrar estabilidade em 400 K e 450 K para responder à pergunta central.",
+      "depende_de": [
+        "M3",
+        "M2-B"
+      ],
+      "resultado_final": true,
+      "marco": true,
+      "contrato": {},
+      "etapas_estimadas": 3,
+      "etapas": [],
+      "emendas": []
+    }
+  ]
+}
