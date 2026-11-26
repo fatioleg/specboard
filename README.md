@@ -50,14 +50,18 @@ O **SpecBoard** transforma o plano do projeto em um painel vivo, legível e audi
 ---
 
 <a id="telas"></a>
-## 🖥️ Como funciona na prática (4 telas)
+## 🖥️ Como funciona na prática (5 telas — Modo Escuro e Claro)
 
-Todas as páginas trazem o botão rápido **`⌂ Início`** no topo, alternância **Tema Claro / Escuro em 1 clique** e tipografia legível sem cortes.
+Toda a plataforma segue a mesma linguagem visual do banner acima — **grade arquitetural pontilhada, cartões com brilho ciano/esmeralda e botões em pílula** — tanto no **Modo Escuro** quanto no **Modo Claro** (alternância em 1 clique no topo), sempre com o botão rápido **`⌂ Início`**.
 
-### 1. Tela _Agora_ (Home) — barra lateral de áreas + sua próxima ação
-A barra lateral esquerda (com a logo do grupo) lista todas as fases do projeto e permite saltar para qualquer área ou clicar em **`📍 Onde estou agora`**. À direita você vê o progresso real aprovado por você, a ação prioritária e a fila com botões diretos (`Revisar`, `✓ Aprovar` e menu `⋯`).
+### 1. Tela _Agora_ (Home) — Fluxo vivo 1-2-3 + Sidebar de Áreas
+A Home traz o fluxo vivo **1. Agente Executa → 2. Você Decide → 3. Projeto Avança** conectado aos dados reais do projeto, ao lado da barra lateral com a logo do grupo, fases clicáveis e botão **`📍 Onde estou agora`**.
 
-<img src="docs/preview-agora.png" alt="Tela Agora (Home) com barra lateral de áreas do projeto" width="100%" />
+**Modo Escuro (Dark):**
+<img src="docs/preview-agora.png" alt="Tela Agora (Home) em Modo Escuro" width="100%" />
+
+**Modo Claro (Light):**
+<img src="docs/preview-agora-light.png" alt="Tela Agora (Home) em Modo Claro" width="100%" />
 
 ---
 
@@ -75,10 +79,17 @@ Exibe todas as fases lado a lado em um canvas com zoom, busca, modo **Ver em lis
 
 ---
 
-### 4. Aba _Agente & Harness_ — entenda toda a engenharia do projeto
+### 4. Aba _Harness_ — entenda toda a engenharia do agente
 Mostra de forma agradável e separada por entidade **como o harness do projeto foi construído**: **📚 Skills**, **🔌 Servidores MCP**, **🛠 Scripts Locais**, **🪝 Hooks/Guardrails em código**, **📋 Regras em texto** e **🔄 Fluxo de Etapas & Papéis** — além da inspeção detalhada etapa por etapa.
 
-<img src="docs/preview-agente.png" alt="Aba Agente e Arquitetura do Harness separada por entidades" width="100%" />
+<img src="docs/preview-agente.png" alt="Aba Harness separada por entidades" width="100%" />
+
+---
+
+### 5. Aba _🐞 Bugs & Melhorias_ — reporte direto no painel para seus agentes analisarem
+Botão rápido **`🐞 Reportar`** em todas as páginas (captura automaticamente tela, etapa, tema e resolução) + painel completo em `.specboard/bugs.jsonl`. Seus agentes leem os relatos via MCP (`specboard_bugs`), registram o diagnóstico/correção (`specboard_bug_update`) ou você copia o prompt estruturado em 1 clique.
+
+<img src="docs/preview-bugs.png" alt="Aba Bugs e Melhorias integrada aos agentes via MCP" width="100%" />
 
 ---
 
@@ -144,6 +155,8 @@ Ou adicione diretamente ao seu `~/.gemini/config/mcp_config.json` (Windows / Lin
 | `specboard_build` | Gera `.specboard/painel.html` (snapshot estático somente leitura) | Não |
 | `specboard_harness` | Retorna o mapa completo de Skills, MCPs, Scripts, Hooks e Fluxo | Não |
 | `specboard_trace_tool` | Registra uso observado de ferramentas em `execucoes.jsonl` (OTel) | Não |
+| `specboard_bugs` | Lista bugs, problemas de UX e melhorias reportados em `bugs.jsonl` | Não |
+| `specboard_bug_update` | Atualiza triagem e registra diagnóstico/correção do agente em um bug | Não |
 
 > **Garantia estrutural:** o servidor MCP **não expõe** nenhuma ferramenta de aprovação, revisão ou troca de política. Decisões humanas acontecem somente no painel interativo (`serve`) ou no terminal humano.
 

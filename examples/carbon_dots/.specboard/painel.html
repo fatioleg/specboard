@@ -4,62 +4,88 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SpecBoard</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230891b2'/%3E%3Cstop offset='100%25' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='%23fff' font-family='system-ui,sans-serif' font-size='14' font-weight='800'%3ESB%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2322d3ee'/%3E%3Cstop offset='100%25' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='%2304131c' font-family='system-ui,sans-serif' font-size='14' font-weight='800'%3ESB%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
-/* SpecBoard v2.1 — Experiência calma, legível, com sidebar na Home, localizador Onde Estou e Harness visual.
-   Gerado a partir de .specboard/estado.json — não edite o HTML gerado. */
+/* SpecBoard v2.2 — Linguagem visual luminosa (grade pontilhada + cartões com pílula no topo + brilho ciano/esmeralda)
+   tanto no Modo Claro quanto no Modo Escuro, com área de Bugs & Melhorias conectada ao MCP. */
 :root{
-  --bg:#f8fafc; --canvas-dot:rgba(15,23,42,.075);
-  --surface:#ffffff; --surface-2:#f1f5f9; --surface-glass:rgba(255,255,255,.92);
-  --fg:#0f172a; --muted:#475569; --line:#e2e8f0; --line-strong:#cbd5e1;
-  --accent:#0891b2; --accent-soft:rgba(8,145,178,.11); --accent-glow:rgba(8,145,178,.28);
-  --ok:#059669; --ok-soft:rgba(5,150,105,.12);
-  --exe:#d97706; --exe-soft:rgba(217,119,6,.13);
+  --bg:#f2f7fb; --canvas-dot:rgba(8,145,178,.13);
+  --halo-1:rgba(14,165,233,.11); --halo-2:rgba(16,185,129,.10);
+  --surface:rgba(255,255,255,.94); --surface-solid:#ffffff; --surface-2:#eef4f9; --surface-glass:rgba(248,252,255,.88);
+  --fg:#0b172a; --muted:#475569; --line:rgba(14,116,144,.16); --line-strong:rgba(14,116,144,.30);
+  --accent:#0891b2; --accent-hi:#06b6d4; --accent-soft:rgba(8,145,178,.11); --accent-glow:rgba(6,182,212,.28);
+  --ok:#059669; --ok-hi:#10b981; --ok-soft:rgba(16,185,129,.13); --ok-glow:rgba(16,185,129,.28);
+  --exe:#d97706; --exe-hi:#f59e0b; --exe-soft:rgba(245,158,11,.15); --exe-glow:rgba(245,158,11,.26);
   --rev:#2563eb; --rev-soft:rgba(37,99,235,.12);
-  --pause:#7c3aed; --pause-soft:rgba(124,58,237,.12);
+  --pause:#6d28d9; --pause-soft:rgba(124,58,237,.12);
   --run:#2563eb; --run-soft:rgba(37,99,235,.12);
   --block:#e11d48; --block-soft:rgba(225,29,72,.11);
-  --wait:#64748b; --wait-soft:rgba(100,116,139,.11);
+  --wait:#64748b; --wait-soft:rgba(100,116,139,.13);
   --edge:#94a3b8;
-  --shadow:0 1px 3px rgba(15,23,42,.05), 0 6px 20px rgba(15,23,42,.04);
-  --shadow-lg:0 16px 40px rgba(15,23,42,.13);
+  --pill-ink:#031521;
+  --shadow:0 4px 20px rgba(8,47,73,.06), 0 1px 3px rgba(8,47,73,.05);
+  --shadow-lg:0 18px 42px rgba(8,47,73,.12);
+  --shadow-cyan:0 10px 30px rgba(6,182,212,.14), 0 1px 3px rgba(8,47,73,.05);
+  --shadow-ok:0 14px 36px rgba(16,185,129,.17), 0 2px 6px rgba(8,47,73,.06);
   --f-display:"Plus Jakarta Sans","Inter","Segoe UI",system-ui,sans-serif;
   --f-body:"Inter","Segoe UI",system-ui,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0b101b; --canvas-dot:rgba(148,163,184,.10);
-  --surface:#121928; --surface-2:#182234; --surface-glass:rgba(18,25,40,.92);
-  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.16); --line-strong:rgba(148,163,184,.30);
-  --accent:#22d3ee; --accent-soft:rgba(34,211,238,.13); --accent-glow:rgba(34,211,238,.32);
-  --ok:#34d399; --ok-soft:rgba(52,211,153,.14);
-  --exe:#fbbf24; --exe-soft:rgba(251,191,36,.14);
-  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.14);
-  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.15);
-  --run:#60a5fa; --run-soft:rgba(96,165,250,.15);
-  --block:#fb7185; --block-soft:rgba(251,113,133,.14);
-  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.13);
-  --edge:#475569; --shadow:0 2px 10px rgba(0,0,0,.30); --shadow-lg:0 20px 48px rgba(0,0,0,.55);
+  --bg:#070d18; --canvas-dot:rgba(56,189,248,.13);
+  --halo-1:rgba(34,211,238,.13); --halo-2:rgba(52,211,153,.13);
+  --surface:rgba(15,24,41,.90); --surface-solid:#10192b; --surface-2:#162238; --surface-glass:rgba(8,14,26,.86);
+  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(56,189,248,.17); --line-strong:rgba(56,189,248,.34);
+  --accent:#22d3ee; --accent-hi:#38bdf8; --accent-soft:rgba(34,211,238,.13); --accent-glow:rgba(34,211,238,.36);
+  --ok:#34d399; --ok-hi:#34d399; --ok-soft:rgba(52,211,153,.15); --ok-glow:rgba(52,211,153,.36);
+  --exe:#fbbf24; --exe-hi:#f59e0b; --exe-soft:rgba(251,191,36,.15); --exe-glow:rgba(251,191,36,.32);
+  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.15);
+  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.16);
+  --run:#60a5fa; --run-soft:rgba(96,165,250,.16);
+  --block:#fb7185; --block-soft:rgba(251,113,133,.15);
+  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.16);
+  --edge:#475569;
+  --pill-ink:#031521;
+  --shadow:0 6px 24px rgba(0,0,0,.34);
+  --shadow-lg:0 22px 52px rgba(0,0,0,.58);
+  --shadow-cyan:0 0 34px rgba(34,211,238,.15), 0 10px 28px rgba(0,0,0,.40);
+  --shadow-ok:0 0 40px rgba(52,211,153,.19), 0 14px 34px rgba(0,0,0,.45);
   color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0b101b; --canvas-dot:rgba(148,163,184,.10);
-  --surface:#121928; --surface-2:#182234; --surface-glass:rgba(18,25,40,.92);
-  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.16); --line-strong:rgba(148,163,184,.30);
-  --accent:#22d3ee; --accent-soft:rgba(34,211,238,.13); --accent-glow:rgba(34,211,238,.32);
-  --ok:#34d399; --ok-soft:rgba(52,211,153,.14);
-  --exe:#fbbf24; --exe-soft:rgba(251,191,36,.14);
-  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.14);
-  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.15);
-  --run:#60a5fa; --run-soft:rgba(96,165,250,.15);
-  --block:#fb7185; --block-soft:rgba(251,113,133,.14);
-  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.13);
-  --edge:#475569; --shadow:0 2px 10px rgba(0,0,0,.30); --shadow-lg:0 20px 48px rgba(0,0,0,.55);
+  --bg:#070d18; --canvas-dot:rgba(56,189,248,.13);
+  --halo-1:rgba(34,211,238,.13); --halo-2:rgba(52,211,153,.13);
+  --surface:rgba(15,24,41,.90); --surface-solid:#10192b; --surface-2:#162238; --surface-glass:rgba(8,14,26,.86);
+  --fg:#f1f5f9; --muted:#94a3b8; --line:rgba(56,189,248,.17); --line-strong:rgba(56,189,248,.34);
+  --accent:#22d3ee; --accent-hi:#38bdf8; --accent-soft:rgba(34,211,238,.13); --accent-glow:rgba(34,211,238,.36);
+  --ok:#34d399; --ok-hi:#34d399; --ok-soft:rgba(52,211,153,.15); --ok-glow:rgba(52,211,153,.36);
+  --exe:#fbbf24; --exe-hi:#f59e0b; --exe-soft:rgba(251,191,36,.15); --exe-glow:rgba(251,191,36,.32);
+  --rev:#60a5fa; --rev-soft:rgba(96,165,250,.15);
+  --pause:#a78bfa; --pause-soft:rgba(167,139,250,.16);
+  --run:#60a5fa; --run-soft:rgba(96,165,250,.16);
+  --block:#fb7185; --block-soft:rgba(251,113,133,.15);
+  --wait:#94a3b8; --wait-soft:rgba(148,163,184,.16);
+  --edge:#475569;
+  --pill-ink:#031521;
+  --shadow:0 6px 24px rgba(0,0,0,.34);
+  --shadow-lg:0 22px 52px rgba(0,0,0,.58);
+  --shadow-cyan:0 0 34px rgba(34,211,238,.15), 0 10px 28px rgba(0,0,0,.40);
+  --shadow-ok:0 0 40px rgba(52,211,153,.19), 0 14px 34px rgba(0,0,0,.45);
   color-scheme:dark}
 
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html,body{
+  margin:0;padding:0;min-height:100%;color:var(--fg);font:14px/1.55 var(--f-body);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(ellipse 65% 42% at 50% -6%, var(--halo-2), transparent 68%),
+    radial-gradient(ellipse 45% 35% at 15% 18%, var(--halo-1), transparent 70%),
+    radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);
+  background-size:100% 100%, 100% 100%, 22px 22px;
+  background-attachment:fixed;
+}
 h1,h2,h3,h4{margin:0;font-family:var(--f-display);letter-spacing:-.015em}
 p{margin:0}
 a{color:var(--accent);text-decoration:none}
@@ -71,151 +97,186 @@ code,pre,.mono{font-family:var(--f-mono);font-size:12px}
 .wrap-any{min-width:0;overflow-wrap:anywhere;word-break:break-word}
 .clamp1{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.clamp3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
 .shell{min-height:100vh;display:flex;flex-direction:column}
 
-/* === BARRA SUPERIOR COM BOTÃO HOME SEMPRE VISÍVEL === */
-.nav{position:sticky;top:0;z-index:45;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 22px;background:var(--surface-glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);flex-wrap:wrap}
-.nav-left,.nav-right{display:flex;align-items:center;gap:9px;min-width:0}
-.brand-btn{display:inline-flex;align-items:center;gap:9px;background:none;border:0;padding:2px 4px;border-radius:10px;cursor:pointer;text-align:left;min-width:0}
-.brand-btn:hover{background:var(--surface-2)}
-.brand-logo{width:32px;height:32px;border-radius:9px;object-fit:cover;border:1px solid var(--line-strong);box-shadow:0 2px 8px rgba(0,0,0,.18);flex:0 0 auto;background:#021324}
-.proj-title{font:700 15px var(--f-display);max-width:290px}
-.home-quick-btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line-strong);background:var(--surface);color:var(--fg);border-radius:9px;padding:5px 11px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .14s;white-space:nowrap}
+/* === BARRA SUPERIOR GLASSMÓRFICA === */
+.nav{position:sticky;top:0;z-index:45;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 18px;background:var(--surface-glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);flex-wrap:nowrap}
+.nav-left,.nav-right{display:flex;align-items:center;gap:6px;min-width:0}
+.brand-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:0;padding:2px 5px 2px 2px;border-radius:11px;cursor:pointer;text-align:left;min-width:0}
+.brand-btn:hover{background:var(--accent-soft)}
+.brand-logo{width:32px;height:32px;border-radius:9px;object-fit:cover;border:1.5px solid var(--accent-glow);box-shadow:0 0 12px var(--accent-soft);flex:0 0 auto;background:#021324}
+.proj-title{font:800 14px var(--f-display);max-width:190px}
+.home-quick-btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line-strong);background:var(--surface-solid);color:var(--fg);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .14s;white-space:nowrap}
 .home-quick-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-.home-quick-btn.is-away{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
-.q-toggle{border:1px solid var(--line);background:var(--surface-2);color:var(--muted);border-radius:99px;padding:4px 10px;font-size:12px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.home-quick-btn.is-away{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);box-shadow:0 0 14px var(--accent-soft)}
+.q-toggle{border:1px solid var(--line);background:var(--surface-2);color:var(--muted);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
 .q-toggle:hover{border-color:var(--accent);color:var(--fg)}
 
-.seg-tabs{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
-.seg-tab{border:0;background:transparent;color:var(--muted);padding:6px 14px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .14s;white-space:nowrap}
+.seg-tabs{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;flex:0 0 auto}
+.seg-tab{border:0;background:transparent;color:var(--muted);padding:5px 11px;border-radius:999px;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .14s;white-space:nowrap}
 .seg-tab:hover{color:var(--fg)}
-.seg-tab[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.12)}
-.seg-badge{background:var(--exe-soft);color:var(--exe);border-radius:99px;padding:1px 7px;font-size:11px;font-weight:700}
+.seg-tab[aria-selected="true"]{background:var(--surface-solid);color:var(--fg);box-shadow:0 2px 10px rgba(0,0,0,.14), 0 0 0 1px var(--line-strong)}
+.seg-badge{background:var(--exe-soft);color:var(--exe);border-radius:999px;padding:1px 6px;font-size:10.5px;font-weight:800}
+.seg-badge.is-bug{background:var(--block-soft);color:var(--block)}
 
-.pill-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 12px;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .14s;white-space:nowrap}
-.pill-btn:hover{border-color:var(--accent)}
-.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--line);background:var(--surface);border-radius:9px;cursor:pointer;font-size:14px;transition:all .14s}
+.pill-btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--surface-solid);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;transition:all .14s;white-space:nowrap}
+.pill-btn:hover{border-color:var(--accent);box-shadow:0 0 14px var(--accent-soft)}
+.pill-btn.bug-cta{border-color:rgba(245,158,11,.42);background:var(--exe-soft);color:var(--exe);font-weight:700}
+.pill-btn.bug-cta:hover{border-color:var(--exe);box-shadow:0 0 16px var(--exe-glow)}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--line);background:var(--surface-solid);border-radius:999px;cursor:pointer;font-size:14px;transition:all .14s}
 .icon-btn:hover{border-color:var(--accent);color:var(--accent)}
-.dot-live{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.dot-live{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
 .dot-static{width:7px;height:7px;border-radius:50%;background:var(--wait)}
 
-.q-drawer{padding:11px 22px;background:var(--surface-2);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:13.5px}
+.q-drawer{padding:11px 22px;background:var(--surface-solid);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:13.5px}
 .offline-tip{padding:9px 22px;background:var(--surface-2);border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 /* === CONTAINER === */
-.main{width:100%;max-width:1320px;margin:0 auto;padding:20px 22px 44px;display:grid;gap:18px;flex:1}
+.main{width:100%;max-width:1360px;margin:0 auto;padding:22px 22px 48px;display:grid;gap:20px;flex:1}
 .main.full-bleed{max-width:1660px}
 
-/* === BOTÕES === */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line-strong);background:var(--surface);color:var(--fg);border-radius:9px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:all .14s;white-space:nowrap}
-.btn:hover:not(:disabled){border-color:var(--accent);transform:translateY(-1px)}
-.btn:disabled{opacity:.42;cursor:not-allowed;transform:none}
-.btn-accent{background:var(--accent);border-color:var(--accent);color:#04131c}
-.btn-accent:hover:not(:disabled){filter:brightness(1.06)}
-.btn-ok{background:var(--ok);border-color:var(--ok);color:#031c13}
-.btn-ok:hover:not(:disabled){filter:brightness(1.06)}
-.btn-soft-ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
-.btn-soft-ok:hover:not(:disabled){border-color:var(--ok)}
-.btn-soft-warn{background:var(--exe-soft);border-color:transparent;color:var(--exe)}
+/* === BOTÕES EM PÍLULA LUMINOSA (ESTILO DA FIGURA HERO!) === */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line-strong);background:var(--surface-solid);color:var(--fg);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn:hover:not(:disabled){border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 16px var(--accent-soft)}
+.btn:disabled{opacity:.42;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-accent{background:linear-gradient(135deg, var(--accent-hi), var(--accent));border-color:transparent;color:var(--pill-ink);box-shadow:0 6px 20px var(--accent-glow)}
+.btn-accent:hover:not(:disabled){filter:brightness(1.06);box-shadow:0 8px 24px var(--accent-glow)}
+.btn-ok{background:linear-gradient(135deg, var(--ok-hi), var(--ok));border-color:transparent;color:#031c13;box-shadow:0 6px 20px var(--ok-glow)}
+.btn-ok:hover:not(:disabled){filter:brightness(1.06);box-shadow:0 8px 26px var(--ok-glow)}
+.btn-amber{background:linear-gradient(135deg, #fbbf24, #f59e0b);border-color:transparent;color:#1c1103;box-shadow:0 6px 20px var(--exe-glow)}
+.btn-amber:hover:not(:disabled){filter:brightness(1.05);box-shadow:0 8px 24px var(--exe-glow)}
+.btn-slate{background:var(--surface-2);border-color:var(--line-strong);color:var(--fg)}
+.btn-slate:hover:not(:disabled){border-color:var(--accent);background:var(--surface-solid)}
+.btn-soft-ok{background:var(--ok-soft);border-color:rgba(16,185,129,.28);color:var(--ok)}
+.btn-soft-ok:hover:not(:disabled){border-color:var(--ok);box-shadow:0 4px 14px var(--ok-soft)}
+.btn-soft-warn{background:var(--exe-soft);border-color:rgba(245,158,11,.32);color:var(--exe)}
 .btn-soft-warn:hover:not(:disabled){border-color:var(--exe)}
-.btn-soft-pause{background:var(--pause-soft);border-color:transparent;color:var(--pause)}
+.btn-soft-pause{background:var(--pause-soft);border-color:rgba(124,58,237,.28);color:var(--pause)}
 .btn-soft-pause:hover:not(:disabled){border-color:var(--pause)}
-.btn-soft-block{background:var(--block-soft);border-color:transparent;color:var(--block)}
+.btn-soft-block{background:var(--block-soft);border-color:rgba(225,29,72,.28);color:var(--block)}
 .btn-soft-block:hover:not(:disabled){border-color:var(--block)}
-.btn-soft-accent{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.btn-soft-accent{background:var(--accent-soft);border-color:rgba(8,145,178,.28);color:var(--accent)}
 .btn-soft-accent:hover:not(:disabled){border-color:var(--accent)}
 .btn-ghost{background:transparent;border-color:transparent;color:var(--muted)}
-.btn-ghost:hover:not(:disabled){background:var(--surface-2);color:var(--fg);border-color:transparent;transform:none}
-.btn-sm{padding:6px 11px;font-size:12.5px;border-radius:8px}
-.btn-xs{padding:4px 9px;font-size:12px;border-radius:7px}
+.btn-ghost:hover:not(:disabled){background:var(--surface-2);color:var(--fg);border-color:transparent;transform:none;box-shadow:none}
+.btn-sm{padding:6px 13px;font-size:12.5px}
+.btn-xs{padding:4px 10px;font-size:12px}
 
 /* === STATUS PILLS === */
-.st-pill{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:3px 9px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.st-pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 10px;font-size:11.5px;font-weight:700;white-space:nowrap}
 .st-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 .st-pill.nob::before{display:none}
-.st-verificado{background:var(--ok-soft);color:var(--ok)}
+.st-verificado,.st-resolvido{background:var(--ok-soft);color:var(--ok)}
 .st-revisado{background:var(--rev-soft);color:var(--rev)}
-.st-executado,.st-aguarda{background:var(--exe-soft);color:var(--exe)}
+.st-executado,.st-aguarda,.st-em_analise{background:var(--exe-soft);color:var(--exe)}
 .st-aguardando_decisao{background:var(--pause-soft);color:var(--pause)}
 .st-em_curso,.st-parcial{background:var(--run-soft);color:var(--run)}
-.st-bloqueado,.st-correcao_solicitada{background:var(--block-soft);color:var(--block)}
-.st-pendente{background:var(--wait-soft);color:var(--wait)}
+.st-bloqueado,.st-correcao_solicitada,.st-aberto{background:var(--block-soft);color:var(--block)}
+.st-pendente,.st-descartado{background:var(--wait-soft);color:var(--wait)}
 .st-code{background:var(--pause-soft);color:var(--pause)}
 .st-accent{background:var(--accent-soft);color:var(--accent)}
-.code-tag{font:600 11.5px var(--f-mono);color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;white-space:nowrap}
+.code-tag{font:600 11.5px var(--f-mono);color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:2px 7px;white-space:nowrap}
 
 /* === MENU "⋯" === */
 .menu-wrap{position:relative;display:inline-flex}
-.menu-pop{position:absolute;right:0;top:calc(100% + 5px);z-index:60;min-width:205px;background:var(--surface);border:1px solid var(--line-strong);border-radius:12px;padding:6px;box-shadow:var(--shadow-lg);display:grid;gap:2px}
-.menu-item{border:0;background:transparent;text-align:left;padding:8px 10px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--fg)}
+.menu-pop{position:absolute;right:0;top:calc(100% + 5px);z-index:60;min-width:210px;background:var(--surface-solid);border:1px solid var(--line-strong);border-radius:14px;padding:6px;box-shadow:var(--shadow-lg);display:grid;gap:2px}
+.menu-item{border:0;background:transparent;text-align:left;padding:8px 11px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--fg)}
 .menu-item:hover{background:var(--surface-2)}
 .menu-item.danger{color:var(--block)}
 .menu-sep{height:1px;background:var(--line);margin:4px 0}
 
-/* === CARDS === */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px;box-shadow:var(--shadow);display:grid;gap:12px;min-width:0}
-.alert-strip{background:var(--block-soft);border:1px solid var(--block);color:var(--fg);border-radius:12px;padding:12px 15px;font-size:13.5px}
+/* === CARDS GLASSMÓRFICOS === */
+.card{background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow);display:grid;gap:14px;min-width:0}
+.alert-strip{background:var(--block-soft);border:1px solid var(--block);color:var(--fg);border-radius:13px;padding:12px 15px;font-size:13.5px}
 
-/* === HOME (AGORA) COM SIDEBAR LATERAL DE ÁREAS DO PROJETO === */
-.home-shell{display:grid;grid-template-columns:270px minmax(0,1fr);gap:20px;align-items:start}
-.home-sidebar{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);display:grid;gap:16px;position:sticky;top:72px;max-height:calc(100vh - 90px);overflow-y:auto;min-width:0}
+/* === HOME (AGORA) — ESTILO HERO IMAGE (3 CARTÕES LUMINOSOS + SIDEBAR) === */
+.home-shell{display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px;align-items:start}
+.home-sidebar{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:20px;padding:18px 16px;box-shadow:var(--shadow);display:grid;gap:16px;position:sticky;top:74px;max-height:calc(100vh - 92px);overflow-y:auto;min-width:0}
 .sb-group-brand{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
-.sb-group-logo{width:50px;height:50px;border-radius:12px;object-fit:cover;border:1px solid var(--line-strong);box-shadow:0 4px 12px rgba(0,0,0,.22);flex:0 0 auto;background:#021324}
+.sb-group-logo{width:52px;height:52px;border-radius:14px;object-fit:cover;border:1.5px solid var(--accent-glow);box-shadow:0 0 18px var(--accent-soft);flex:0 0 auto;background:#021324}
 .sb-sec{display:grid;gap:6px}
-.sb-sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:0 6px}
-.sb-nav-btn{border:1px solid transparent;background:transparent;border-radius:10px;padding:8px 10px;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;font-weight:600;color:var(--fg);transition:all .13s;width:100%}
+.sb-sec-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:0 6px}
+.sb-nav-btn{border:1px solid transparent;background:transparent;border-radius:11px;padding:8px 11px;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;font-weight:600;color:var(--fg);transition:all .14s;width:100%}
 .sb-nav-btn:hover{background:var(--surface-2);border-color:var(--line)}
-.sb-area-btn{border:1px solid var(--line);background:var(--surface-2);border-radius:11px;padding:9px 11px;text-align:left;cursor:pointer;display:grid;gap:4px;transition:all .14s;width:100%}
-.sb-area-btn:hover{border-color:var(--accent);background:var(--surface)}
-.sb-area-btn.is-current{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-soft),var(--surface));box-shadow:0 0 0 1px var(--accent)}
+.sb-area-btn{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:9px 11px;text-align:left;cursor:pointer;display:grid;gap:4px;transition:all .15s;width:100%}
+.sb-area-btn:hover{border-color:var(--accent);background:var(--surface-solid);box-shadow:0 4px 14px var(--accent-soft)}
+.sb-area-btn.is-current{border:1.5px solid var(--accent);background:linear-gradient(135deg,var(--accent-soft),var(--surface-solid));box-shadow:0 0 18px var(--accent-soft)}
 .sb-area-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:700}
 .sb-area-title{font-size:13px;font-weight:700;line-height:1.3;color:var(--fg)}
-.home-content{display:grid;gap:18px;min-width:0}
+.home-content{display:grid;gap:22px;min-width:0}
 
-/* KPIs da Home SEM CORTAR TEXTO */
-.kpi-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.kpi-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:var(--shadow);display:grid;gap:8px;min-width:0;align-content:start}
-.kpi-lbl{font-size:12px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:8px}
-.kpi-val{font:700 16px var(--f-display);line-height:1.3}
-.kpi-sub{font-size:12.5px;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}
-.bar-slim{height:7px;border-radius:99px;background:var(--surface-2);overflow:hidden;display:flex}
+/* HERO VIVO EM 3 PILARES CONECTADOS (EXATAMENTE COMO A FIGURA DO README!) */
+.hero-header{text-align:center;display:grid;gap:6px;padding:4px 8px 2px}
+.hero-header-brand{display:inline-flex;align-items:center;justify-content:center;gap:11px;margin:0 auto}
+.hero-header h1{font:800 24px/1.2 var(--f-display);letter-spacing:-.025em}
+.hero-header p{font-size:13.5px;color:var(--muted);max-width:720px;margin:0 auto}
+
+.trio-stage{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1.22fr) 30px minmax(0,1fr);align-items:stretch;gap:6px;padding-top:14px}
+.trio-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);opacity:.9}
+.trio-arrow.ok{color:var(--ok)}
+
+.glow-card{position:relative;background:var(--surface);backdrop-filter:blur(12px);border-radius:20px;padding:26px 18px 18px;display:grid;gap:13px;align-content:space-between;transition:transform .16s, box-shadow .16s;min-width:0}
+.glow-card.c-cyan{border:1.5px solid var(--accent-glow);box-shadow:var(--shadow-cyan)}
+.glow-card.c-center{border:2px solid var(--ok);box-shadow:var(--shadow-ok);background:linear-gradient(180deg, var(--ok-soft) 0%, var(--surface) 30%, var(--surface) 100%)}
+.glow-card.c-ok{border:1.5px solid var(--ok-glow);box-shadow:var(--shadow-ok)}
+.glow-card:hover{transform:translateY(-2px)}
+
+/* Pílula flutuante no topo do cartão (assinatura da figura!) */
+.pill-crest{position:absolute;top:-14px;left:50%;transform:translateX(-50%);border-radius:999px;padding:5px 15px;font:800 11.5px/1 var(--f-display);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+.pill-crest.c-cyan{background:linear-gradient(135deg, #38bdf8, #06b6d4);color:#031521}
+.pill-crest.c-center{background:linear-gradient(135deg, #22d3ee, #34d399);color:#031521}
+.pill-crest.c-ok{background:linear-gradient(135deg, #34d399, #10b981);color:#031521}
+
+.mini-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mini-tile{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:9px 7px;text-align:center;display:grid;gap:2px}
+.mini-tile b{font:800 15px var(--f-display);color:var(--accent)}
+.mini-tile span{font-size:11px;color:var(--muted);font-weight:600}
+
+.hero-btn-stack{display:grid;gap:8px}
+.hero-btn-stack .btn{width:100%;padding:9px 14px;font-size:13.5px}
+.hero-btn-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* Mini trilha luminosa de fases no Cartão 3 */
+.phase-rail-mini{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;padding:6px 0}
+.phase-dot-btn{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:36px;padding:0 8px;border-radius:11px;border:1.5px solid var(--line-strong);background:var(--surface-2);color:var(--muted);font:800 12px var(--f-display);cursor:pointer;transition:all .14s}
+.phase-dot-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.phase-dot-btn.is-done{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);box-shadow:0 0 14px var(--ok-soft)}
+.phase-dot-btn.is-cur{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);box-shadow:0 0 16px var(--accent-glow)}
+.phase-sep{color:var(--muted);font-weight:700;font-size:12px}
+
+.bar-slim{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;display:flex;border:1px solid var(--line)}
 .bar-slim i{display:block;height:100%}
+.action-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
-.focus-card{background:linear-gradient(135deg, var(--surface) 0%, var(--surface) 60%, var(--accent-soft) 100%);border:1px solid var(--accent-glow);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);display:grid;gap:13px}
-.focus-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.focus-eyebrow{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--accent)}
-.focus-title{font:700 20px/1.3 var(--f-display)}
-.action-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding-top:2px}
-
-.queue-card{background:var(--surface);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}
-.queue-head{padding:15px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+/* Fila de decisão */
+.queue-card{background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.queue-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .qrows{display:grid}
 .qrow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--line);transition:background .12s}
 .qrow:last-child{border-bottom:0}
 .qrow:hover{background:var(--surface-2)}
 .qrow-main{display:grid;gap:5px;min-width:0}
-.qrow-title{font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.35}
+.qrow-title{font-weight:700;font-size:14.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.35}
 .qrow-sub{font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .qrow-actions{display:flex;align-items:center;gap:7px;flex-shrink:0}
 
 .bottom-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .compact-list{display:grid;gap:8px}
-.compact-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);font-size:13px}
-.compact-row.is-block{border-left:3px solid var(--block)}
+.compact-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 13px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);font-size:13px}
+.compact-row.is-block{border-left:3.5px solid var(--block)}
 
 /* === ABA PROJETO — MAPA ARCHIFY LEGÍVEL + LOCALIZADOR ONDE ESTOU === */
-.canvas-shell{display:grid;gap:12px}
-.canvas-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.canvas-shell{display:grid;gap:14px}
+.canvas-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:15px;padding:10px 15px;box-shadow:var(--shadow)}
 .canvas-bar-group{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.search-in{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:6px 11px;font-size:13px;width:210px}
-.search-in:focus{border-color:var(--accent);outline:none;background:var(--surface)}
+.search-in{border:1px solid var(--line-strong);background:var(--surface-2);border-radius:999px;padding:6px 14px;font-size:13px;width:210px}
+.search-in:focus{border-color:var(--accent);outline:none;background:var(--surface-solid)}
 
 .workspace-split{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
 .workspace-split.with-inspector{grid-template-columns:minmax(0,1fr) 380px}
 
-.arch-viewport{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1px solid var(--line);border-radius:16px;overflow:auto;min-height:540px;max-height:76vh;padding:20px}
+.arch-viewport{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1.5px solid var(--line);border-radius:20px;overflow:auto;min-height:540px;max-height:76vh;padding:22px;box-shadow:inset 0 0 36px var(--accent-soft)}
 .arch-world{position:relative;display:inline-flex;gap:24px;align-items:flex-start;transform-origin:0 0;min-width:max-content;padding:6px 12px 42px 6px}
 svg.arch-svg{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:visible}
 svg.arch-svg path{fill:none;transition:opacity .18s,stroke .18s,stroke-width .18s}
@@ -226,22 +287,21 @@ svg.arch-svg path.e-hot-down{stroke:var(--exe);stroke-width:2.8;stroke-dasharray
 svg.arch-svg path.e-hot-block{stroke:var(--block);stroke-width:3;stroke-dasharray:none}
 svg.arch-svg path.e-dim{opacity:.14}
 
-/* Largura generosa (272px) para NENHUM card esmagar texto */
 .lane{position:relative;z-index:2;width:272px;flex:0 0 auto;display:grid;gap:14px}
-.lane-head{background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:12px 14px;cursor:pointer;display:grid;gap:5px;box-shadow:var(--shadow);transition:all .16s;text-align:left}
+.lane-head{background:var(--surface-solid);border:1.5px solid var(--line);border-radius:15px;padding:12px 14px;cursor:pointer;display:grid;gap:5px;box-shadow:var(--shadow);transition:all .16s;text-align:left}
 .lane-head:hover{border-color:var(--accent)}
-.lane-head.is-current{border:2px solid var(--accent);background:linear-gradient(135deg, var(--accent-soft), var(--surface));box-shadow:0 0 0 3px var(--accent-soft), var(--shadow-lg)}
+.lane-head.is-current{border:2px solid var(--accent);background:linear-gradient(135deg, var(--accent-soft), var(--surface-solid));box-shadow:0 0 0 3px var(--accent-soft), var(--shadow-cyan)}
 .lane-head-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:700}
 .lane-title{font:700 14.5px/1.3 var(--f-display)}
-.here-badge{display:inline-flex;align-items:center;gap:4px;background:var(--accent);color:#04131c;border-radius:99px;padding:2px 8px;font-size:10.5px;font-weight:800;letter-spacing:.02em;white-space:nowrap}
+.here-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg, var(--accent-hi), var(--ok-hi));color:#031521;border-radius:999px;padding:2px 9px;font-size:10.5px;font-weight:800;letter-spacing:.02em;white-space:nowrap}
 
-.mod-node{position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);display:grid;gap:10px;transition:all .15s}
+.mod-node{position:relative;background:var(--surface-solid);border:1.5px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow);display:grid;gap:10px;transition:all .15s}
 .mod-node::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:4px;border-radius:0 4px 4px 0;background:var(--node-accent,var(--wait))}
 .mod-node:hover{border-color:var(--line-strong);transform:translateY(-1px)}
-.mod-node.is-final{box-shadow:0 0 0 1.5px var(--accent), var(--shadow)}
+.mod-node.is-final{box-shadow:0 0 0 1.5px var(--accent), var(--shadow-cyan)}
 .mod-node.is-dim{opacity:.24}
 .mod-node.is-hot{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
-.mod-node.is-selected{border:2px solid var(--accent);background:linear-gradient(180deg, var(--accent-soft) 0%, var(--surface) 38%);box-shadow:0 0 0 4px var(--accent-soft), var(--shadow-lg)}
+.mod-node.is-selected{border:2px solid var(--accent);background:linear-gradient(180deg, var(--accent-soft) 0%, var(--surface-solid) 38%);box-shadow:0 0 0 4px var(--accent-soft), var(--shadow-cyan)}
 .mod-node.st-n-verificado{--node-accent:var(--ok)}
 .mod-node.st-n-aguarda{--node-accent:var(--exe)}
 .mod-node.st-n-em_curso{--node-accent:var(--run)}
@@ -253,121 +313,133 @@ svg.arch-svg path.e-dim{opacity:.14}
 .mod-title{font:700 14px/1.35 var(--f-display)}
 
 .stages-wrap{display:grid;gap:9px;padding-top:10px;border-top:1px dashed var(--line)}
-.st-card{background:var(--surface-2);border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;display:grid;gap:7px;cursor:pointer;transition:all .14s}
+.st-card{background:var(--surface-2);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:7px;cursor:pointer;transition:all .14s}
 .st-card:hover{border-color:var(--accent)}
-.st-card.is-sel{border:2px solid var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-soft), 0 8px 22px rgba(0,0,0,.14)}
-.st-card.is-here{border:2px solid var(--accent);background:linear-gradient(135deg, var(--accent-soft), var(--surface));box-shadow:0 0 0 4px var(--accent-soft)}
+.st-card.is-sel{border:2px solid var(--accent);background:var(--surface-solid);box-shadow:0 0 0 3px var(--accent-soft), var(--shadow-cyan)}
+.st-card.is-here{border:2px solid var(--ok);background:linear-gradient(135deg, var(--ok-soft), var(--surface-solid));box-shadow:0 0 0 4px var(--ok-soft)}
 .st-card-top{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:nowrap}
 .st-card-top .st-pill{font-size:10.5px;padding:2px 7px;white-space:nowrap}
 .st-card-title{font-size:13px;font-weight:600;line-height:1.38}
 
-/* Resumo legível em largura total (substitui as 3 caixinhas esmagadas!) */
 .st-preview{display:grid;gap:7px;padding-top:8px;border-top:1px solid var(--line);font-size:12px;line-height:1.45}
 .st-preview-meta{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;color:var(--muted);font-weight:600}
-.st-preview-crit{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:7px 9px;color:var(--fg);overflow-wrap:anywhere}
+.st-preview-crit{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:7px 9px;color:var(--fg);overflow-wrap:anywhere}
 
-/* === INSPETOR LATERAL DIREITO LEVE E AMIGÁVEL === */
-.inspector{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow-lg);display:grid;gap:14px;max-height:76vh;overflow-y:auto;position:sticky;top:72px;min-width:0}
+/* === INSPETOR LATERAL DIREITO === */
+.inspector{background:var(--surface);backdrop-filter:blur(12px);border:1.5px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow-lg);display:grid;gap:14px;max-height:76vh;overflow-y:auto;position:sticky;top:74px;min-width:0}
 .ins-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px}
 .ins-sec{display:grid;gap:7px;font-size:13.5px;min-width:0}
-.ins-sec h4{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.ins-box{background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:12px 14px;display:grid;gap:8px;min-width:0;overflow-wrap:anywhere;word-break:break-word}
+.ins-sec h4{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ins-box{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:8px;min-width:0;overflow-wrap:anywhere;word-break:break-word}
 .check-list{display:grid;gap:7px;margin:0;padding:0;list-style:none}
-.check-item{display:flex;gap:8px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:12.5px;line-height:1.45}
-.check-ic{color:var(--accent);font-weight:800;flex:0 0 auto;margin-top:1px}
-details.clean-fold{border:1px solid var(--line);border-radius:10px;padding:8px 11px;background:var(--surface-2)}
+.check-item{display:flex;gap:8px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.45}
+.check-ic{color:var(--ok);font-weight:800;flex:0 0 auto;margin-top:1px}
+details.clean-fold{border:1px solid var(--line);border-radius:11px;padding:8px 11px;background:var(--surface-2)}
 details.clean-fold summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--accent);list-style:none;display:flex;align-items:center;justify-content:space-between}
 details.clean-fold[open] summary{margin-bottom:8px}
 
 /* === REVISÃO CONTEXTUAL === */
-.rev-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
-.rev-rail{position:sticky;top:72px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow-lg);display:grid;gap:13px;min-width:0}
-.ev-stage{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:14px;display:grid;gap:10px;overflow-x:auto}
-.ev-img{max-width:100%;max-height:520px;object-fit:contain;border-radius:8px;background:#fff;border:1px solid var(--line);cursor:zoom-in}
-.ev-table-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.rev-grid{display:grid;grid-template-columns:minmax(0,1fr) 365px;gap:18px;align-items:start}
+.rev-rail{position:sticky;top:74px;background:var(--surface);backdrop-filter:blur(12px);border:1.5px solid var(--ok-glow);border-radius:18px;padding:20px;box-shadow:var(--shadow-ok);display:grid;gap:13px;min-width:0}
+.ev-stage{border:1px solid var(--line);background:var(--surface-2);border-radius:14px;padding:14px;display:grid;gap:10px;overflow-x:auto}
+.ev-img{max-width:100%;max-height:520px;object-fit:contain;border-radius:10px;background:#fff;border:1px solid var(--line);cursor:zoom-in}
+.ev-table-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface-solid)}
 .ev-table{border-collapse:collapse;width:100%;font-size:12.5px;font-family:var(--f-mono)}
 .ev-table th,.ev-table td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
 .ev-table th{position:sticky;top:0;background:var(--surface-2);font-weight:700}
 .ev-md{font-size:14px;line-height:1.6;display:grid;gap:8px}
-.ev-md pre{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;margin:0}
+.ev-md pre{background:var(--surface-solid);border:1px solid var(--line);border-radius:9px;padding:10px;overflow-x:auto;margin:0}
 .ev-md ul{margin:0;padding-left:18px}
 
-/* === ABA HARNESS & AGENTE (ESTRUTURADA, AMIGÁVEL E POR ENTIDADE) === */
-.harness-hero{background:linear-gradient(135deg, var(--surface) 0%, var(--surface) 58%, var(--accent-soft) 100%);border:1px solid var(--accent-glow);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);display:grid;gap:14px}
+/* === ABA HARNESS & AGENTE === */
+.harness-hero{background:linear-gradient(135deg, var(--surface) 0%, var(--surface) 56%, var(--accent-soft) 100%);border:1.5px solid var(--accent-glow);border-radius:20px;padding:22px 24px;box-shadow:var(--shadow-cyan);display:grid;gap:16px}
 .stat-pills{display:flex;flex-wrap:wrap;gap:8px}
-.stat-chip{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:6px 11px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .13s}
+.stat-chip{display:inline-flex;align-items:center;gap:6px;background:var(--surface-solid);border:1px solid var(--line-strong);border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .14s}
 .stat-chip:hover{border-color:var(--accent);transform:translateY(-1px)}
-.stat-chip.is-active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.stat-chip.is-active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);box-shadow:0 0 14px var(--accent-soft)}
 
 .arch-pillars{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
-.pillar-card{background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:12px;text-align:left;cursor:pointer;display:grid;gap:4px;position:relative;transition:all .14s;box-shadow:var(--shadow)}
-.pillar-card::before{content:"";position:absolute;top:0;left:10px;right:10px;height:3px;border-radius:0 0 3px 3px;background:var(--pc,var(--accent))}
-.pillar-card:hover,.pillar-card.is-active{border-color:var(--pc,var(--accent));transform:translateY(-1px);box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
+.pillar-card{background:var(--surface-solid);border:1.5px solid var(--line);border-radius:15px;padding:13px;text-align:left;cursor:pointer;display:grid;gap:4px;position:relative;transition:all .14s;box-shadow:var(--shadow)}
+.pillar-card::before{content:"";position:absolute;top:0;left:12px;right:12px;height:3px;border-radius:0 0 3px 3px;background:var(--pc,var(--accent))}
+.pillar-card:hover,.pillar-card.is-active{border-color:var(--pc,var(--accent));transform:translateY(-2px);box-shadow:0 0 18px var(--accent-soft), var(--shadow)}
 .pillar-ic{font-size:17px}
 .pillar-t{font:700 13px/1.25 var(--f-display)}
 .pillar-s{font-size:11.5px;color:var(--muted)}
 
-.entity-section{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px;box-shadow:var(--shadow);display:grid;gap:14px}
+.entity-section{background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow);display:grid;gap:14px}
 .entity-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
 .entity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
-.entity-card{background:var(--surface-2);border:1px solid var(--line);border-top:3px solid var(--ec,var(--accent));border-radius:12px;padding:13px 14px;display:grid;gap:7px;align-content:start;min-width:0;overflow-wrap:anywhere}
+.entity-card{background:var(--surface-2);border:1px solid var(--line);border-top:3px solid var(--ec,var(--accent));border-radius:14px;padding:14px 15px;display:grid;gap:7px;align-content:start;min-width:0;overflow-wrap:anywhere}
 .entity-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .entity-name{font:700 13.5px/1.3 var(--f-display)}
 .entity-desc{font-size:12.5px;line-height:1.45;color:var(--fg)}
 .entity-foot{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding-top:4px}
 
 .flow-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:12px}
-.flow-phase{background:var(--surface-2);border:1px solid var(--line);border-radius:13px;padding:13px;display:grid;gap:9px;align-content:start}
-.flow-mod{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 11px;display:grid;gap:5px;cursor:pointer;transition:all .13s;text-align:left;width:100%}
+.flow-phase{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:13px;display:grid;gap:9px;align-content:start}
+.flow-mod{background:var(--surface-solid);border:1px solid var(--line);border-radius:11px;padding:10px 11px;display:grid;gap:5px;cursor:pointer;transition:all .13s;text-align:left;width:100%}
 .flow-mod:hover{border-color:var(--accent)}
 
 .agent-shell{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;align-items:start}
-.agent-rail{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:14px;box-shadow:var(--shadow);display:grid;gap:10px;max-height:78vh;overflow-y:auto;position:sticky;top:72px;min-width:0}
+.agent-rail{background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow);display:grid;gap:10px;max-height:78vh;overflow-y:auto;position:sticky;top:74px;min-width:0}
 .rail-phase{display:grid;gap:4px}
 .rail-phase-lbl{font-size:11px;font-weight:700;color:var(--muted);padding:6px 6px 2px;letter-spacing:.02em}
-.rail-item{border:1px solid transparent;background:transparent;border-radius:9px;padding:8px 10px;text-align:left;cursor:pointer;display:grid;gap:3px;transition:all .12s;width:100%;min-width:0}
+.rail-item{border:1px solid transparent;background:transparent;border-radius:10px;padding:8px 10px;text-align:left;cursor:pointer;display:grid;gap:3px;transition:all .12s;width:100%;min-width:0}
 .rail-item:hover{background:var(--surface-2);border-color:var(--line)}
 .rail-item.is-active{background:var(--accent-soft);border-color:var(--accent)}
 .rail-item-title{font-size:13px;font-weight:600;line-height:1.35}
 .agent-main{display:grid;gap:16px;min-width:0}
-.agent-canvas{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1px solid var(--line);border-radius:16px;padding:16px;overflow:hidden}
+.agent-canvas{position:relative;background-color:var(--bg);background-image:radial-gradient(var(--canvas-dot) 1.25px, transparent 1.25px);background-size:20px 20px;border:1.5px solid var(--line);border-radius:18px;padding:16px;overflow:hidden}
 .layer-grid{position:relative;display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:18px;z-index:2}
-.layer-node{background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:12px 14px;cursor:pointer;text-align:left;display:grid;gap:4px;box-shadow:var(--shadow);transition:all .14s;position:relative;min-width:0}
+.layer-node{background:var(--surface-solid);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;display:grid;gap:4px;box-shadow:var(--shadow);transition:all .14s;position:relative;min-width:0}
 .layer-node::before{content:"";position:absolute;top:0;left:12px;right:12px;height:3px;border-radius:0 0 3px 3px;background:var(--layer-c,var(--accent))}
 .layer-node:hover{border-color:var(--accent);transform:translateY(-1px)}
-.layer-node.open{border-color:var(--accent);background:linear-gradient(135deg, var(--accent-soft), var(--surface));box-shadow:0 0 0 2px var(--accent-soft), var(--shadow)}
+.layer-node.open{border-color:var(--accent);background:linear-gradient(135deg, var(--accent-soft), var(--surface-solid));box-shadow:0 0 18px var(--accent-soft)}
 .clean-list{margin:0;padding-left:18px;display:grid;gap:6px}
 .chip-row{display:flex;flex-wrap:wrap;gap:6px}
-.file-chip{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:12px;max-width:100%}
+.file-chip{display:inline-flex;align-items:center;gap:5px;background:var(--surface-solid);border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12px;max-width:100%}
 .file-chip.is-btn{cursor:pointer}
 .file-chip.is-btn:hover{border-color:var(--accent);color:var(--accent)}
 .lineage{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .lin-node{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:12.5px}
 
+/* === ABA BUGS & MELHORIAS (TRIAGEM PARA AGENTES) === */
+.bugs-grid{display:grid;grid-template-columns:390px minmax(0,1fr);gap:20px;align-items:start}
+.bug-card{background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--line);border-left:4px solid var(--bc,var(--exe));border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);display:grid;gap:10px}
+.bug-card.sev-critico{--bc:var(--block)}
+.bug-card.sev-alto{--bc:#f97316}
+.bug-card.sev-medio{--bc:var(--exe)}
+.bug-card.sev-baixo{--bc:var(--accent)}
+.bug-agent-box{background:linear-gradient(135deg, var(--ok-soft), var(--surface-2));border:1px solid var(--ok-glow);border-radius:11px;padding:10px 12px;font-size:12.5px;display:grid;gap:4px}
+
 /* === MODAIS, TOAST E FORMULÁRIOS === */
-.input,.textarea{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:9px;padding:9px 11px;font-size:13.5px}
-.input:focus,.textarea:focus{border-color:var(--accent);outline:none;background:var(--surface)}
-.textarea{min-height:76px;resize:vertical}
-.modal-bg{position:fixed;inset:0;background:rgba(2,6,23,.58);backdrop-filter:blur(4px);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px}
-.modal-box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;display:grid;gap:14px;box-shadow:var(--shadow-lg)}
-.toast{position:fixed;right:20px;bottom:20px;z-index:90;background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:11px 16px;box-shadow:var(--shadow-lg);font-size:13.5px;font-weight:600;max-width:420px}
+.input,.textarea,.select{width:100%;border:1px solid var(--line-strong);background:var(--surface-2);border-radius:11px;padding:9px 12px;font-size:13.5px}
+.input:focus,.textarea:focus,.select:focus{border-color:var(--accent);outline:none;background:var(--surface-solid)}
+.textarea{min-height:80px;resize:vertical}
+.field-lbl{font-size:12px;font-weight:700;color:var(--muted);display:grid;gap:5px}
+.modal-bg{position:fixed;inset:0;background:rgba(2,6,23,.62);backdrop-filter:blur(6px);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:var(--surface-solid);border:1.5px solid var(--line-strong);border-radius:20px;padding:24px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;display:grid;gap:14px;box-shadow:var(--shadow-lg)}
+.toast{position:fixed;right:20px;bottom:20px;z-index:90;background:var(--surface-solid);border:1.5px solid var(--accent);border-radius:14px;padding:11px 16px;box-shadow:var(--shadow-cyan);font-size:13.5px;font-weight:700;max-width:440px}
 .toast.err{border-color:var(--block);color:var(--block)}
 .lightbox{position:fixed;inset:0;background:rgba(2,6,23,.88);z-index:95;display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
-.lightbox img{max-width:95vw;max-height:92vh;background:#fff;border-radius:10px}
+.lightbox img{max-width:95vw;max-height:92vh;background:#fff;border-radius:12px}
 
 /* === RESPONSIVO === */
-@media (max-width:1120px){
-  .home-shell,.workspace-split.with-inspector,.rev-grid,.agent-shell{grid-template-columns:minmax(0,1fr)}
+@media (max-width:1180px){
+  .nav{flex-wrap:wrap}
+  .home-shell,.workspace-split.with-inspector,.rev-grid,.agent-shell,.bugs-grid{grid-template-columns:minmax(0,1fr)}
   .home-sidebar,.inspector,.rev-rail,.agent-rail{position:static;max-height:none}
+  .trio-stage{grid-template-columns:minmax(0,1fr);gap:24px}
+  .trio-arrow{display:none}
   .arch-pillars{grid-template-columns:repeat(3,minmax(0,1fr))}
   .layer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:760px){
-  .kpi-strip,.bottom-two,.layer-grid,.arch-pillars{grid-template-columns:minmax(0,1fr)}
+  .bottom-two,.layer-grid,.arch-pillars,.hero-btn-pair{grid-template-columns:minmax(0,1fr)}
   .qrow{grid-template-columns:minmax(0,1fr);gap:8px}
   .arch-world{flex-direction:column;gap:20px;min-width:0;width:100%;padding:4px}
   .lane{width:100%}
-  .proj-title{max-width:170px}
+  .proj-title{max-width:160px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
@@ -375,14 +447,13 @@ details.clean-fold[open] summary{margin-bottom:8px}
 <body>
 <div class="shell" id="app"></div>
 <script>
-let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nome": "Carbon Dots — Estabilidade Estrutural", "titulo": "Estabilidade Térmica de Carbon Dots Funcionalizados", "subtitulo": "exemplo científico v2 (política só nos marcos + aba Agente)", "pergunta_central": "O núcleo grafítico de carbon dots funcionalizados mantém integridade estrutural a 400 K sem reconstrução de borda antes de avançar para simulações a 450 K?", "atualizado_em": "2026-11-26 08:30", "limite_fila": 5, "politica_aprovacao": {"modo": "so_marcos", "canal_padrao": "painel", "definida_em": "2026-11-24 09:00", "definida_por": "Pesquisador responsável"}, "atividade_agente": {"estado": "aguardando_humano", "etapa_id": "M2.3", "resumo": "Figura e relatório de estabilidade estrutural (M2.3) gerados; aguardando aprovação do marco para liberar a Fase 3.", "sessao_id": "sess-cd-04", "atualizado_em": "2026-11-26 07:45"}, "fontes": "examples/carbon_dots/reports/relatorio_m2.md, protocolo-md-cd v2.1"}, "fases": ["Fase 1 · Preparo", "Fase 2 · Análise Estrutural", "Fase 3 · Simulação 450 K", "Fase 4 · Síntese"], "modulos": [{"id": "M1", "titulo": "Geometria de referência e protocolo", "fase": "Fase 1 · Preparo", "objetivo": "Fixar estrutura de referência do núcleo grafítico e parâmetros do protocolo MD v2.1.", "depende_de": [], "marco": false, "contrato": {"pergunta": "As estruturas de entrada e o protocolo estão íntegros e versionados?", "criterios_aceitacao": ["Estrutura core_ref.xyz com checksum registrado", "Protocolo v2.1 travado antes da análise"], "criterio_abandono": "Se houver distorção inicial na minimização, revisar topologia antes de rodar dinâmica.", "parametros": {"protocolo": "protocolo-md-cd v2.1", "unidade_distancia": "Angstrom"}, "travado_em": "2026-11-24 09:30", "hash": "c1b5ba82ad4a"}, "etapas": [{"id": "M1.1", "titulo": "Validação da estrutura de referência (core_ref.xyz)", "status": "executado", "impacto": "alto", "revisao": "completa", "marco": true, "data": "2026-11-24", "afirmacao": "Geometria de referência do núcleo grafítico auditada sem contatos espúrios.", "verificacao": "Conferir data/core_ref.xyz (6 átomos de referência sintéticos em Å).", "evidencia": ["data/core_ref.xyz"], "_status": "verificado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": {"schema_hash_v": 2, "tipo": "decisao", "etapa": "M1.1", "acao": "verificado", "nivel": "verificado", "ator": "humano", "canal": "painel", "revisor": "Pesquisador", "nota": "Estrutura de referência conferida (exemplo sintético).", "data": "2026-11-26 11:46:29", "hash_etapa": "bc990e0ffcda", "etapa_meta_hash": "0e09b67c680189b1", "criterio_hash": "a08f58e8b6cb9c1b", "fingerprint_total": "b9b7bd24e0204f0d", "evidencias": [{"ref": "data/core_ref.xyz", "tipo": "arquivo_local", "estado": "ok", "sha256": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52", "bytes": 234, "versao": null}], "_seq": 1}, "_regs": [{"schema_hash_v": 2, "tipo": "decisao", "etapa": "M1.1", "acao": "verificado", "nivel": "verificado", "ator": "humano", "canal": "painel", "revisor": "Pesquisador", "nota": "Estrutura de referência conferida (exemplo sintético).", "data": "2026-11-26 11:46:29", "hash_etapa": "bc990e0ffcda", "etapa_meta_hash": "0e09b67c680189b1", "criterio_hash": "a08f58e8b6cb9c1b", "fingerprint_total": "b9b7bd24e0204f0d", "evidencias": [{"ref": "data/core_ref.xyz", "tipo": "arquivo_local", "estado": "ok", "sha256": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52", "bytes": 234, "versao": null}], "_seq": 1}], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "0e09b67c680189b1", "criterio_hash": "a08f58e8b6cb9c1b", "hash_etapa_v1": "bc990e0ffcda", "evidencias": [{"ref": "data/core_ref.xyz", "caminho_rel": "data/core_ref.xyz", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "texto", "estado": "ok", "sha256": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52", "versao": null, "bytes": 234, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}], "fingerprint_total": "b9b7bd24e0204f0d"}, "_eh_marco": true, "_modulo_id": "M1", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M2", "titulo": "Estabilidade estrutural a 400 K"}, {"tipo": "modulo", "id": "M2-B", "titulo": "Ramo paralelo: espectro vibracional a 300 K"}], "_bloqueia_agora": []}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": true, "_bloqueios_sistema": [], "_status_mod": "verificado"}, {"id": "M2", "titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "objetivo": "Calcular desvio estrutural (RMSD) do núcleo e da superfície na janela equilibrada (5–10 ns) e consolidar o marco de liberação da Fase 3.", "responde": "Determina se o modelo é estruturalmente estável a 400 K antes de investir custo computacional em 450 K.", "depende_de": ["M1"], "marco": true, "contrato": {"pergunta": "O núcleo grafítico permanece com RMSD <= 0.80 Å em 5–10 ns a 400 K?", "criterios_aceitacao": ["RMSD médio e máximo do núcleo <= 0.80 Å na janela 5–10 ns", "100% de integridade dos anéis aromáticos", "Checagens determinísticas de unidades (Å) e máscara de átomos aprovadas"], "criterio_abandono": "Se RMSD do núcleo > 1.20 Å ou houver ruptura de anel, interromper e revisar campo de força antes da Fase 3.", "parametros": {"temperatura_K": 400, "janela_ns": "5-10", "limiar_rmsd_A": 0.8}, "travado_em": "2026-11-24 09:30", "hash": "b5ba46ffa1bb"}, "etapas": [{"id": "M2.1", "titulo": "Seleção de máscara de átomos e janela de equilíbrio", "status": "executado", "impacto": "medio", "revisao": "completa", "marco": false, "data": "2026-11-25", "afirmacao": "Máscara do núcleo grafítico separada dos grupos funcionais de borda; janela equilibrada definida em 5–10 ns.", "verificacao": "Conferir script scripts/calc_rmsd.py e máscara em data/core_ref.xyz.", "evidencia": ["data/core_ref.xyz", "scripts/calc_rmsd.py"], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "fb470fa82a1218e4", "criterio_hash": "903166aadfa815f9", "hash_etapa_v1": "ac8923ba6241", "evidencias": [{"ref": "data/core_ref.xyz", "caminho_rel": "data/core_ref.xyz", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "texto", "estado": "ok", "sha256": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52", "versao": null, "bytes": 234, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}, {"ref": "scripts/calc_rmsd.py", "caminho_rel": "scripts/calc_rmsd.py", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "texto", "estado": "ok", "sha256": "7af9edd53aef5ecb879af6e61eda4630a2e91b0549693b8d52ebf17c89e1ba3d", "versao": null, "bytes": 2086, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}], "fingerprint_total": "3b5c7eed6663f4d9"}, "_eh_marco": false, "_modulo_id": "M2", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "_bloqueia_agora": []}, {"id": "M2.2", "titulo": "Cálculo determinístico de desvio estrutural (RMSD)", "status": "executado", "impacto": "alto", "revisao": "completa", "marco": false, "data": "2026-11-26", "afirmacao": "RMSD do núcleo calculado em 0.425 Å (máximo 0.440 Å) na janela 5–10 ns; checagens determinísticas de unidades e integridade aprovadas.", "verificacao": "Conferir série temporal em data/rmsd_cd_400k.csv e executar scripts/calc_rmsd.py.", "evidencia": ["data/rmsd_cd_400k.csv", "scripts/calc_rmsd.py"], "arquitetura_agente": {"papel": "Analista de trajetórias MD (cálculo determinístico auditável)", "contexto_duravel": {"objetivo": "Calcular RMSD do núcleo grafítico a 400 K com verificação determinística de unidades, máscara e integridade.", "decisoes_aceitas": ["D-01: usar janela equilibrada 5–10 ns", "D-02: reportar distâncias exclusivamente em Angstrom (Å)"], "protocolo": {"nome": "protocolo-md-cd", "versao": "v2.1", "caminho": "reports/relatorio_m2.md"}, "janela_analise": "5.0–10.0 ns (passo 1.0 ns)", "artefatos_referencia": [{"nome": "Estrutura de referência do núcleo", "caminho": "data/core_ref.xyz", "papel": "alinhamento RMSD"}, {"nome": "Script determinístico de RMSD", "caminho": "scripts/calc_rmsd.py", "papel": "execução e validação"}]}, "contexto_execucao": {"fontes_carregadas": ["protocolo-md-cd v2.1", "data/core_ref.xyz", "contrato M2", "checkpoint M1.1"], "fontes_omitidas": ["logs brutos de minimização da Fase 1", "trajetórias de sistemas descartados"], "estrategia_retomada": "Em sessão limpa ou troca de agente, rodar `python specboard.py context M2.2` para carregar apenas protocolo v2.1, estrutura de referência, janela 5–10 ns e guardrails."}, "componentes": [{"id": "cd-rmsd-analysis", "nome": "cd-rmsd-analysis", "tipo": "skill", "versao_origem": "skills/cd-rmsd-analysis v1.2", "funcao": "Padroniza alinhamento de núcleo grafítico, extração de janela equilibrada e checagem de unidades.", "motivo_escolha": "Evita erros recorrentes de mistura Å/nm e inclusão indevida de grupos de borda.", "planejado": true, "configurado": true}, {"id": "calc_rmsd.py", "nome": "calc_rmsd.py", "tipo": "local_tool", "versao_origem": "scripts/calc_rmsd.py (local)", "funcao": "Calcula média/máximo de RMSD e executa validações determinísticas de entrada.", "motivo_escolha": "Reprodutível offline sem depender de cálculo simbólico pelo LLM.", "planejado": true, "configurado": true}, {"id": "pubchem-mcp", "nome": "pubchem-mcp", "tipo": "mcp_tool", "mcp_server": "pubchem-reference", "versao_origem": "mcp:pubchem-reference v0.4 (opcional)", "funcao": "Consulta externa opcional a parâmetros de literatura; entra apenas se houver recurso externo pertinente.", "motivo_escolha": "Não necessário quando os dados locais estão completos.", "planejado": false, "configurado": true}], "guardrails": [{"id": "G-01", "regra": "Conferir unidade explícita em Angstrom (Å)", "natureza": "codigo", "onde_aplica": "pré-cálculo em scripts/calc_rmsd.py", "verifica": "Presença da coluna rmsd_core_angstrom e rejeição de entradas em nm sem conversão.", "se_falhar": "Aborta com exit code 1 e bloqueia geração de evidência.", "referencia_codigo": "scripts/calc_rmsd.py::analisar_rmsd"}, {"id": "G-02", "regra": "Validar máscara de átomos e integridade do XYZ", "natureza": "codigo", "onde_aplica": "leitura de data/core_ref.xyz", "verifica": "Contagem de átomos consistente com cabeçalho XYZ e SHA-256 íntegro.", "se_falhar": "Levanta ValueError e impede cálculo silencioso com máscara errada.", "referencia_codigo": "scripts/calc_rmsd.py::validar_xyz"}, {"id": "G-03", "regra": "Nunca sobrescrever arquivos originais de entrada", "natureza": "instrucao", "onde_aplica": "SKILL.md / prompt do agente", "verifica": "Disciplina operacional do agente durante análise.", "se_falhar": "Detectado posteriormente via divergência de SHA-256 no SpecBoard."}], "linhagem": [{"etapa_fluxo": "Script local", "artefato": "scripts/calc_rmsd.py", "detalhe": "Validação determinística Å + máscara"}, {"etapa_fluxo": "Resultado", "artefato": "data/rmsd_cd_400k.csv", "detalhe": "RMSD núcleo 0.425 Å (5–10 ns)"}, {"etapa_fluxo": "Evidência", "artefato": "figs/estabilidade_cd_400k.png", "detalhe": "Figura revisada no marco M2.3"}], "avaliacao": {"nota_separacao": "Casos de referência medem confiabilidade do fluxo do agente (trajetória de ferramentas e aderência ao protocolo); não substituem a aprovação científica humana do marco M2.3.", "casos_referencia": [{"id": "EVAL-CD-01", "titulo": "Rejeição de tabela em nm sem conversão", "qualidade_resultado": "100% de detecção antes do gráfico", "trajetoria_ferramentas": "cd-rmsd-analysis → calc_rmsd.py (erro capturado)", "tempo_ou_chamadas": "2 chamadas · 1.4 s", "status": "passou"}, {"id": "EVAL-CD-02", "titulo": "Retomada em sessão limpa sem ler Fase 1", "qualidade_resultado": "Reproduziu RMSD 0.425 Å idêntico", "trajetoria_ferramentas": "context M2.2 → calc_rmsd.py", "tempo_ou_chamadas": "2 chamadas · 1.1 s", "status": "passou"}]}}, "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "c5c096c32824cbba", "criterio_hash": "903166aadfa815f9", "hash_etapa_v1": "23929e73214f", "evidencias": [{"ref": "data/rmsd_cd_400k.csv", "caminho_rel": "data/rmsd_cd_400k.csv", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "tabela", "estado": "ok", "sha256": "1c8762e84846bc15e9036eb9b02f5a932598cbf850b7d7e030564fff486fa618", "versao": null, "bytes": 277, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}, {"ref": "scripts/calc_rmsd.py", "caminho_rel": "scripts/calc_rmsd.py", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "texto", "estado": "ok", "sha256": "7af9edd53aef5ecb879af6e61eda4630a2e91b0549693b8d52ebf17c89e1ba3d", "versao": null, "bytes": 2086, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}], "fingerprint_total": "7a26a729dfa47d45"}, "_eh_marco": false, "_modulo_id": "M2", "_agente": {"papel": "Analista de trajetórias MD (cálculo determinístico auditável)", "contexto_duravel": {"objetivo": "Calcular RMSD do núcleo grafítico a 400 K com verificação determinística de unidades, máscara e integridade.", "decisoes_aceitas": ["D-01: usar janela equilibrada 5–10 ns", "D-02: reportar distâncias exclusivamente em Angstrom (Å)"], "protocolo": {"nome": "protocolo-md-cd", "versao": "v2.1", "caminho": "reports/relatorio_m2.md"}, "janela_analise": "5.0–10.0 ns (passo 1.0 ns)", "artefatos_referencia": [{"nome": "Estrutura de referência do núcleo", "caminho": "data/core_ref.xyz", "papel": "alinhamento RMSD", "estado_arquivo": "ok", "sha256_atual": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52"}, {"nome": "Script determinístico de RMSD", "caminho": "scripts/calc_rmsd.py", "papel": "execução e validação", "estado_arquivo": "ok", "sha256_atual": "7af9edd53aef5ecb879af6e61eda4630a2e91b0549693b8d52ebf17c89e1ba3d"}]}, "contexto_execucao": {"fontes_carregadas": ["protocolo-md-cd v2.1", "data/core_ref.xyz", "contrato M2", "checkpoint M1.1"], "fontes_omitidas": ["logs brutos de minimização da Fase 1", "trajetórias de sistemas descartados"], "estrategia_retomada": "Em sessão limpa ou troca de agente, rodar `python specboard.py context M2.2` para carregar apenas protocolo v2.1, estrutura de referência, janela 5–10 ns e guardrails."}, "componentes": [{"id": "cd-rmsd-analysis", "nome": "cd-rmsd-analysis", "tipo": "skill", "mcp_server": null, "versao_origem": "skills/cd-rmsd-analysis v1.2", "funcao": "Padroniza alinhamento de núcleo grafítico, extração de janela equilibrada e checagem de unidades.", "motivo_escolha": "Evita erros recorrentes de mistura Å/nm e inclusão indevida de grupos de borda.", "planejado": true, "configurado": true, "observado": {"estado": "observado", "label": "observado (1x)", "chamadas": 1, "duracao_total_ms": 340, "ultimo_status": "ok", "ultima_em": "2026-11-26 07:41:10", "observado_por": "wrapper"}}, {"id": "calc_rmsd.py", "nome": "calc_rmsd.py", "tipo": "local_tool", "mcp_server": null, "versao_origem": "scripts/calc_rmsd.py (local)", "funcao": "Calcula média/máximo de RMSD e executa validações determinísticas de entrada.", "motivo_escolha": "Reprodutível offline sem depender de cálculo simbólico pelo LLM.", "planejado": true, "configurado": true, "observado": {"estado": "observado", "label": "observado (1x)", "chamadas": 1, "duracao_total_ms": 1120, "ultimo_status": "ok", "ultima_em": "2026-11-26 07:41:14", "observado_por": "wrapper"}}, {"id": "pubchem-mcp", "nome": "pubchem-mcp", "tipo": "mcp_tool", "mcp_server": "pubchem-reference", "versao_origem": "mcp:pubchem-reference v0.4 (opcional)", "funcao": "Consulta externa opcional a parâmetros de literatura; entra apenas se houver recurso externo pertinente.", "motivo_escolha": "Não necessário quando os dados locais estão completos.", "planejado": false, "configurado": true, "observado": {"estado": "sem_registro", "label": "sem registro", "chamadas": 0}}], "guardrails": [{"id": "G-01", "regra": "Conferir unidade explícita em Angstrom (Å)", "natureza": "codigo", "onde_aplica": "pré-cálculo em scripts/calc_rmsd.py", "verifica": "Presença da coluna rmsd_core_angstrom e rejeição de entradas em nm sem conversão.", "se_falhar": "Aborta com exit code 1 e bloqueia geração de evidência.", "referencia_codigo": "scripts/calc_rmsd.py::analisar_rmsd"}, {"id": "G-02", "regra": "Validar máscara de átomos e integridade do XYZ", "natureza": "codigo", "onde_aplica": "leitura de data/core_ref.xyz", "verifica": "Contagem de átomos consistente com cabeçalho XYZ e SHA-256 íntegro.", "se_falhar": "Levanta ValueError e impede cálculo silencioso com máscara errada.", "referencia_codigo": "scripts/calc_rmsd.py::validar_xyz"}, {"id": "G-03", "regra": "Nunca sobrescrever arquivos originais de entrada", "natureza": "instrucao", "onde_aplica": "SKILL.md / prompt do agente", "verifica": "Disciplina operacional do agente durante análise.", "se_falhar": "Detectado posteriormente via divergência de SHA-256 no SpecBoard.", "referencia_codigo": ""}], "avaliacao": {"nota_separacao": "Casos de referência medem confiabilidade do fluxo do agente (trajetória de ferramentas e aderência ao protocolo); não substituem a aprovação científica humana do marco M2.3.", "casos_referencia": [{"id": "EVAL-CD-01", "titulo": "Rejeição de tabela em nm sem conversão", "qualidade_resultado": "100% de detecção antes do gráfico", "trajetoria_ferramentas": "cd-rmsd-analysis → calc_rmsd.py (erro capturado)", "tempo_ou_chamadas": "2 chamadas · 1.4 s", "status": "passou"}, {"id": "EVAL-CD-02", "titulo": "Retomada em sessão limpa sem ler Fase 1", "qualidade_resultado": "Reproduziu RMSD 0.425 Å idêntico", "trajetoria_ferramentas": "context M2.2 → calc_rmsd.py", "tempo_ou_chamadas": "2 chamadas · 1.1 s", "status": "passou"}]}, "possui_definicao": true, "linhagem": [{"etapa_fluxo": "Script local", "artefato": "scripts/calc_rmsd.py", "detalhe": "Validação determinística Å + máscara"}, {"etapa_fluxo": "Resultado", "artefato": "data/rmsd_cd_400k.csv", "detalhe": "RMSD núcleo 0.425 Å (5–10 ns)"}, {"etapa_fluxo": "Evidência", "artefato": "figs/estabilidade_cd_400k.png", "detalhe": "Figura revisada no marco M2.3"}]}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "etapa", "id": "M2.3", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)"}, {"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "_bloqueia_agora": []}, {"id": "M2.3", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "status": "executado", "impacto": "alto", "revisao": "completa", "marco": true, "depende_de": ["M2.2"], "data": "2026-11-26", "afirmacao": "Núcleo grafítico permanece estável a 400 K (RMSD médio 0.425 Å, máx 0.440 Å <= 0.80 Å) sem ruptura de anel.", "verificacao": "Revisar a figura figs/estabilidade_cd_400k.png, a tabela data/rmsd_cd_400k.csv e reports/relatorio_m2.md antes de liberar a Fase 3.", "evidencia": [{"id": "FIG-2", "caminho": "figs/estabilidade_cd_400k.png", "tipo": "arquivo_local", "descricao": "Curvas de RMSD (núcleo vs superfície) a 400 K com limiar de 0.80 Å"}, {"id": "TAB-2", "caminho": "data/rmsd_cd_400k.csv", "tipo": "arquivo_local", "descricao": "Série temporal completa de RMSD (0–10 ns)"}, {"id": "REL-M2", "caminho": "reports/relatorio_m2.md", "tipo": "arquivo_local", "descricao": "Relatório consolidado e checagens determinísticas"}], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "c23765e70d370206", "criterio_hash": "903166aadfa815f9", "hash_etapa_v1": "5b7d2135ba84", "evidencias": [{"ref": "figs/estabilidade_cd_400k.png", "caminho_rel": "figs/estabilidade_cd_400k.png", "id": "FIG-2", "descricao": "Curvas de RMSD (núcleo vs superfície) a 400 K com limiar de 0.80 Å", "tipo": "arquivo_local", "midia": "imagem", "estado": "ok", "sha256": "e166fcb47c1d99040dd37fae290ff052bb75bc68d333d6da7d27a2c2a91c1940", "versao": null, "bytes": 3179, "mtime": "2026-11-26 10:51:48", "obrigatoria": true}, {"ref": "data/rmsd_cd_400k.csv", "caminho_rel": "data/rmsd_cd_400k.csv", "id": "TAB-2", "descricao": "Série temporal completa de RMSD (0–10 ns)", "tipo": "arquivo_local", "midia": "tabela", "estado": "ok", "sha256": "1c8762e84846bc15e9036eb9b02f5a932598cbf850b7d7e030564fff486fa618", "versao": null, "bytes": 277, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}, {"ref": "reports/relatorio_m2.md", "caminho_rel": "reports/relatorio_m2.md", "id": "REL-M2", "descricao": "Relatório consolidado e checagens determinísticas", "tipo": "arquivo_local", "midia": "markdown", "estado": "ok", "sha256": "893d8a10e01a7ef3849301c2580785d1d789d55abc6bf31e316777eb13631e25", "versao": null, "bytes": 1011, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}], "fingerprint_total": "810f588b2f6b6098"}, "_eh_marco": true, "_modulo_id": "M2", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}]}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": true, "_bloqueios_sistema": [], "_status_mod": "aguarda"}, {"id": "M2-B", "titulo": "Ramo paralelo: espectro vibracional a 300 K", "fase": "Fase 2 · Análise Estrutural", "objetivo": "Caracterizar modos vibracionais de superfície a 300 K de forma independente do marco de 400 K.", "depende_de": ["M1"], "marco": false, "contrato": {}, "etapas": [{"id": "M2-B.1", "titulo": "Cálculo de modos IR de referência (300 K)", "status": "pendente", "impacto": "medio", "revisao": "completa", "marco": false, "descricao": "Ramo independente de M2.3 — permanece liberado mesmo enquanto M2.3 aguarda aprovação.", "afirmacao": "", "verificacao": "", "evidencia": [], "_status": "pendente", "_status_agente": "pendente", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "c59320418d27840b", "criterio_hash": "b75cdb80b5c3d3e3", "hash_etapa_v1": "99d7823b3625", "evidencias": [], "fingerprint_total": "181136246e1b1da5"}, "_eh_marco": false, "_modulo_id": "M2-B", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M4", "titulo": "Resposta à pergunta central"}], "_bloqueia_agora": []}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [], "_status_mod": "pendente"}, {"id": "M3", "titulo": "Simulação de produção a 450 K", "fase": "Fase 3 · Simulação 450 K", "objetivo": "Executar dinâmica molecular a 450 K somente após aprovação humana do marco M2.3.", "depende_de": ["M2"], "marco": true, "contrato": {}, "etapas": [{"id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)", "status": "pendente", "impacto": "alto", "revisao": "completa", "marco": true, "descricao": "Bloqueada pelo sistema até aprovação humana do marco M2.3.", "afirmacao": "", "verificacao": "", "evidencia": [], "_status": "pendente", "_status_agente": "pendente", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "047760320dc91539", "criterio_hash": "b75cdb80b5c3d3e3", "hash_etapa_v1": "9000835819f5", "evidencias": [], "fingerprint_total": "a3257f935e4d7045"}, "_eh_marco": true, "_modulo_id": "M3", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [{"tipo": "marco_pendente", "origem_id": "M2.3", "modulo_origem": "M2", "motivo": "Depende de M2.3 (Marco: Figura e relatório de estabilidade estrutural (400 K)): aguarda aprovação humana."}], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M4", "titulo": "Resposta à pergunta central"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M4", "titulo": "Resposta à pergunta central"}]}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": true, "_bloqueios_sistema": [{"tipo": "marco_pendente", "origem_id": "M2.3", "modulo_origem": "M2", "motivo": "Depende de M2.3 (Marco: Figura e relatório de estabilidade estrutural (400 K)): aguarda aprovação humana."}], "_status_mod": "bloqueado"}, {"id": "M4", "titulo": "Resposta à pergunta central", "fase": "Fase 4 · Síntese", "objetivo": "Integrar estabilidade em 400 K e 450 K para responder à pergunta central.", "depende_de": ["M3", "M2-B"], "resultado_final": true, "marco": true, "contrato": {}, "etapas_estimadas": 3, "etapas": [], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": true, "_bloqueios_sistema": [{"tipo": "marco_pendente", "origem_id": "M3.1", "modulo_origem": "M3", "motivo": "Depende de M3.1 (Equilibração e produção 450 K (50 ns)): aguarda aprovação humana."}], "_status_mod": "bloqueado"}]}, "politica": {"modo": "so_marcos", "canal_padrao": "painel", "definida_em": "2026-11-24 09:00", "definida_por": "Pesquisador responsável", "legada": false, "historico": []}, "resumo": {"total": 9, "verificadas": 1, "estimado": true, "contagem": {"verificado": 1, "executado": 3, "pendente": 2}}, "situacao_atual": {"fase_atual": "Fase 2 · Análise Estrutural", "modulo_atual_id": "M2", "modulo_atual_titulo": "Estabilidade estrutural a 400 K", "etapa_foco_id": "M2.3", "marco_atual": {"id": "M2.3", "modulo_id": "M2", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "status": "executado", "contrato_travado": true}, "atividade_agente": {"origem": "reportado_pelo_agente", "estado": "aguardando_humano", "etapa_id": "M2.3", "resumo": "Figura e relatório de estabilidade estrutural (M2.3) gerados; aguardando aprovação do marco para liberar a Fase 3.", "sessao_id": "sess-cd-04", "atualizado_em": "2026-11-26 07:45"}, "bloqueios_sistema": [], "proxima_acao": {"tipo": "revisar", "etapa_id": "M2.3", "modulo_id": "M2", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "detalhe": "Aprovar esta entrega libera: Simulação de produção a 450 K.", "cta_label": "Revisar evidências", "fila_count": 1, "fila_total_count": 3}}, "harness_resumo": {"nome": "Harness de Carbon Dots — Estabilidade Estrutural", "descricao": "Estrutura operacional que combina memória versionada, skills, scripts/MCPs, hooks de proteção e validação humana para conduzir este projeto com segurança.", "papeis": [{"papel": "Analista de trajetórias MD (cálculo determinístico auditável)", "modulos": ["M2"], "etapas": ["M2.2"]}], "skills": [{"nome": "cd-rmsd-analysis", "tipo": "skill", "mcp_server": "", "funcao": "Padroniza alinhamento de núcleo grafítico, extração de janela equilibrada e checagem de unidades.", "motivo_escolha": "Evita erros recorrentes de mistura Å/nm e inclusão indevida de grupos de borda.", "planejado": true, "configurado": true, "observado": {"estado": "observado", "label": "observado (1x)", "chamadas": 1, "duracao_total_ms": 340, "ultimo_status": "ok", "ultima_em": "2026-11-26 07:41:10", "observado_por": "wrapper"}, "etapas": ["M2.2"]}], "mcps": [{"nome": "pubchem-mcp", "tipo": "mcp_tool", "mcp_server": "pubchem-reference", "funcao": "Consulta externa opcional a parâmetros de literatura; entra apenas se houver recurso externo pertinente.", "motivo_escolha": "Não necessário quando os dados locais estão completos.", "planejado": false, "configurado": true, "observado": {"estado": "sem_registro", "label": "sem registro", "chamadas": 0}, "etapas": ["M2.2"]}], "scripts": [{"nome": "calc_rmsd.py", "tipo": "local_tool", "mcp_server": "", "funcao": "Calcula média/máximo de RMSD e executa validações determinísticas de entrada.", "motivo_escolha": "Reprodutível offline sem depender de cálculo simbólico pelo LLM.", "planejado": true, "configurado": true, "observado": {"estado": "observado", "label": "observado (1x)", "chamadas": 1, "duracao_total_ms": 1120, "ultimo_status": "ok", "ultima_em": "2026-11-26 07:41:14", "observado_por": "wrapper"}, "etapas": ["M2.2"]}], "hooks_codigo": [{"regra": "Bloqueio de autovalidação por agentes (PreToolUse)", "onde_aplica": "block_verify_hook.py · CLI e endpoints /api/decisao, /api/politica", "se_falhar": "Bloqueia execução (exit 2 / deny) e exige decisão humana no painel ou terminal", "etapas": ["Todas"], "nativo": true}, {"regra": "Conferir unidade explícita em Angstrom (Å)", "onde_aplica": "pré-cálculo em scripts/calc_rmsd.py", "se_falhar": "Aborta com exit code 1 e bloqueia geração de evidência.", "etapas": ["M2.2"], "nativo": false}, {"regra": "Validar máscara de átomos e integridade do XYZ", "onde_aplica": "leitura de data/core_ref.xyz", "se_falhar": "Levanta ValueError e impede cálculo silencioso com máscara errada.", "etapas": ["M2.2"], "nativo": false}], "regras_instrucao": [{"regra": "Nunca sobrescrever arquivos originais de entrada", "onde_aplica": "SKILL.md / prompt do agente", "se_falhar": "Detectado posteriormente via divergência de SHA-256 no SpecBoard.", "etapas": ["M2.2"], "nativo": false}], "fluxo_fases": [{"fase": "Fase 1 · Preparo", "blocos": [{"id": "M1", "titulo": "Geometria de referência e protocolo", "status": "verificado", "eh_marco": true, "papel": "Execução modular", "total_etapas": 1, "verificadas": 1, "marcos": ["M1.1"]}]}, {"fase": "Fase 2 · Análise Estrutural", "blocos": [{"id": "M2", "titulo": "Estabilidade estrutural a 400 K", "status": "aguarda", "eh_marco": true, "papel": "Execução modular", "total_etapas": 3, "verificadas": 0, "marcos": ["M2.3"]}, {"id": "M2-B", "titulo": "Ramo paralelo: espectro vibracional a 300 K", "status": "pendente", "eh_marco": false, "papel": "Execução modular", "total_etapas": 1, "verificadas": 0, "marcos": []}]}, {"fase": "Fase 3 · Simulação 450 K", "blocos": [{"id": "M3", "titulo": "Simulação de produção a 450 K", "status": "bloqueado", "eh_marco": true, "papel": "Execução modular", "total_etapas": 1, "verificadas": 0, "marcos": ["M3.1"]}]}, {"fase": "Fase 4 · Síntese", "blocos": [{"id": "M4", "titulo": "Resposta à pergunta central", "status": "bloqueado", "eh_marco": true, "papel": "Execução modular", "total_etapas": 3, "verificadas": 0, "marcos": []}]}], "contadores": {"skills": 1, "mcps": 1, "scripts": 1, "hooks_codigo": 3, "regras_instrucao": 1, "papeis": 1, "fases": 4}}, "fila": [{"id": "M2.3", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": true, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "evidencia_ausente": false}], "fila_todos": [{"id": "M2.3", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": true, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "evidencia_ausente": false}, {"id": "M2.2", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Cálculo determinístico de desvio estrutural (RMSD)", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": false, "libera": [{"tipo": "etapa", "id": "M2.3", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)"}, {"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "bloqueia_agora": [], "evidencia_ausente": false}, {"id": "M2.1", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Seleção de máscara de átomos e janela de equilíbrio", "impacto": "medio", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": false, "libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "bloqueia_agora": [], "evidencia_ausente": false}], "fila_opcional": [{"id": "M2.2", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Cálculo determinístico de desvio estrutural (RMSD)", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": false, "libera": [{"tipo": "etapa", "id": "M2.3", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)"}, {"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "bloqueia_agora": [], "evidencia_ausente": false}, {"id": "M2.1", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Seleção de máscara de átomos e janela de equilíbrio", "impacto": "medio", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": false, "libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "bloqueia_agora": [], "evidencia_ausente": false}], "relacoes_mapa": [{"de": "M1", "para": "M2", "tipo": "bloqueante", "ativa": false, "motivo": "Dependência de marco/aprovação"}, {"de": "M1", "para": "M2-B", "tipo": "bloqueante", "ativa": false, "motivo": "Dependência de marco/aprovação"}, {"de": "M2", "para": "M3", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M3", "para": "M4", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M2-B", "para": "M4", "tipo": "sequencia", "ativa": false, "motivo": "Sequência de trabalho"}], "eventos": [{"id": "exec:M2.1:3b5c7eed6663f4d9", "tipo": "entrega", "data": "2026-11-25", "alvo_id": "M2.1", "texto": "M2.1 (Seleção de máscara de átomos e janela de equilíbrio) marcada como executada pelo agente."}, {"id": "exec:M2.2:7a26a729dfa47d45", "tipo": "entrega", "data": "2026-11-26", "alvo_id": "M2.2", "texto": "M2.2 (Cálculo determinístico de desvio estrutural (RMSD)) marcada como executada pelo agente."}, {"id": "exec:M2.3:810f588b2f6b6098", "tipo": "entrega", "data": "2026-11-26", "alvo_id": "M2.3", "texto": "M2.3 (Marco: Figura e relatório de estabilidade estrutural (400 K)) marcada como executada pelo agente."}, {"id": "dec:1:M1.1:verificado", "tipo": "decisao", "data": "2026-11-26 11:46:29", "alvo_id": "M1.1", "texto": "M1.1 marcada como verificado por Pesquisador."}], "mudancas": {"referencia_confiavel": false, "referencia_em": "", "novos": []}, "erros": [], "avisos": [], "gerado_em": "2026-11-26 11:52:50"};
+let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nome": "Carbon Dots — Estabilidade Estrutural", "titulo": "Estabilidade Térmica de Carbon Dots Funcionalizados", "subtitulo": "exemplo científico v2 (política só nos marcos + aba Agente)", "pergunta_central": "O núcleo grafítico de carbon dots funcionalizados mantém integridade estrutural a 400 K sem reconstrução de borda antes de avançar para simulações a 450 K?", "atualizado_em": "2026-11-26 08:30", "limite_fila": 5, "politica_aprovacao": {"modo": "so_marcos", "canal_padrao": "painel", "definida_em": "2026-11-24 09:00", "definida_por": "Pesquisador responsável"}, "atividade_agente": {"estado": "aguardando_humano", "etapa_id": "M2.3", "resumo": "Figura e relatório de estabilidade estrutural (M2.3) gerados; aguardando aprovação do marco para liberar a Fase 3.", "sessao_id": "sess-cd-04", "atualizado_em": "2026-11-26 07:45"}, "fontes": "examples/carbon_dots/reports/relatorio_m2.md, protocolo-md-cd v2.1"}, "fases": ["Fase 1 · Preparo", "Fase 2 · Análise Estrutural", "Fase 3 · Simulação 450 K", "Fase 4 · Síntese"], "modulos": [{"id": "M1", "titulo": "Geometria de referência e protocolo", "fase": "Fase 1 · Preparo", "objetivo": "Fixar estrutura de referência do núcleo grafítico e parâmetros do protocolo MD v2.1.", "depende_de": [], "marco": false, "contrato": {"pergunta": "As estruturas de entrada e o protocolo estão íntegros e versionados?", "criterios_aceitacao": ["Estrutura core_ref.xyz com checksum registrado", "Protocolo v2.1 travado antes da análise"], "criterio_abandono": "Se houver distorção inicial na minimização, revisar topologia antes de rodar dinâmica.", "parametros": {"protocolo": "protocolo-md-cd v2.1", "unidade_distancia": "Angstrom"}, "travado_em": "2026-11-24 09:30", "hash": "c1b5ba82ad4a"}, "etapas": [{"id": "M1.1", "titulo": "Validação da estrutura de referência (core_ref.xyz)", "status": "executado", "impacto": "alto", "revisao": "completa", "marco": true, "data": "2026-11-24", "afirmacao": "Geometria de referência do núcleo grafítico auditada sem contatos espúrios.", "verificacao": "Conferir data/core_ref.xyz (6 átomos de referência sintéticos em Å).", "evidencia": ["data/core_ref.xyz"], "_status": "verificado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": {"schema_hash_v": 2, "tipo": "decisao", "etapa": "M1.1", "acao": "verificado", "nivel": "verificado", "ator": "humano", "canal": "painel", "revisor": "Pesquisador", "nota": "Estrutura de referência conferida (exemplo sintético).", "data": "2026-11-26 11:46:29", "hash_etapa": "bc990e0ffcda", "etapa_meta_hash": "0e09b67c680189b1", "criterio_hash": "a08f58e8b6cb9c1b", "fingerprint_total": "b9b7bd24e0204f0d", "evidencias": [{"ref": "data/core_ref.xyz", "tipo": "arquivo_local", "estado": "ok", "sha256": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52", "bytes": 234, "versao": null}], "_seq": 1}, "_regs": [{"schema_hash_v": 2, "tipo": "decisao", "etapa": "M1.1", "acao": "verificado", "nivel": "verificado", "ator": "humano", "canal": "painel", "revisor": "Pesquisador", "nota": "Estrutura de referência conferida (exemplo sintético).", "data": "2026-11-26 11:46:29", "hash_etapa": "bc990e0ffcda", "etapa_meta_hash": "0e09b67c680189b1", "criterio_hash": "a08f58e8b6cb9c1b", "fingerprint_total": "b9b7bd24e0204f0d", "evidencias": [{"ref": "data/core_ref.xyz", "tipo": "arquivo_local", "estado": "ok", "sha256": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52", "bytes": 234, "versao": null}], "_seq": 1}], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "0e09b67c680189b1", "criterio_hash": "a08f58e8b6cb9c1b", "hash_etapa_v1": "bc990e0ffcda", "evidencias": [{"ref": "data/core_ref.xyz", "caminho_rel": "data/core_ref.xyz", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "texto", "estado": "ok", "sha256": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52", "versao": null, "bytes": 234, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}], "fingerprint_total": "b9b7bd24e0204f0d"}, "_eh_marco": true, "_modulo_id": "M1", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M2", "titulo": "Estabilidade estrutural a 400 K"}, {"tipo": "modulo", "id": "M2-B", "titulo": "Ramo paralelo: espectro vibracional a 300 K"}], "_bloqueia_agora": []}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": true, "_bloqueios_sistema": [], "_status_mod": "verificado"}, {"id": "M2", "titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "objetivo": "Calcular desvio estrutural (RMSD) do núcleo e da superfície na janela equilibrada (5–10 ns) e consolidar o marco de liberação da Fase 3.", "responde": "Determina se o modelo é estruturalmente estável a 400 K antes de investir custo computacional em 450 K.", "depende_de": ["M1"], "marco": true, "contrato": {"pergunta": "O núcleo grafítico permanece com RMSD <= 0.80 Å em 5–10 ns a 400 K?", "criterios_aceitacao": ["RMSD médio e máximo do núcleo <= 0.80 Å na janela 5–10 ns", "100% de integridade dos anéis aromáticos", "Checagens determinísticas de unidades (Å) e máscara de átomos aprovadas"], "criterio_abandono": "Se RMSD do núcleo > 1.20 Å ou houver ruptura de anel, interromper e revisar campo de força antes da Fase 3.", "parametros": {"temperatura_K": 400, "janela_ns": "5-10", "limiar_rmsd_A": 0.8}, "travado_em": "2026-11-24 09:30", "hash": "b5ba46ffa1bb"}, "etapas": [{"id": "M2.1", "titulo": "Seleção de máscara de átomos e janela de equilíbrio", "status": "executado", "impacto": "medio", "revisao": "completa", "marco": false, "data": "2026-11-25", "afirmacao": "Máscara do núcleo grafítico separada dos grupos funcionais de borda; janela equilibrada definida em 5–10 ns.", "verificacao": "Conferir script scripts/calc_rmsd.py e máscara em data/core_ref.xyz.", "evidencia": ["data/core_ref.xyz", "scripts/calc_rmsd.py"], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "fb470fa82a1218e4", "criterio_hash": "903166aadfa815f9", "hash_etapa_v1": "ac8923ba6241", "evidencias": [{"ref": "data/core_ref.xyz", "caminho_rel": "data/core_ref.xyz", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "texto", "estado": "ok", "sha256": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52", "versao": null, "bytes": 234, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}, {"ref": "scripts/calc_rmsd.py", "caminho_rel": "scripts/calc_rmsd.py", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "texto", "estado": "ok", "sha256": "7af9edd53aef5ecb879af6e61eda4630a2e91b0549693b8d52ebf17c89e1ba3d", "versao": null, "bytes": 2086, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}], "fingerprint_total": "3b5c7eed6663f4d9"}, "_eh_marco": false, "_modulo_id": "M2", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "_bloqueia_agora": []}, {"id": "M2.2", "titulo": "Cálculo determinístico de desvio estrutural (RMSD)", "status": "executado", "impacto": "alto", "revisao": "completa", "marco": false, "data": "2026-11-26", "afirmacao": "RMSD do núcleo calculado em 0.425 Å (máximo 0.440 Å) na janela 5–10 ns; checagens determinísticas de unidades e integridade aprovadas.", "verificacao": "Conferir série temporal em data/rmsd_cd_400k.csv e executar scripts/calc_rmsd.py.", "evidencia": ["data/rmsd_cd_400k.csv", "scripts/calc_rmsd.py"], "arquitetura_agente": {"papel": "Analista de trajetórias MD (cálculo determinístico auditável)", "contexto_duravel": {"objetivo": "Calcular RMSD do núcleo grafítico a 400 K com verificação determinística de unidades, máscara e integridade.", "decisoes_aceitas": ["D-01: usar janela equilibrada 5–10 ns", "D-02: reportar distâncias exclusivamente em Angstrom (Å)"], "protocolo": {"nome": "protocolo-md-cd", "versao": "v2.1", "caminho": "reports/relatorio_m2.md"}, "janela_analise": "5.0–10.0 ns (passo 1.0 ns)", "artefatos_referencia": [{"nome": "Estrutura de referência do núcleo", "caminho": "data/core_ref.xyz", "papel": "alinhamento RMSD"}, {"nome": "Script determinístico de RMSD", "caminho": "scripts/calc_rmsd.py", "papel": "execução e validação"}]}, "contexto_execucao": {"fontes_carregadas": ["protocolo-md-cd v2.1", "data/core_ref.xyz", "contrato M2", "checkpoint M1.1"], "fontes_omitidas": ["logs brutos de minimização da Fase 1", "trajetórias de sistemas descartados"], "estrategia_retomada": "Em sessão limpa ou troca de agente, rodar `python specboard.py context M2.2` para carregar apenas protocolo v2.1, estrutura de referência, janela 5–10 ns e guardrails."}, "componentes": [{"id": "cd-rmsd-analysis", "nome": "cd-rmsd-analysis", "tipo": "skill", "versao_origem": "skills/cd-rmsd-analysis v1.2", "funcao": "Padroniza alinhamento de núcleo grafítico, extração de janela equilibrada e checagem de unidades.", "motivo_escolha": "Evita erros recorrentes de mistura Å/nm e inclusão indevida de grupos de borda.", "planejado": true, "configurado": true}, {"id": "calc_rmsd.py", "nome": "calc_rmsd.py", "tipo": "local_tool", "versao_origem": "scripts/calc_rmsd.py (local)", "funcao": "Calcula média/máximo de RMSD e executa validações determinísticas de entrada.", "motivo_escolha": "Reprodutível offline sem depender de cálculo simbólico pelo LLM.", "planejado": true, "configurado": true}, {"id": "pubchem-mcp", "nome": "pubchem-mcp", "tipo": "mcp_tool", "mcp_server": "pubchem-reference", "versao_origem": "mcp:pubchem-reference v0.4 (opcional)", "funcao": "Consulta externa opcional a parâmetros de literatura; entra apenas se houver recurso externo pertinente.", "motivo_escolha": "Não necessário quando os dados locais estão completos.", "planejado": false, "configurado": true}], "guardrails": [{"id": "G-01", "regra": "Conferir unidade explícita em Angstrom (Å)", "natureza": "codigo", "onde_aplica": "pré-cálculo em scripts/calc_rmsd.py", "verifica": "Presença da coluna rmsd_core_angstrom e rejeição de entradas em nm sem conversão.", "se_falhar": "Aborta com exit code 1 e bloqueia geração de evidência.", "referencia_codigo": "scripts/calc_rmsd.py::analisar_rmsd"}, {"id": "G-02", "regra": "Validar máscara de átomos e integridade do XYZ", "natureza": "codigo", "onde_aplica": "leitura de data/core_ref.xyz", "verifica": "Contagem de átomos consistente com cabeçalho XYZ e SHA-256 íntegro.", "se_falhar": "Levanta ValueError e impede cálculo silencioso com máscara errada.", "referencia_codigo": "scripts/calc_rmsd.py::validar_xyz"}, {"id": "G-03", "regra": "Nunca sobrescrever arquivos originais de entrada", "natureza": "instrucao", "onde_aplica": "SKILL.md / prompt do agente", "verifica": "Disciplina operacional do agente durante análise.", "se_falhar": "Detectado posteriormente via divergência de SHA-256 no SpecBoard."}], "linhagem": [{"etapa_fluxo": "Script local", "artefato": "scripts/calc_rmsd.py", "detalhe": "Validação determinística Å + máscara"}, {"etapa_fluxo": "Resultado", "artefato": "data/rmsd_cd_400k.csv", "detalhe": "RMSD núcleo 0.425 Å (5–10 ns)"}, {"etapa_fluxo": "Evidência", "artefato": "figs/estabilidade_cd_400k.png", "detalhe": "Figura revisada no marco M2.3"}], "avaliacao": {"nota_separacao": "Casos de referência medem confiabilidade do fluxo do agente (trajetória de ferramentas e aderência ao protocolo); não substituem a aprovação científica humana do marco M2.3.", "casos_referencia": [{"id": "EVAL-CD-01", "titulo": "Rejeição de tabela em nm sem conversão", "qualidade_resultado": "100% de detecção antes do gráfico", "trajetoria_ferramentas": "cd-rmsd-analysis → calc_rmsd.py (erro capturado)", "tempo_ou_chamadas": "2 chamadas · 1.4 s", "status": "passou"}, {"id": "EVAL-CD-02", "titulo": "Retomada em sessão limpa sem ler Fase 1", "qualidade_resultado": "Reproduziu RMSD 0.425 Å idêntico", "trajetoria_ferramentas": "context M2.2 → calc_rmsd.py", "tempo_ou_chamadas": "2 chamadas · 1.1 s", "status": "passou"}]}}, "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "c5c096c32824cbba", "criterio_hash": "903166aadfa815f9", "hash_etapa_v1": "23929e73214f", "evidencias": [{"ref": "data/rmsd_cd_400k.csv", "caminho_rel": "data/rmsd_cd_400k.csv", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "tabela", "estado": "ok", "sha256": "1c8762e84846bc15e9036eb9b02f5a932598cbf850b7d7e030564fff486fa618", "versao": null, "bytes": 277, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}, {"ref": "scripts/calc_rmsd.py", "caminho_rel": "scripts/calc_rmsd.py", "id": null, "descricao": "", "tipo": "arquivo_local", "midia": "texto", "estado": "ok", "sha256": "7af9edd53aef5ecb879af6e61eda4630a2e91b0549693b8d52ebf17c89e1ba3d", "versao": null, "bytes": 2086, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}], "fingerprint_total": "7a26a729dfa47d45"}, "_eh_marco": false, "_modulo_id": "M2", "_agente": {"papel": "Analista de trajetórias MD (cálculo determinístico auditável)", "contexto_duravel": {"objetivo": "Calcular RMSD do núcleo grafítico a 400 K com verificação determinística de unidades, máscara e integridade.", "decisoes_aceitas": ["D-01: usar janela equilibrada 5–10 ns", "D-02: reportar distâncias exclusivamente em Angstrom (Å)"], "protocolo": {"nome": "protocolo-md-cd", "versao": "v2.1", "caminho": "reports/relatorio_m2.md"}, "janela_analise": "5.0–10.0 ns (passo 1.0 ns)", "artefatos_referencia": [{"nome": "Estrutura de referência do núcleo", "caminho": "data/core_ref.xyz", "papel": "alinhamento RMSD", "estado_arquivo": "ok", "sha256_atual": "fd8ef5bc1e6165599844f4700a091c74968212bcad18d24505357f58945e1b52"}, {"nome": "Script determinístico de RMSD", "caminho": "scripts/calc_rmsd.py", "papel": "execução e validação", "estado_arquivo": "ok", "sha256_atual": "7af9edd53aef5ecb879af6e61eda4630a2e91b0549693b8d52ebf17c89e1ba3d"}]}, "contexto_execucao": {"fontes_carregadas": ["protocolo-md-cd v2.1", "data/core_ref.xyz", "contrato M2", "checkpoint M1.1"], "fontes_omitidas": ["logs brutos de minimização da Fase 1", "trajetórias de sistemas descartados"], "estrategia_retomada": "Em sessão limpa ou troca de agente, rodar `python specboard.py context M2.2` para carregar apenas protocolo v2.1, estrutura de referência, janela 5–10 ns e guardrails."}, "componentes": [{"id": "cd-rmsd-analysis", "nome": "cd-rmsd-analysis", "tipo": "skill", "mcp_server": null, "versao_origem": "skills/cd-rmsd-analysis v1.2", "funcao": "Padroniza alinhamento de núcleo grafítico, extração de janela equilibrada e checagem de unidades.", "motivo_escolha": "Evita erros recorrentes de mistura Å/nm e inclusão indevida de grupos de borda.", "planejado": true, "configurado": true, "observado": {"estado": "observado", "label": "observado (1x)", "chamadas": 1, "duracao_total_ms": 340, "ultimo_status": "ok", "ultima_em": "2026-11-26 07:41:10", "observado_por": "wrapper"}}, {"id": "calc_rmsd.py", "nome": "calc_rmsd.py", "tipo": "local_tool", "mcp_server": null, "versao_origem": "scripts/calc_rmsd.py (local)", "funcao": "Calcula média/máximo de RMSD e executa validações determinísticas de entrada.", "motivo_escolha": "Reprodutível offline sem depender de cálculo simbólico pelo LLM.", "planejado": true, "configurado": true, "observado": {"estado": "observado", "label": "observado (1x)", "chamadas": 1, "duracao_total_ms": 1120, "ultimo_status": "ok", "ultima_em": "2026-11-26 07:41:14", "observado_por": "wrapper"}}, {"id": "pubchem-mcp", "nome": "pubchem-mcp", "tipo": "mcp_tool", "mcp_server": "pubchem-reference", "versao_origem": "mcp:pubchem-reference v0.4 (opcional)", "funcao": "Consulta externa opcional a parâmetros de literatura; entra apenas se houver recurso externo pertinente.", "motivo_escolha": "Não necessário quando os dados locais estão completos.", "planejado": false, "configurado": true, "observado": {"estado": "sem_registro", "label": "sem registro", "chamadas": 0}}], "guardrails": [{"id": "G-01", "regra": "Conferir unidade explícita em Angstrom (Å)", "natureza": "codigo", "onde_aplica": "pré-cálculo em scripts/calc_rmsd.py", "verifica": "Presença da coluna rmsd_core_angstrom e rejeição de entradas em nm sem conversão.", "se_falhar": "Aborta com exit code 1 e bloqueia geração de evidência.", "referencia_codigo": "scripts/calc_rmsd.py::analisar_rmsd"}, {"id": "G-02", "regra": "Validar máscara de átomos e integridade do XYZ", "natureza": "codigo", "onde_aplica": "leitura de data/core_ref.xyz", "verifica": "Contagem de átomos consistente com cabeçalho XYZ e SHA-256 íntegro.", "se_falhar": "Levanta ValueError e impede cálculo silencioso com máscara errada.", "referencia_codigo": "scripts/calc_rmsd.py::validar_xyz"}, {"id": "G-03", "regra": "Nunca sobrescrever arquivos originais de entrada", "natureza": "instrucao", "onde_aplica": "SKILL.md / prompt do agente", "verifica": "Disciplina operacional do agente durante análise.", "se_falhar": "Detectado posteriormente via divergência de SHA-256 no SpecBoard.", "referencia_codigo": ""}], "avaliacao": {"nota_separacao": "Casos de referência medem confiabilidade do fluxo do agente (trajetória de ferramentas e aderência ao protocolo); não substituem a aprovação científica humana do marco M2.3.", "casos_referencia": [{"id": "EVAL-CD-01", "titulo": "Rejeição de tabela em nm sem conversão", "qualidade_resultado": "100% de detecção antes do gráfico", "trajetoria_ferramentas": "cd-rmsd-analysis → calc_rmsd.py (erro capturado)", "tempo_ou_chamadas": "2 chamadas · 1.4 s", "status": "passou"}, {"id": "EVAL-CD-02", "titulo": "Retomada em sessão limpa sem ler Fase 1", "qualidade_resultado": "Reproduziu RMSD 0.425 Å idêntico", "trajetoria_ferramentas": "context M2.2 → calc_rmsd.py", "tempo_ou_chamadas": "2 chamadas · 1.1 s", "status": "passou"}]}, "possui_definicao": true, "linhagem": [{"etapa_fluxo": "Script local", "artefato": "scripts/calc_rmsd.py", "detalhe": "Validação determinística Å + máscara"}, {"etapa_fluxo": "Resultado", "artefato": "data/rmsd_cd_400k.csv", "detalhe": "RMSD núcleo 0.425 Å (5–10 ns)"}, {"etapa_fluxo": "Evidência", "artefato": "figs/estabilidade_cd_400k.png", "detalhe": "Figura revisada no marco M2.3"}]}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "etapa", "id": "M2.3", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)"}, {"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "_bloqueia_agora": []}, {"id": "M2.3", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "status": "executado", "impacto": "alto", "revisao": "completa", "marco": true, "depende_de": ["M2.2"], "data": "2026-11-26", "afirmacao": "Núcleo grafítico permanece estável a 400 K (RMSD médio 0.425 Å, máx 0.440 Å <= 0.80 Å) sem ruptura de anel.", "verificacao": "Revisar a figura figs/estabilidade_cd_400k.png, a tabela data/rmsd_cd_400k.csv e reports/relatorio_m2.md antes de liberar a Fase 3.", "evidencia": [{"id": "FIG-2", "caminho": "figs/estabilidade_cd_400k.png", "tipo": "arquivo_local", "descricao": "Curvas de RMSD (núcleo vs superfície) a 400 K com limiar de 0.80 Å"}, {"id": "TAB-2", "caminho": "data/rmsd_cd_400k.csv", "tipo": "arquivo_local", "descricao": "Série temporal completa de RMSD (0–10 ns)"}, {"id": "REL-M2", "caminho": "reports/relatorio_m2.md", "tipo": "arquivo_local", "descricao": "Relatório consolidado e checagens determinísticas"}], "_status": "executado", "_status_agente": "executado", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "c23765e70d370206", "criterio_hash": "903166aadfa815f9", "hash_etapa_v1": "5b7d2135ba84", "evidencias": [{"ref": "figs/estabilidade_cd_400k.png", "caminho_rel": "figs/estabilidade_cd_400k.png", "id": "FIG-2", "descricao": "Curvas de RMSD (núcleo vs superfície) a 400 K com limiar de 0.80 Å", "tipo": "arquivo_local", "midia": "imagem", "estado": "ok", "sha256": "e166fcb47c1d99040dd37fae290ff052bb75bc68d333d6da7d27a2c2a91c1940", "versao": null, "bytes": 3179, "mtime": "2026-11-26 10:51:48", "obrigatoria": true}, {"ref": "data/rmsd_cd_400k.csv", "caminho_rel": "data/rmsd_cd_400k.csv", "id": "TAB-2", "descricao": "Série temporal completa de RMSD (0–10 ns)", "tipo": "arquivo_local", "midia": "tabela", "estado": "ok", "sha256": "1c8762e84846bc15e9036eb9b02f5a932598cbf850b7d7e030564fff486fa618", "versao": null, "bytes": 277, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}, {"ref": "reports/relatorio_m2.md", "caminho_rel": "reports/relatorio_m2.md", "id": "REL-M2", "descricao": "Relatório consolidado e checagens determinísticas", "tipo": "arquivo_local", "midia": "markdown", "estado": "ok", "sha256": "893d8a10e01a7ef3849301c2580785d1d789d55abc6bf31e316777eb13631e25", "versao": null, "bytes": 1011, "mtime": "2026-11-26 11:46:29", "obrigatoria": true}], "fingerprint_total": "810f588b2f6b6098"}, "_eh_marco": true, "_modulo_id": "M2", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}]}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": true, "_bloqueios_sistema": [], "_status_mod": "aguarda"}, {"id": "M2-B", "titulo": "Ramo paralelo: espectro vibracional a 300 K", "fase": "Fase 2 · Análise Estrutural", "objetivo": "Caracterizar modos vibracionais de superfície a 300 K de forma independente do marco de 400 K.", "depende_de": ["M1"], "marco": false, "contrato": {}, "etapas": [{"id": "M2-B.1", "titulo": "Cálculo de modos IR de referência (300 K)", "status": "pendente", "impacto": "medio", "revisao": "completa", "marco": false, "descricao": "Ramo independente de M2.3 — permanece liberado mesmo enquanto M2.3 aguarda aprovação.", "afirmacao": "", "verificacao": "", "evidencia": [], "_status": "pendente", "_status_agente": "pendente", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "c59320418d27840b", "criterio_hash": "b75cdb80b5c3d3e3", "hash_etapa_v1": "99d7823b3625", "evidencias": [], "fingerprint_total": "181136246e1b1da5"}, "_eh_marco": false, "_modulo_id": "M2-B", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M4", "titulo": "Resposta à pergunta central"}], "_bloqueia_agora": []}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": false, "_bloqueios_sistema": [], "_status_mod": "pendente"}, {"id": "M3", "titulo": "Simulação de produção a 450 K", "fase": "Fase 3 · Simulação 450 K", "objetivo": "Executar dinâmica molecular a 450 K somente após aprovação humana do marco M2.3.", "depende_de": ["M2"], "marco": true, "contrato": {}, "etapas": [{"id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)", "status": "pendente", "impacto": "alto", "revisao": "completa", "marco": true, "descricao": "Bloqueada pelo sistema até aprovação humana do marco M2.3.", "afirmacao": "", "verificacao": "", "evidencia": [], "_status": "pendente", "_status_agente": "pendente", "_exp": null, "_exp_motivos": [], "_arquivos_alterados": [], "_legada": false, "_reentregue": false, "_ultima_decisao": null, "_regs": [], "_snapshot": {"schema_hash_v": 2, "etapa_meta_hash": "047760320dc91539", "criterio_hash": "b75cdb80b5c3d3e3", "hash_etapa_v1": "9000835819f5", "evidencias": [], "fingerprint_total": "a3257f935e4d7045"}, "_eh_marco": true, "_modulo_id": "M3", "_agente": {"papel": "", "contexto_duravel": {}, "contexto_execucao": {}, "componentes": [], "guardrails": [], "avaliacao": {}, "possui_definicao": false, "linhagem": []}, "_bloqueios_sistema": [{"tipo": "marco_pendente", "origem_id": "M2.3", "modulo_origem": "M2", "motivo": "Depende de M2.3 (Marco: Figura e relatório de estabilidade estrutural (400 K)): aguarda aprovação humana."}], "_base_reaberta_por": [], "_libera": [{"tipo": "modulo", "id": "M4", "titulo": "Resposta à pergunta central"}], "_bloqueia_agora": [{"tipo": "modulo", "id": "M4", "titulo": "Resposta à pergunta central"}]}], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": true, "_bloqueios_sistema": [{"tipo": "marco_pendente", "origem_id": "M2.3", "modulo_origem": "M2", "motivo": "Depende de M2.3 (Marco: Figura e relatório de estabilidade estrutural (400 K)): aguarda aprovação humana."}], "_status_mod": "bloqueado"}, {"id": "M4", "titulo": "Resposta à pergunta central", "fase": "Fase 4 · Síntese", "objetivo": "Integrar estabilidade em 400 K e 450 K para responder à pergunta central.", "depende_de": ["M3", "M2-B"], "resultado_final": true, "marco": true, "contrato": {}, "etapas_estimadas": 3, "etapas": [], "emendas": [], "_contrato_ok": true, "_na_rota": true, "_eh_marco": true, "_bloqueios_sistema": [{"tipo": "marco_pendente", "origem_id": "M3.1", "modulo_origem": "M3", "motivo": "Depende de M3.1 (Equilibração e produção 450 K (50 ns)): aguarda aprovação humana."}], "_status_mod": "bloqueado"}]}, "politica": {"modo": "so_marcos", "canal_padrao": "painel", "definida_em": "2026-11-24 09:00", "definida_por": "Pesquisador responsável", "legada": false, "historico": []}, "resumo": {"total": 9, "verificadas": 1, "estimado": true, "contagem": {"verificado": 1, "executado": 3, "pendente": 2}}, "situacao_atual": {"fase_atual": "Fase 2 · Análise Estrutural", "modulo_atual_id": "M2", "modulo_atual_titulo": "Estabilidade estrutural a 400 K", "etapa_foco_id": "M2.3", "marco_atual": {"id": "M2.3", "modulo_id": "M2", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "status": "executado", "contrato_travado": true}, "atividade_agente": {"origem": "reportado_pelo_agente", "estado": "aguardando_humano", "etapa_id": "M2.3", "resumo": "Figura e relatório de estabilidade estrutural (M2.3) gerados; aguardando aprovação do marco para liberar a Fase 3.", "sessao_id": "sess-cd-04", "atualizado_em": "2026-11-26 07:45"}, "bloqueios_sistema": [], "proxima_acao": {"tipo": "revisar", "etapa_id": "M2.3", "modulo_id": "M2", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "detalhe": "Aprovar esta entrega libera: Simulação de produção a 450 K.", "cta_label": "Revisar evidências", "fila_count": 1, "fila_total_count": 3}}, "harness_resumo": {"nome": "Harness de Carbon Dots — Estabilidade Estrutural", "descricao": "Estrutura operacional que combina memória versionada, skills, scripts/MCPs, hooks de proteção e validação humana para conduzir este projeto com segurança.", "papeis": [{"papel": "Analista de trajetórias MD (cálculo determinístico auditável)", "modulos": ["M2"], "etapas": ["M2.2"]}], "skills": [{"nome": "cd-rmsd-analysis", "tipo": "skill", "mcp_server": "", "funcao": "Padroniza alinhamento de núcleo grafítico, extração de janela equilibrada e checagem de unidades.", "motivo_escolha": "Evita erros recorrentes de mistura Å/nm e inclusão indevida de grupos de borda.", "planejado": true, "configurado": true, "observado": {"estado": "observado", "label": "observado (1x)", "chamadas": 1, "duracao_total_ms": 340, "ultimo_status": "ok", "ultima_em": "2026-11-26 07:41:10", "observado_por": "wrapper"}, "etapas": ["M2.2"]}], "mcps": [{"nome": "pubchem-mcp", "tipo": "mcp_tool", "mcp_server": "pubchem-reference", "funcao": "Consulta externa opcional a parâmetros de literatura; entra apenas se houver recurso externo pertinente.", "motivo_escolha": "Não necessário quando os dados locais estão completos.", "planejado": false, "configurado": true, "observado": {"estado": "sem_registro", "label": "sem registro", "chamadas": 0}, "etapas": ["M2.2"]}], "scripts": [{"nome": "calc_rmsd.py", "tipo": "local_tool", "mcp_server": "", "funcao": "Calcula média/máximo de RMSD e executa validações determinísticas de entrada.", "motivo_escolha": "Reprodutível offline sem depender de cálculo simbólico pelo LLM.", "planejado": true, "configurado": true, "observado": {"estado": "observado", "label": "observado (1x)", "chamadas": 1, "duracao_total_ms": 1120, "ultimo_status": "ok", "ultima_em": "2026-11-26 07:41:14", "observado_por": "wrapper"}, "etapas": ["M2.2"]}], "hooks_codigo": [{"regra": "Bloqueio de autovalidação por agentes (PreToolUse)", "onde_aplica": "block_verify_hook.py · CLI e endpoints /api/decisao, /api/politica", "se_falhar": "Bloqueia execução (exit 2 / deny) e exige decisão humana no painel ou terminal", "etapas": ["Todas"], "nativo": true}, {"regra": "Conferir unidade explícita em Angstrom (Å)", "onde_aplica": "pré-cálculo em scripts/calc_rmsd.py", "se_falhar": "Aborta com exit code 1 e bloqueia geração de evidência.", "etapas": ["M2.2"], "nativo": false}, {"regra": "Validar máscara de átomos e integridade do XYZ", "onde_aplica": "leitura de data/core_ref.xyz", "se_falhar": "Levanta ValueError e impede cálculo silencioso com máscara errada.", "etapas": ["M2.2"], "nativo": false}], "regras_instrucao": [{"regra": "Nunca sobrescrever arquivos originais de entrada", "onde_aplica": "SKILL.md / prompt do agente", "se_falhar": "Detectado posteriormente via divergência de SHA-256 no SpecBoard.", "etapas": ["M2.2"], "nativo": false}], "fluxo_fases": [{"fase": "Fase 1 · Preparo", "blocos": [{"id": "M1", "titulo": "Geometria de referência e protocolo", "status": "verificado", "eh_marco": true, "papel": "Execução modular", "total_etapas": 1, "verificadas": 1, "marcos": ["M1.1"]}]}, {"fase": "Fase 2 · Análise Estrutural", "blocos": [{"id": "M2", "titulo": "Estabilidade estrutural a 400 K", "status": "aguarda", "eh_marco": true, "papel": "Execução modular", "total_etapas": 3, "verificadas": 0, "marcos": ["M2.3"]}, {"id": "M2-B", "titulo": "Ramo paralelo: espectro vibracional a 300 K", "status": "pendente", "eh_marco": false, "papel": "Execução modular", "total_etapas": 1, "verificadas": 0, "marcos": []}]}, {"fase": "Fase 3 · Simulação 450 K", "blocos": [{"id": "M3", "titulo": "Simulação de produção a 450 K", "status": "bloqueado", "eh_marco": true, "papel": "Execução modular", "total_etapas": 1, "verificadas": 0, "marcos": ["M3.1"]}]}, {"fase": "Fase 4 · Síntese", "blocos": [{"id": "M4", "titulo": "Resposta à pergunta central", "status": "bloqueado", "eh_marco": true, "papel": "Execução modular", "total_etapas": 3, "verificadas": 0, "marcos": []}]}], "contadores": {"skills": 1, "mcps": 1, "scripts": 1, "hooks_codigo": 3, "regras_instrucao": 1, "papeis": 1, "fases": 4}}, "bugs": [], "fila": [{"id": "M2.3", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": true, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "evidencia_ausente": false}], "fila_todos": [{"id": "M2.3", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": true, "bloqueante": true, "libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "bloqueia_agora": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}, {"tipo": "etapa", "id": "M3.1", "titulo": "Equilibração e produção 450 K (50 ns)"}], "evidencia_ausente": false}, {"id": "M2.2", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Cálculo determinístico de desvio estrutural (RMSD)", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": false, "libera": [{"tipo": "etapa", "id": "M2.3", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)"}, {"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "bloqueia_agora": [], "evidencia_ausente": false}, {"id": "M2.1", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Seleção de máscara de átomos e janela de equilíbrio", "impacto": "medio", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": false, "libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "bloqueia_agora": [], "evidencia_ausente": false}], "fila_opcional": [{"id": "M2.2", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Cálculo determinístico de desvio estrutural (RMSD)", "impacto": "alto", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": false, "libera": [{"tipo": "etapa", "id": "M2.3", "titulo": "Marco: Figura e relatório de estabilidade estrutural (400 K)"}, {"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "bloqueia_agora": [], "evidencia_ausente": false}, {"id": "M2.1", "modulo_id": "M2", "modulo_titulo": "Estabilidade estrutural a 400 K", "fase": "Fase 2 · Análise Estrutural", "titulo": "Seleção de máscara de átomos e janela de equilíbrio", "impacto": "medio", "status": "executado", "exp": null, "exp_motivos": [], "arquivos_alterados": [], "reentregue": false, "revisao": "completa", "eh_marco": false, "bloqueante": false, "libera": [{"tipo": "modulo", "id": "M3", "titulo": "Simulação de produção a 450 K"}], "bloqueia_agora": [], "evidencia_ausente": false}], "relacoes_mapa": [{"de": "M1", "para": "M2", "tipo": "bloqueante", "ativa": false, "motivo": "Dependência de marco/aprovação"}, {"de": "M1", "para": "M2-B", "tipo": "bloqueante", "ativa": false, "motivo": "Dependência de marco/aprovação"}, {"de": "M2", "para": "M3", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M3", "para": "M4", "tipo": "bloqueante", "ativa": true, "motivo": "Dependência de marco/aprovação"}, {"de": "M2-B", "para": "M4", "tipo": "sequencia", "ativa": false, "motivo": "Sequência de trabalho"}], "eventos": [{"id": "exec:M2.1:3b5c7eed6663f4d9", "tipo": "entrega", "data": "2026-11-25", "alvo_id": "M2.1", "texto": "M2.1 (Seleção de máscara de átomos e janela de equilíbrio) marcada como executada pelo agente."}, {"id": "exec:M2.2:7a26a729dfa47d45", "tipo": "entrega", "data": "2026-11-26", "alvo_id": "M2.2", "texto": "M2.2 (Cálculo determinístico de desvio estrutural (RMSD)) marcada como executada pelo agente."}, {"id": "exec:M2.3:810f588b2f6b6098", "tipo": "entrega", "data": "2026-11-26", "alvo_id": "M2.3", "texto": "M2.3 (Marco: Figura e relatório de estabilidade estrutural (400 K)) marcada como executada pelo agente."}, {"id": "dec:1:M1.1:verificado", "tipo": "decisao", "data": "2026-11-26 11:46:29", "alvo_id": "M1.1", "texto": "M1.1 marcada como verificado por Pesquisador."}], "mudancas": {"referencia_confiavel": false, "referencia_em": "", "novos": []}, "erros": [], "avisos": [], "gerado_em": "2026-11-26 12:17:35"};
 (function(){
   if (!D || !D.estado) {
     document.getElementById('app').innerHTML = '<div class="main"><div class="alert-strip">Nenhum dado carregado. Abra com <code>python specboard.py serve --open</code>.</div></div>';
     return;
   }
 
-  // Brasão compacto do grupo CEMOL (sobrescrevível por projeto.logo)
   const CEMOL_LOGO_URI = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwQDAwQEBAQFBQQFBwsHBwYGBw4KCggLEA4RERAOEA8SFBoWEhMYEw8QFh8XGBsbHR0dERYgIh8cIhocHRz/2wBDAQUFBQcGBw0HBw0cEhASHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBz/wAARCABgAGADASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAABgIDBAUHAQgA/8QANhAAAgEDAwIFAwMCBAcAAAAAAQIDBAURABIhBjETIkFRYQcUcSOBkRUyQmKToRYkNFJy4fH/xAAbAQACAgMBAAAAAAAAAAAAAAADBAIFAAEGB//EADMRAAECBAQDBwMDBQAAAAAAAAECEQADITEEEkFhE1GRBXGBobHB8CIjMhQV8SSSosLR/9oADAMBAAIRAxEAPwDw8DnSgM64o06o1YiK4wgRk6V4TfGnVXTvhsApIIVhkH0P499baNPEXwW+Nd8BvjRG/Tc69ORX1Killo2qPtZUR/1YJCpYBkIHBVSQRkHB9dEtl6dtNr+qFmtdU092s8tTTtG8cPhmqSRVZDsY/wBuWGfgNoC8RLSCRVgT0v41giZayQLO3nGbeA3xr7wW+NaV1B09bLt9VrpaaITWq1/eSiRpId/2yoC0jhB/gGCQP+0jQsnT8klkqrx9zTpRQ1H20YdiJZ3xuwqAHspBJOAM++tS8VLWlJNHAP8AdaNqlLSSLs/leB3wm+Nc2EameGxDEKSFGSQOw9zplhjTECeI540ksBp1xpkjUSTEhDqjnUqmp3qJo4YwN8jBVycDJ+dRk1pPTXT1rl+n/VlZX7Y73S1FGlKJDtZAzZJx7MN2fhNBnz0yUhR1IHUge9YnLlmYWG56B4i9AWm1zdQWyS7UNVW0kbOZKWEBvuZAcRx8kAAnkkkDA5POm/qNda29dXVlRWx0sDIFiipaSZJY6WJRhYgyeXIHfHqT+NTLJbKbqDqO1WR3qYrfWyS7JpIwQIyGYukbHG447t8YxjTC3fpC3KDb+nKu4PjIkvFbhP8AShC/7udLIL4jisVFrcgSeZAq1daQVQ+1kcAP1psH9o59O7zQ2y9yUd2iop7PcYjBUxVoYxgjzI+F8wZWHBHPmPvrc26zpJZKKooKSaaShiEFNNR9OyyGGMDAVHaPIGPnWQWPq3q+/wB0prN0wtLbqmpJWKntNNFS5wCTmTG7sDyW1s3Tf0F6hu2yr6p64uwG4boKaeQl+DlRI7YznjIUjg+4Ouf7fxWCwyuJjlhBI/EEknR8oTrZ3al6RY9mpnLTkkJKhzZvN/GKuXrOmpqqpq6uGqgnqo/BnnrLDJGZUxjazBMkY9M6xTry60FfdoaO0JRxWmgiEcCUgYIWbzO/m8xYnAJPPlHtr0XWfQKugEcvTvX99pC8hBFVKxUANg8qwPvyQQTjOM6xXq6p606RrRR9U0tLcUOdj3CkjqFkGSOJMBgeM43AjQOwcb2fPnZsEsKU34klJ5UBSHIDi9AYL2lLxCZeWelhzZ/N/aBjoOvrLX1RR1FEKaSXDI0FVMsUdQjDDRlm8uSO2fUD8aV1vbKGK9XGW30U9JTuV208gCiCQnDpwSpHqMHGDx2117p0pXqTWWGst8mMl7XV7o/9OYH/AGbTt1oKey3y4WlPuZaGmMRMqIAfD2q4Z0HBYZ7jng9866NR/qeKxSrLbmARqCRR6a1irSPs5HBD35EjcA6d0BNTA9PLJDIBvjYqwByM/nUZho3vdopB0lZJqYK9zlqqlZgnLOAc/wAAbSP/AC0EtpuRPE5JUNCR0JHSkBmSjLIB1APUPBF0LbrfeOqbbb7ozLRVbtCzI21lZlYIQffdt76OKTp+gtlzNrvl1goaSB5YaqvkGXZYmyPDGDlnDKACG2gNrOLTQS1Mcspg3U5Ig+4OdsMjAlCSOxO0/nnHOju0Wa79W1co8RGeCCOaprqpg0VNglmduDuZtpIHrtyeNIY0kTCszGSBXY8xfnbVhQw1hwClsrl+u3l6xL6eqrXN9WbYbLR1FLbY3ZIRUuzTSjwXPiOWPds5x2AxrP7fSy19RS0sAzNOyRoPk4A0QfTqYt11apNzOTLI25u5/Tfk6v8A6OdJ1F3vUd7lgqxarQyyNUwAYWfgxqeDxnk8Hj2zok2cMGmYu+VCdyT9fiXMCSgz8ibOo/6x6Q6G6Xh6F6Pp7bPbmo6qSRDNWsyT+HPJhS0TkZ42nyhcDIyTydGs9wlepmmAp5ViXJd5/CaIpw7OOy5wMY7fzqlrep6WjM9ZFVR1EiBFR8hzIzDAUJ/hOQOfz86yes6huHVU8tXXzYd4kgeKKFNzIrnduB5AAyeCcAEj114knCz+0pq8RPoSXJL3Og189mjvAUYVCUI+NG7i5VQmkWoG2nZwsZULl0bB28HIb054ORjkaEerbHT9YWausdRXRNUVkZf/AKPdJGUbAYAtgbd2BnB5zoBsfUS00/3Ecr4nV/8AmomMiLHgYwuAFI2qvPOc8nGivqnq2GzW1q5Z2pDIEdkaRXzjALEAEuewIHuMe+tI7OxGFxCBJ/JwzDUbV1r6gUgpmy5ss57a90eNbtRtba6to3ZXamkeIsuQG2kjIyAcaML5UUUX1EqTcKaWoo3WJZBAzLIg8FDvQg91xnHrg6pOrY62sr6u61UjTTVZ8aZyuPM3PA9uw051u4/4wqiZDGP0DvAzt/Sj5/bXuS0KWtCZlCUKduf0WMcAU8EKYWUGfl9UWVTa6e4XBKO1V0VZBUMtPBVqNrIH8xLjAO5VRgcAbgRoT6po6S3X6uo6Es1LTuIlZjkkgAMSffdnRXdbVdOmq4QuyJUeFLLDVUzfpz55DrwNpGRx/myNBlzpHgCuIsQqfB8YZxK4GWPPc88/tnS+CU6gpK3S1LV3PTQamggmJDJIKWL9Nvm0EXQPUQ6eeu+9o/vLJWIIKyEYLY9GCnvjJ/nuCBqwa71cdLV2qhqh/Sato5JR/ZJVgjbGhb0XCDPbndnPbQv0nQJc7zDSmuSimkBEMsi5QvjhTggjPIyPXGjWj6f+3v8ASWm9+FCZKkLPzhTEQ77lc9lbDr6EZIPbQcVwJU9S1fkQCR3atzDXG3IQSRxVykgWdh46fzvFJ9PWC9b2sgbR4kmBnOP03xzrY+h+rKfoH6V2l4Gp1udxLzotPLudm343Sqe2FXAxx++spuN8oYvqLHfqUBLca8MirHtUwrtQsB7EbsDVVXw1VFWVNhqaqYwUE8ixRbzsXOfMo+Rg8e+irT+pUFLDOlJbuKnHgVB4Gn7SWTViQ/ezdWMa9c75bamKd6QiniZ9kcEg3uMsfOHGCAPnnnjXLJcYj1LTUEgQCYtPTCEjgqhDLx3VlLdxrM6t5E6TsHhM4zU1WHXIbyFdvPfjJ1e/SpWm+olseUvKY46mV5GbJwYmOcemC38nVNi+z5Iws6byC/8AF/cfKxYSMXM4qEHUp829jEy89UVFmvc9vtxTfRhNsko3NFgcgEnBJyckj10L3fqauvlZFLVVE0uMhS+AFXHIA9O3ppHWiB+sLmSMGVlYHB4yo/8AeqZE2WwyAld1QIiQCMLgEj+catuzsPh5UmVNCBnIFdajnAp+JmFa5b0BPkYl3KWSW1SMxjCkEALkbf8ALjSesj4nVVV5d3EIIzjtEmefTtqLTW1q+4UdCrtvnmWMhifKvGSfwMnOrq1XijfrxrzUFTQ/eNuDrlRE4ZAx+ANufg6cnzmXxEh8qVU7yGHixhRR4oyqo5A6O/R4aNwqKhKakrao/Y0YkMQJ3PTrgK6bvUANx+BqB1pfFvklG1JSfa2mlUw0sZwDj1OB27Aft3Jzq+q7GJ7rU2y1qkssdWyQq39qxKEbc7DkgZRfc7RjvoN6mpUobvPTrVrVyR4WSVAQm/HKjJJIHbPvnSmFEmZNStN2JA79W5l7nfeJz+IiWUm1j4afNorYGRZUaRS8YILKDjI9s6KBUVNTGrVUtTLTSxNHGazdmEHO0q54YZ9M+/GdCSnRX031rdLJA9FFNTyUTBj4NWC0Y9wMe/t2Ptp3FIWU5paQSOZbpQwth1JCsqywMW1NaKOu6Z6grqlWhqbdBDHBG7k+GTId35zjaNNyU69QwxpGwnvtuiEUkcbc1sKjgr7yIPKR3KgEcg6hSVtNFGjzTCAybZFp6KMnau7coO84AzyAckA9hxqZaYKWtiqroKYw01vKb6upqXyrsfIqrEqktwT34xknSQStIVMJN6bOAGvUE6A3NKgGGSUEhAAtXwcvs3tyiXbalepKeltsy7aSnUkJEgJjGcsxYkBR3JY/P41o3TDWLo+OWooR4k86BRufdPNHyxLEgBFwhbaoycDOgalpY7897r0W3VJpvCkleKlqJpKjxDgEIZByDwQfk86+gtb3K136spY7ZI1pYkwSULK8ygZdhlzgqAcg+3fSOMkIxCTLUopTRxo5Y173F+8toxh1qlELACjVjsHt0gg6lp7FdwZpyqVITh4jl1X0JA7rzgjuO/bWbXJjQKaTcjwL2jIAHPqCCQfzotl6brV/oUf2lnaqucckzoadlWlSMZYuwfuByQB8d9QqeCmFOLvaorfMlJUxwyusE8MkJc4RwviHKk5+QfTU8ElGHSEhZUBYaAuQK6OQQOem+YhapqirKEk9WYG2tGPrFXDSmyQvHK6Q3qvjMaRueaWJhyW9nccAegJz31Ims0FJ0/YqqmQzVNyp5UmjV8bj4gx+AAcH8aZvf2dlvlbSTUzvVQSFJZ6apYhmyCeJFYnkd86ZiuMDRs0UgqDHl2grYzyu4uwARsEZOSOM47EDThExaUzUksWJ3DFhsA4Ic73LwsCgFSDpTuqPO/8AER6ismgVzTT1EVLHGsbfbbt0yjuXccDJ5xnj86FpCpdtgITPAJzgaJupOsLleolpJZoI6NcHwaXIRvbOeTj27D20LE6dwyVBLrSxO7+whaepJUyS4jgOr63XCeWk+1iZEmhVnRzGh3KOSCxGRjuD+3tqlEYHvqStS6U326BVQnLlRhn9gT6ge2jTJWcM0QQvKXiwalq7kIZ44ncGJQ0h4XIyvLHA9Bq7sszUduuFrrDSy0Nbsd0jq1Ekbocq6lQw7EggjkHQsla6xJGUikVM7fETdtzycaU9fK6Iu2Ndm7BjXYTux3xj20Jcha05CzP6Fx7RNMxKTnF/+0MHNBV09oprpTwRhaW4QxRkmom8Rdjbt25Ye5PsMAcactnUH9Dk8SiemhaGqFSTJ4794/DKPmPkMCSSfU6BBdKpYhGkgRck+Qbc5GD211brUhSrsJVPGJPN/wDdBOACgrPXNet7D0EEGKIbLRrU+aweU/Us8QsxSeklmo/uMtIs7fdrMSZQw2euT27aYp6yCkoxS0McMdFJVR1VQGlmZ5fDOUQMYgAoPwT86C3u1SyIiMsSqMARDbxpJulS0Rjd96nH9/JwBgDUf25Og89yfUkjkbRn6o6n4wHoGgjv6QXSrqauDw1q6qdp5PFrFwA2TtUFV9T3PtqpSmqraJ5pInjPhlUfuCSQOGHHYnUJblMkTx7Y2DlSTIu8jaCOM59zpLV8hieNVjRHILBFxux20xLkLQkSx+I9IEqYlSivX3idcq2aKmellZHqJMGVhGg2juFBA5J7k/sPXVAdTZKl5YFhcKwU+ViPMo9gfb41G8MfOiy5WUM0RWvMXj//2Q==";
 
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -399,7 +470,9 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     executando:'Trabalhando agora', aguardando_humano:'Aguardando você',
     aguardando_correcao:'Aguardando retomada', ocioso:'Parado', sem_dados:'Sem atividade informada'
   };
-  const TIPO_COMP = {skill:'Skill (Guia)', local_tool:'Script local', mcp_tool:'Servidor MCP'};
+  const BUG_TIPO_LBL = {bug:'🐞 Bug', ux:'🎨 Visual / UX', melhoria:'✨ Melhoria'};
+  const BUG_SEV_LBL = {critico:'Crítico', alto:'Alto', medio:'Médio', baixo:'Baixo'};
+  const BUG_ST_LBL = {aberto:'Aberto', em_analise:'Em análise', resolvido:'Resolvido', descartado:'Descartado'};
 
   const UI = {
     tab: 'agora',
@@ -416,20 +489,24 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     selectedStageId: null,
     selectedModId: null,
     hoverModId: null,
-    spotlightTargetId: null, // etapa ou fase enfatizada pelo botão "Onde estou"
+    spotlightTargetId: null,
     returnAfterReview: null,
     reviewStageId: null,
     reviewEvIndex: 0,
     reviewEvidenceCache: {},
     reviewConflictMsg: '',
     reviewBusy: false,
-    agentView: 'harness', // 'harness' (visão do projeto) | 'etapa' (detalhes por etapa)
-    harnessFocus: 'todos', // 'todos' | 'skills' | 'mcps' | 'scripts' | 'hooks' | 'regras' | 'fluxo'
+    agentView: 'harness',
+    harnessFocus: 'todos',
     agentStageId: null,
     agentReturnStageId: null,
     agentSearch: '',
     agentActiveLayer: 'contexto',
     agentContextBundle: null,
+    bugFilter: 'todos',
+    bugModal: false,
+    bugBusy: false,
+    bugError: '',
     showPolicyModal: false,
     policyBusy: false,
     policyError: '',
@@ -466,6 +543,19 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
   function getGroupLogo(){
     const custom = D.estado && D.estado.projeto && D.estado.projeto.logo;
     return custom || CEMOL_LOGO_URI;
+  }
+  function getCurrentTheme(){
+    const a = document.documentElement.getAttribute('data-theme');
+    if (a) return a;
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  }
+  function getEffectiveBugs(){
+    const serverBugs = Array.isArray(D.bugs) ? D.bugs : [];
+    if (D.modo_servidor) return serverBugs;
+    try {
+      const local = JSON.parse(localStorage.getItem(projectKey('bugs_offline')) || '[]');
+      return Array.isArray(local) ? [...local, ...serverBugs] : serverBugs;
+    } catch(e) { return serverBugs; }
   }
 
   function findStage(sid){
@@ -651,6 +741,90 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     else showToast(data.erro || 'Erro ao travar critérios.', true);
   }
 
+  async function submitBugReport(formObj){
+    const titulo = (formObj.titulo || '').trim();
+    if (!titulo) { UI.bugError = 'Descreva um título curto para o bug ou melhoria.'; render(); return; }
+    const payloadBug = {
+      titulo,
+      descricao: (formObj.descricao || '').trim(),
+      passos: (formObj.passos || '').trim(),
+      tipo: formObj.tipo || 'bug',
+      severidade: formObj.severidade || 'medio',
+      tela_origem: formObj.tela_origem || (UI.reviewStageId ? 'revisao' : UI.tab),
+      etapa_id: formObj.etapa_id || UI.reviewStageId || UI.selectedStageId || '',
+      tema: getCurrentTheme(),
+      viewport: `${window.innerWidth}x${window.innerHeight}`,
+      reportado_por: (formObj.reportado_por || getReviewer() || 'Usuário').trim()
+    };
+    if (payloadBug.reportado_por && payloadBug.reportado_por !== 'Usuário') setReviewer(payloadBug.reportado_por);
+
+    if (canWrite()) {
+      UI.bugBusy = true; UI.bugError = ''; render();
+      const {status, data} = await apiPost('/api/bug', payloadBug);
+      UI.bugBusy = false;
+      if (status === 200 && data.payload) {
+        D = data.payload;
+        UI.bugModal = false;
+        render();
+        showToast(`🐞 ${data.bug.id} salvo em .specboard/bugs.jsonl — pronto para seus agentes analisarem!`);
+      } else {
+        UI.bugError = data.erro || 'Erro ao registrar bug.';
+        render();
+      }
+      return;
+    }
+    // Fallback offline (salva no navegador para não perder)
+    try {
+      const prev = JSON.parse(localStorage.getItem(projectKey('bugs_offline')) || '[]');
+      const localItem = Object.assign({}, payloadBug, {
+        id: 'LOCAL-' + String(prev.length + 1).padStart(3, '0'),
+        status: 'aberto',
+        criado_em: new Date().toLocaleString('pt-BR'),
+        analise_agente: ''
+      });
+      localStorage.setItem(projectKey('bugs_offline'), JSON.stringify([localItem, ...prev]));
+      UI.bugModal = false;
+      render();
+      showToast('Relato salvo localmente no navegador (abra via serve para gravar em bugs.jsonl).');
+    } catch(e) {
+      UI.bugError = 'Não foi possível salvar no modo offline.';
+      render();
+    }
+  }
+
+  async function updateBugStatusNow(bugId, novoStatus){
+    if (!canWrite()) { showToast('Abra pelo servidor local para atualizar status em bugs.jsonl.', true); return; }
+    const {status, data} = await apiPost('/api/bug/status', {
+      bug_id: bugId, status: novoStatus, atualizado_por: getReviewer() || 'Usuário'
+    });
+    if (status === 200 && data.payload) {
+      D = data.payload;
+      render();
+      showToast(`✓ ${bugId} marcado como ${BUG_ST_LBL[novoStatus] || novoStatus}.`);
+    } else showToast(data.erro || 'Erro ao atualizar status.', true);
+  }
+
+  function copyBugsPromptForAgent(){
+    const abertos = getEffectiveBugs().filter(b => b.status === 'aberto' || b.status === 'em_analise');
+    if (!abertos.length) { showToast('Não há bugs abertos para copiar.'); return; }
+    const lines = [
+      'Analise os bugs/melhorias reportados no SpecBoard (use a ferramenta MCP `specboard_bugs` e atualize com `specboard_bug_update` após corrigir):',
+      ''
+    ];
+    for (const b of abertos) {
+      lines.push(`- **${b.id}** [${b.tipo} · severidade: ${b.severidade} · tela: ${b.tela_origem || '—'}${b.etapa_id ? ' · etapa: ' + b.etapa_id : ''} · tema: ${b.tema || '—'}]: **${b.titulo}**`);
+      if (b.descricao) lines.push(`  Descrição: ${b.descricao}`);
+      if (b.passos) lines.push(`  Passos: ${b.passos}`);
+    }
+    const text = lines.join('\n');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showToast(`📋 Prompt com ${abertos.length} relato(s) copiado — cole no Claude, Codex ou Antigravity!`))
+        .catch(() => showToast('Não foi possível acessar a área de transferência.', true));
+    } else {
+      showToast('Use a ferramenta MCP specboard_bugs para o agente ler diretamente.');
+    }
+  }
+
   function renderRowActions(e, menuKey, qidx){
     const s = e._status;
     const w = canWrite();
@@ -757,11 +931,12 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     return html || '<p class="muted">(vazio)</p>';
   }
 
-  // ==================== BARRA SUPERIOR (COM LOGO DO GRUPO + BOTÃO INÍCIO EM TODAS AS PÁGINAS) ====================
+  // ==================== BARRA SUPERIOR ====================
   function renderNav(){
     const P = D.estado.projeto || {};
     const pol = D.politica || {};
     const filaN = (D.fila || []).length;
+    const bugsAbertos = getEffectiveBugs().filter(b => b.status === 'aberto' || b.status === 'em_analise').length;
     const rev = getReviewer();
     const isHome = UI.tab === 'agora' && !UI.reviewStageId;
     return `<header class="nav">
@@ -771,7 +946,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
           <div class="proj-title clamp1" title="${esc(P.titulo || P.nome)}">${esc(P.nome || P.titulo || 'SpecBoard')}</div>
         </button>
         <button type="button" class="home-quick-btn ${isHome ? '' : 'is-away'}" id="btn-go-home" data-go-home title="Voltar rápido para a Home">⌂ Início</button>
-        <button type="button" class="q-toggle" id="btn-toggle-q">${UI.showQuestion ? 'Ocultar objetivo ▴' : 'Objetivo central ▾'}</button>
+        <button type="button" class="q-toggle" id="btn-toggle-q">${UI.showQuestion ? 'Ocultar objetivo ▴' : 'Objetivo ▾'}</button>
       </div>
       <div class="seg-tabs" role="tablist" aria-label="Navegação principal">
         <button type="button" role="tab" class="seg-tab" data-tab="agora" aria-selected="${isHome ? 'true' : 'false'}">
@@ -781,10 +956,14 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
           Projeto
         </button>
         <button type="button" role="tab" class="seg-tab" data-tab="agente" aria-selected="${UI.tab === 'agente' && !UI.reviewStageId ? 'true' : 'false'}">
-          Agente & Harness
+          Harness
+        </button>
+        <button type="button" role="tab" class="seg-tab" data-tab="bugs" aria-selected="${UI.tab === 'bugs' && !UI.reviewStageId ? 'true' : 'false'}">
+          🐞 Bugs ${bugsAbertos ? `<span class="seg-badge is-bug">${bugsAbertos}</span>` : ''}
         </button>
       </div>
       <div class="nav-right">
+        <button type="button" class="pill-btn bug-cta" id="btn-quick-bug" title="Reportar bug visual ou sugestão para seus agentes analisarem">🐞 Reportar</button>
         <button type="button" class="pill-btn" id="btn-reviewer" title="Seu nome para aprovar em 1 clique">
           👤 ${rev ? esc(rev) : '<span class="muted">Seu nome</span>'}
         </button>
@@ -796,18 +975,17 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
           ${canWrite() ? 'Interativo' : 'Só leitura'}
         </span>
         ${D.modo_servidor ? '<button type="button" class="icon-btn" id="btn-refresh" title="Atualizar dados">↻</button>' : ''}
-        <button type="button" class="icon-btn" id="btn-theme" title="Tema claro / escuro">◐</button>
+        <button type="button" class="icon-btn" id="btn-theme" title="Alternar tema claro / escuro">◐</button>
       </div>
     </header>
     ${UI.showQuestion ? `<div class="q-drawer"><span><b>Pergunta central:</b> ${esc(P.pergunta_central)}</span><span class="muted" style="font-size:12px">Atualizado em ${esc(D.gerado_em)}</span></div>` : ''}
-    ${!canWrite() ? `<div class="offline-tip"><span><b>Modo somente leitura:</b> para aprovar, pausar ou pedir ajustes diretamente aqui, abra o painel com o comando <code>serve --open</code> no terminal.</span></div>` : ''}`;
+    ${!canWrite() ? `<div class="offline-tip"><span><b>Modo somente leitura:</b> para aprovar, pausar ou gravar bugs direto em <code>.specboard/</code>, abra pelo servidor local (<code>serve --open</code>).</span></div>` : ''}`;
   }
 
-  // ==================== ABA 1: HOME (AGORA) COM SIDEBAR DE ÁREAS DO PROJETO ====================
+  // ==================== ABA 1: HOME (AGORA) NO ESTILO DA FIGURA HERO ====================
   function renderAgora(){
     const P = D.estado.projeto || {};
     const sit = D.situacao_atual || {};
-    const marco = sit.marco_atual || {};
     const ativ = sit.atividade_agente || {};
     const bloqs = sit.bloqueios_sistema || [];
     const prox = sit.proxima_acao || {};
@@ -818,6 +996,8 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const w = n => tot ? (100 * (n || 0) / tot) : 0;
     const mud = getEffectiveMudancas();
     const curLoc = getWhereAmI();
+    const bugsList = getEffectiveBugs();
+    const bugsAbertos = bugsList.filter(b => b.status === 'aberto' || b.status === 'em_analise');
 
     const focusPair = prox.etapa_id ? findStage(prox.etapa_id) : null;
     const filaBloq = D.fila || [];
@@ -832,6 +1012,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const bloqVisiveis = UI.showAllBlockers ? bloqs : bloqs.slice(0, 4);
     const nPause = stagesAll.filter(p => p.e._status === 'aguardando_decisao').length;
     const nBlk = stagesAll.filter(p => p.e._status === 'bloqueado' || p.e._status === 'correcao_solicitada').length;
+    const nExec = (c.executado || 0) + (c.revisado || 0);
 
     const fases = fasesList();
     const mods = D.estado.modulos || [];
@@ -852,6 +1033,16 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       </button>`;
     }).join('');
 
+    const miniPhaseNodes = fases.map((f, idx) => {
+      const fMods = mods.filter(m => (m.fase || '—') === f);
+      const totF = fMods.reduce((a, m) => a + ((m.etapas || []).length || m.etapas_estimadas || 0), 0);
+      const verF = fMods.reduce((a, m) => a + (m.etapas || []).filter(e => e._status === 'verificado').length, 0);
+      const isCur = f === curLoc.fase;
+      const doneAll = totF > 0 && verF === totF;
+      const firstMod = fMods[0];
+      return `${idx ? '<span class="phase-sep">→</span>' : ''}<button type="button" class="phase-dot-btn ${doneAll ? 'is-done' : (isCur ? 'is-cur' : '')}" data-jump-phase="${esc(f)}" data-jump-mod="${esc(firstMod ? firstMod.id : '')}" title="${esc(f)} (${verF}/${totF} aprovadas)">${doneAll ? '✓' : (isCur ? `F${idx + 1}📍` : `F${idx + 1}`)}</button>`;
+    }).join('');
+
     const sidebar = `<aside class="home-sidebar" aria-label="Guia das áreas do projeto">
       <div class="sb-group-brand">
         <img class="sb-group-logo" src="${esc(getGroupLogo())}" alt="Logo CEMOL">
@@ -866,7 +1057,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
 
       <div class="sb-sec">
         <div class="sb-sec-lbl">Nesta página</div>
-        <button type="button" class="sb-nav-btn" data-scroll-sec="sec-foco"><span>⚡ Sua vez agora</span><span class="muted">→</span></button>
+        <button type="button" class="sb-nav-btn" data-scroll-sec="sec-foco"><span>⚡ Painel 1-2-3</span><span class="muted">→</span></button>
         <button type="button" class="sb-nav-btn" data-scroll-sec="sec-fila"><span>✅ Fila de decisão</span><span class="seg-badge">${filaBloq.length}</span></button>
         <button type="button" class="sb-nav-btn" data-scroll-sec="sec-extras"><span>🔒 Bloqueios & novidades</span><span class="muted">${bloqs.length + (P.pendencias_humanas || []).length}</span></button>
       </div>
@@ -876,10 +1067,11 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
         ${areasHtml}
       </div>
 
-      <div class="sb-sec" style="padding-top:6px;border-top:1px solid var(--line)">
-        <div class="sb-sec-lbl">Outras visões</div>
-        <button type="button" class="sb-nav-btn" data-tab-jump="projeto"><span>🗺 Mapa completo do Projeto</span><span>→</span></button>
+      <div class="sb-sec" style="padding-top:8px;border-top:1px solid var(--line)">
+        <div class="sb-sec-lbl">Ferramentas</div>
+        <button type="button" class="sb-nav-btn" data-tab-jump="projeto"><span>🗺 Mapa do Projeto</span><span>→</span></button>
         <button type="button" class="sb-nav-btn" data-tab-jump="agente"><span>🏗 Arquitetura do Harness</span><span>→</span></button>
+        <button type="button" class="sb-nav-btn" data-tab-jump="bugs"><span>🐞 Bugs & Melhorias</span><span class="seg-badge is-bug">${bugsAbertos.length}</span></button>
       </div>
     </aside>`;
 
@@ -887,48 +1079,95 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       <div class="home-shell">
         ${sidebar}
         <div class="home-content">
-          <section class="kpi-strip" aria-label="Resumo do momento">
-            <div class="kpi-box">
-              <div class="kpi-lbl"><span>Onde o projeto está</span><button type="button" class="btn btn-soft-accent btn-xs" id="btn-kpi-where">📍 Localizar</button></div>
-              <div class="kpi-val">${esc(sit.fase_atual || '—')}</div>
-              <div class="kpi-sub"><b>Ponto atual:</b> ${esc(marco.titulo || curLoc.stageTitle || '—')}</div>
-            </div>
-            <div class="kpi-box">
-              <div class="kpi-lbl"><span>O que o agente está fazendo</span><span class="st-pill st-em_curso nob">Informado pelo agente</span></div>
-              <div class="kpi-val">${esc(ATIV_LABEL[ativ.estado] || ativ.estado || 'Sem atividade')}</div>
-              <div class="kpi-sub">${esc(ativ.resumo || 'Nenhuma tarefa ativa no momento.')}</div>
-            </div>
-            <div class="kpi-box">
-              <div class="kpi-lbl"><span>Aprovado por você</span><b style="color:var(--ok);font-size:15px">${pct}%</b></div>
-              <div class="bar-slim" aria-hidden="true">
-                <i style="width:${w(c.verificado)}%;background:var(--ok)"></i>
-                <i style="width:${w(c.revisado)}%;background:var(--rev)"></i>
-                <i style="width:${w(c.executado)}%;background:var(--exe)"></i>
-                <i style="width:${w(c.aguardando_decisao)}%;background:var(--pause)"></i>
-                <i style="width:${w(c.em_curso)}%;background:var(--run)"></i>
-                <i style="width:${w((c.bloqueado || 0) + (c.correcao_solicitada || 0))}%;background:var(--block)"></i>
+          <section id="sec-foco" aria-label="Fluxo vivo do projeto">
+            <div class="hero-header">
+              <div class="hero-header-brand">
+                <h1>${esc(P.titulo || P.nome || 'SpecBoard')}</h1>
               </div>
-              <div class="kpi-sub"><b>${c.verificado || 0} de ${tot}</b> aprovadas · ${(c.executado || 0) + (c.revisado || 0)} feitas pelo agente</div>
+              <p>${esc(P.subtitulo || 'O agente executa e entrega evidências — você decide no painel e libera a próxima fase com segurança.')}</p>
             </div>
-          </section>
 
-          <section class="focus-card" id="sec-foco" aria-label="Sua próxima ação">
-            <div class="focus-top">
-              <span class="focus-eyebrow">SUA VEZ AGORA</span>
-              ${focusPair ? `<span class="st-pill st-${esc(focusPair.e._status)}">${esc(ST_LABEL[focusPair.e._status] || focusPair.e._status)}</span>` : ''}
-            </div>
-            <div class="focus-title">${esc(prox.titulo || 'Tudo em dia')}</div>
-            <p class="muted" style="font-size:14px">${esc(prox.detalhe || '')}</p>
-            <div class="action-bar">
-              ${focusPair ? `
-                <button type="button" class="btn btn-accent" data-open-review="${esc(focusPair.e.id)}" data-qidx-btn="0">Revisar evidências</button>
-                ${canWrite() && focusPair.e._status !== 'verificado' ? `<button type="button" class="btn btn-ok" data-act="verificado" data-sid="${esc(focusPair.e.id)}">✓ Aprovar direto</button>` : ''}
-                ${canWrite() ? `
-                  <button type="button" class="btn" data-act="aguardar_decisao" data-sid="${esc(focusPair.e.id)}">Deixar em espera</button>
-                  <button type="button" class="btn" data-act="pedir_correcao" data-sid="${esc(focusPair.e.id)}">Pedir ajuste</button>
-                  <button type="button" class="btn btn-ghost" data-act="bloquear" data-sid="${esc(focusPair.e.id)}">Pausar etapa</button>
-                ` : ''}
-              ` : `<button type="button" class="btn btn-accent" data-tab-jump="projeto">Abrir mapa do Projeto →</button>`}
+            <div class="trio-stage">
+              <!-- PILAR 1: AGENTE EXECUTA -->
+              <div class="glow-card c-cyan">
+                <span class="pill-crest c-cyan">1. Agente executa</span>
+                <div style="display:grid;gap:8px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
+                    <span class="st-pill st-em_curso nob">${esc(ATIV_LABEL[ativ.estado] || 'Em atividade')}</span>
+                    ${ativ.etapa_id ? `<span class="code-tag">${esc(ativ.etapa_id)}</span>` : ''}
+                  </div>
+                  <p style="font-size:13px;line-height:1.5">${esc(ativ.resumo || 'Nenhuma tarefa em execução informada no momento.')}</p>
+                </div>
+                <div class="mini-tiles">
+                  <div class="mini-tile"><b>${nExec}</b><span>Prontas</span></div>
+                  <div class="mini-tile"><b>${c.em_curso || 0}</b><span>Em curso</span></div>
+                  <div class="mini-tile"><b>${(D.harness_resumo && D.harness_resumo.contadores && D.harness_resumo.contadores.hooks_codigo) || 1}</b><span>Travas</span></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+                  <span class="muted">Entrega evidências reais</span>
+                  <button type="button" class="btn btn-soft-accent btn-xs" data-tab-jump="agente">Ver Harness →</button>
+                </div>
+              </div>
+
+              <div class="trio-arrow" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 28 28" fill="none"><path d="M4 18 C10 10, 16 10, 23 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 7 L24 12 L18 17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+
+              <!-- PILAR 2 (CENTRAL ELEVADO): VOCÊ DECIDE -->
+              <div class="glow-card c-center">
+                <span class="pill-crest c-center">2. Você decide</span>
+                <div style="display:grid;gap:6px;text-align:center">
+                  ${focusPair ? `<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+                    <span class="code-tag">${esc(focusPair.e.id)}</span>
+                    <span class="st-pill st-${esc(focusPair.e._status)}">${esc(ST_LABEL[focusPair.e._status] || focusPair.e._status)}</span>
+                  </div>` : ''}
+                  <h2 style="font-size:17.5px;line-height:1.3">${esc(prox.titulo || 'Tudo em dia por aqui')}</h2>
+                  <p class="muted" style="font-size:12.5px;line-height:1.45">${esc(prox.detalhe || 'Nenhuma entrega aguardando decisão agora.')}</p>
+                </div>
+
+                ${focusPair ? `<div class="hero-btn-stack">
+                  ${canWrite() && focusPair.e._status !== 'verificado'
+                    ? `<button type="button" class="btn btn-ok" data-act="verificado" data-sid="${esc(focusPair.e.id)}">✓ Aprovar</button>` : ''}
+                  ${canWrite() ? `<div class="hero-btn-pair">
+                    <button type="button" class="btn btn-slate btn-sm" data-act="aguardar_decisao" data-sid="${esc(focusPair.e.id)}">⏸ Em espera</button>
+                    <button type="button" class="btn btn-amber btn-sm" data-act="pedir_correcao" data-sid="${esc(focusPair.e.id)}">↺ Pedir ajuste</button>
+                  </div>` : ''}
+                  <button type="button" class="btn btn-accent btn-sm" data-open-review="${esc(focusPair.e.id)}" data-qidx-btn="0">👁 Revisar evidências</button>
+                </div>` : `<button type="button" class="btn btn-accent" data-tab-jump="projeto">Abrir mapa do Projeto →</button>`}
+
+                <div style="text-align:center;font-size:12px" class="muted">Aprovação rastreável no painel (SHA-256)</div>
+              </div>
+
+              <div class="trio-arrow ok" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 28 28" fill="none"><path d="M4 18 C10 10, 16 10, 23 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 7 L24 12 L18 17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+
+              <!-- PILAR 3: PROJETO AVANÇA -->
+              <div class="glow-card c-ok">
+                <span class="pill-crest c-ok">3. Projeto avança</span>
+                <div style="display:grid;gap:8px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:6px">
+                    <span class="muted" style="font-size:12px;font-weight:700">Aprovado por você</span>
+                    <b style="color:var(--ok);font:800 20px var(--f-display)">${pct}%</b>
+                  </div>
+                  <div class="bar-slim" aria-hidden="true">
+                    <i style="width:${w(c.verificado)}%;background:var(--ok)"></i>
+                    <i style="width:${w(c.revisado)}%;background:var(--rev)"></i>
+                    <i style="width:${w(c.executado)}%;background:var(--exe)"></i>
+                    <i style="width:${w(c.aguardando_decisao)}%;background:var(--pause)"></i>
+                    <i style="width:${w(c.em_curso)}%;background:var(--run)"></i>
+                    <i style="width:${w((c.bloqueado || 0) + (c.correcao_solicitada || 0))}%;background:var(--block)"></i>
+                  </div>
+                  <div style="font-size:12.5px" class="muted"><b>${c.verificado || 0} de ${tot}</b> etapas verificadas · <b>${esc(sit.fase_atual || '—')}</b></div>
+                </div>
+
+                <div class="phase-rail-mini" aria-label="Progresso das fases">${miniPhaseNodes}</div>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+                  <span class="muted">Marcos liberam a próxima fase</span>
+                  <button type="button" class="btn btn-soft-ok btn-xs" id="btn-kpi-where">📍 Localizar</button>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -956,7 +1195,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
                     </div>
                     <div class="qrow-sub">
                       <span class="st-pill st-${esc(pair.e._status)}">${esc(ST_LABEL[pair.e._status] || pair.e._status)}</span>
-                      ${pair.e._eh_marco ? '<span class="st-pill st-executado nob">Marco principal</span>' : ''}
+                      ${pair.e._eh_marco ? '<span class="st-pill st-executado nob">★ Marco principal</span>' : ''}
                       ${pair.e._exp ? '<span class="st-pill st-bloqueado">Arquivo alterado</span>' : ''}
                       ${unlockStr ? `<span>Libera: <b>${esc(unlockStr)}</b></span>` : `<span>${esc(pair.m.titulo)}</span>`}
                     </div>
@@ -970,7 +1209,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
           <section class="bottom-two" id="sec-extras">
             <div class="card">
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-                <h3>Pontos travados ou aguardando autorização (${bloqs.length + (P.pendencias_humanas || []).length})</h3>
+                <h3>🔒 Pontos travados ou autorizações (${bloqs.length + (P.pendencias_humanas || []).length})</h3>
                 ${bloqs.length > 4 ? `<button type="button" class="btn btn-ghost btn-xs" id="btn-all-bloqs">${UI.showAllBlockers ? 'Ver menos' : `Ver todos (${bloqs.length})`}</button>` : ''}
               </div>
               <div class="compact-list">
@@ -987,15 +1226,23 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
             </div>
 
             <div class="card">
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-                <h3>Novidades desde sua última visita</h3>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                <h3>🐞 Bugs & Melhorias (${bugsAbertos.length} aberto${bugsAbertos.length === 1 ? '' : 's'})</h3>
+                <div style="display:flex;gap:6px">
+                  <button type="button" class="btn btn-soft-warn btn-xs" id="btn-home-bug">+ Reportar</button>
+                  <button type="button" class="btn btn-xs" data-tab-jump="bugs">Ver painel →</button>
+                </div>
+              </div>
+              ${bugsList.length
+                ? `<div class="compact-list">${bugsList.slice(0, 3).map(b => `<div class="compact-row">
+                    <div class="wrap-any"><span class="code-tag">${esc(b.id)}</span> <b>${esc(b.titulo)}</b><div class="muted" style="font-size:12px">${esc(BUG_TIPO_LBL[b.tipo] || b.tipo)} · ${esc(BUG_SEV_LBL[b.severidade] || b.severidade)}${b.tela_origem ? ' · ' + esc(b.tela_origem) : ''}</div></div>
+                    <span class="st-pill st-${esc(b.status)}">${esc(BUG_ST_LBL[b.status] || b.status)}</span>
+                  </div>`).join('')}</div>`
+                : `<p class="muted">Achou algo confuso, texto cortado ou ideia de melhoria? Clique em <b>+ Reportar</b> — fica salvo em <code>.specboard/bugs.jsonl</code> para seus agentes analisarem automaticamente via MCP.</p>`}
+              <div style="border-top:1px solid var(--line);padding-top:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                <span class="muted" style="font-size:12px">${mud.referencia_confiavel ? `Novidades desde ${esc(mud.referencia_em)}: ${mud.novos.length}` : 'Marque sua visita para rastrear novidades'}</span>
                 <button type="button" class="btn btn-xs" id="btn-mark-visit">${mud.referencia_confiavel ? 'Marcar como visto' : 'Marcar ponto inicial'}</button>
               </div>
-              ${mud.referencia_confiavel
-                ? (mud.novos.length
-                  ? `<div class="compact-list">${mud.novos.slice(0, 5).map(ev => `<div class="compact-row"><span class="wrap-any">${esc(ev.texto)}</span><span class="muted" style="font-size:11.5px;white-space:nowrap">${esc(ev.data)}</span></div>`).join('')}</div>`
-                  : `<p class="muted">Tudo igual desde ${esc(mud.referencia_em)}.</p>`)
-                : `<p class="muted">Clique em <b>Marcar ponto inicial</b> para acompanhar o que mudar a partir de hoje.</p>`}
             </div>
           </section>
         </div>
@@ -1003,7 +1250,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     </div>`;
   }
 
-  // ==================== ABA 2: PROJETO (MAPA LEGÍVEL + ONDE ESTOU + INSPETOR LIMPO) ====================
+  // ==================== ABA 2: PROJETO ====================
   function getConnectedModSet(modId){
     const up = new Set(), down = new Set();
     if (!modId) return {up, down};
@@ -1183,8 +1430,8 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
         const isCur = f === curLoc.fase;
         return `<div class="card">
           <div style="display:flex;align-items:center;gap:8px"><h3>${esc(f)}</h3>${isCur ? '<span class="here-badge">📍 Fase atual</span>' : ''}</div>
-          ${fMods.map(m => `<div class="qrows" style="border:1px solid var(--line);border-radius:12px">
-            <div style="padding:10px 14px;background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;gap:8px;border-radius:12px 12px 0 0">
+          ${fMods.map(m => `<div class="qrows" style="border:1px solid var(--line);border-radius:14px">
+            <div style="padding:10px 14px;background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;gap:8px;border-radius:14px 14px 0 0">
               <b>${esc(m.titulo)}</b>
               <span class="st-pill st-${esc(m._status_mod)}">${esc(ST_LABEL[m._status_mod] || m._status_mod)}</span>
             </div>
@@ -1363,7 +1610,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       return `${meta}<div class="ev-table-wrap"><table class="ev-table"><thead><tr>${(cached.headers || []).map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${(cached.rows || []).map(r => `<tr>${r.map(v => `<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${cached.truncado ? `<span class="muted" style="font-size:12px">Mostrando as primeiras ${cached.max_linhas} linhas.</span>` : ''}`;
     }
     if (cached.midia === 'markdown') return `${meta}<div class="ev-md">${renderMarkdownSafe(cached.conteudo)}</div>`;
-    return `${meta}<pre style="margin:0;overflow:auto;max-height:400px;background:var(--surface);padding:12px;border-radius:8px;border:1px solid var(--line)">${esc(cached.conteudo || '')}</pre>`;
+    return `${meta}<pre style="margin:0;overflow:auto;max-height:400px;background:var(--surface-solid);padding:12px;border-radius:10px;border:1px solid var(--line)">${esc(cached.conteudo || '')}</pre>`;
   }
 
   function renderRevisao(){
@@ -1397,13 +1644,13 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       <div class="rev-grid">
         <div style="display:grid;gap:16px">
           <div class="card">
-            <span class="kpi-lbl">1. O que foi entregue</span>
+            <span class="muted" style="font-size:12px;font-weight:700">1. O que foi entregue</span>
             <p style="font-size:15px">${esc(e.afirmacao || e.descricao || 'Sem resumo registrado.')}</p>
             <span class="muted" style="font-size:12.5px">${esc(m.titulo)} · ${esc(m.fase || '')}</span>
           </div>
 
           <div class="card">
-            <span class="kpi-lbl">2. Critério de verificação e contrato</span>
+            <span class="muted" style="font-size:12px;font-weight:700">2. Critério de verificação e contrato</span>
             <div><b>Como conferir:</b> ${esc(e.verificacao || '—')}</div>
             ${ct.pergunta || (ct.criterios_aceitacao || []).length ? `<div class="ins-box">
               <div><b>Critérios do bloco</b> ${ct.hash ? '🔒 travados' : ''}</div>
@@ -1414,7 +1661,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
 
           <div class="card">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-              <span class="kpi-lbl">3. Evidência (${evs.length} arquivo${evs.length === 1 ? '' : 's'})</span>
+              <span class="muted" style="font-size:12px;font-weight:700">3. Evidência (${evs.length} arquivo${evs.length === 1 ? '' : 's'})</span>
               ${evs.length > 1 ? `<div style="display:flex;gap:6px;flex-wrap:wrap">${evs.map((ev, i) => `
                 <button type="button" class="btn btn-xs ${i === UI.reviewEvIndex ? 'btn-soft-accent' : ''}" data-ev-idx="${i}">${esc(baseName(ev.ref))} ${ev.estado === 'ok' ? '✓' : '!'}</button>
               `).join('')}</div>` : ''}
@@ -1424,7 +1671,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
         </div>
 
         <aside class="rev-rail">
-          <span class="kpi-lbl">4. Decisão e efeito nas etapas dependentes</span>
+          <span class="muted" style="font-size:12px;font-weight:700">4. Decisão e efeito nas etapas dependentes</span>
           <div class="ins-box" style="font-size:13px">
             <div><b style="color:var(--ok)">✓ Aprovar:</b> libera ${esc(liberaTxt)}.</div>
             <div><b style="color:var(--block)">↺ Pedir ajuste / ⛔ Pausar:</b> segura as próximas etapas.</div>
@@ -1434,18 +1681,18 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
               <input id="rev-revisor" class="input" type="text" value="${esc(getReviewer())}" placeholder="Seu nome ou iniciais *">
               <textarea id="rev-nota" class="textarea" placeholder="Comentário (opcional ao aprovar; obrigatório ao pedir ajuste ou pausar)..."></textarea>
             </div>
-            <div style="display:grid;gap:7px">
+            <div style="display:grid;gap:8px">
               <button type="button" class="btn btn-ok" id="btn-dec-aprovar" ${UI.reviewBusy || hasMissing ? 'disabled' : ''}>${UI.reviewBusy ? 'Salvando...' : '✓ Aprovar entrega'}</button>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
-                <button type="button" class="btn btn-soft-warn" id="btn-dec-correcao" ${UI.reviewBusy ? 'disabled' : ''}>↺ Pedir correção</button>
-                <button type="button" class="btn btn-soft-pause" id="btn-dec-aguardar" ${UI.reviewBusy ? 'disabled' : ''}>⏸ Em espera</button>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <button type="button" class="btn btn-amber btn-sm" id="btn-dec-correcao" ${UI.reviewBusy ? 'disabled' : ''}>↺ Pedir correção</button>
+                <button type="button" class="btn btn-slate btn-sm" id="btn-dec-aguardar" ${UI.reviewBusy ? 'disabled' : ''}>⏸ Em espera</button>
               </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
-                <button type="button" class="btn btn-soft-block" id="btn-dec-bloquear" ${UI.reviewBusy ? 'disabled' : ''}>⛔ Pausar</button>
-                <button type="button" class="btn" id="btn-dec-depois" ${UI.reviewBusy ? 'disabled' : ''}>Deixar para depois</button>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <button type="button" class="btn btn-soft-block btn-sm" id="btn-dec-bloquear" ${UI.reviewBusy ? 'disabled' : ''}>⛔ Pausar</button>
+                <button type="button" class="btn btn-sm" id="btn-dec-depois" ${UI.reviewBusy ? 'disabled' : ''}>Deixar para depois</button>
               </div>
               ${['bloqueado','aguardando_decisao','correcao_solicitada'].includes(e._status)
-                ? `<button type="button" class="btn btn-soft-accent" id="btn-dec-desbloquear" ${UI.reviewBusy ? 'disabled' : ''}>▶ Retomar etapa</button>` : ''}
+                ? `<button type="button" class="btn btn-soft-accent btn-sm" id="btn-dec-desbloquear" ${UI.reviewBusy ? 'disabled' : ''}>▶ Retomar etapa</button>` : ''}
               <button type="button" class="btn btn-ghost btn-xs" id="btn-dec-revisado" ${UI.reviewBusy ? 'disabled' : ''}>Marcar apenas como lido</button>
             </div>
           ` : `<div class="ins-box">Abra pelo servidor local (<code>serve --open</code>) para salvar sua decisão diretamente no painel.</div>`}
@@ -1458,7 +1705,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     </div>`;
   }
 
-  // ==================== ABA 3: ARQUITETURA DO HARNESS & AGENTE (ENTIDADES SEPARADAS E AMIGÁVEIS) ====================
+  // ==================== ABA 3: ARQUITETURA DO HARNESS & AGENTE ====================
   function renderEntityCard(comp, color, badgeText){
     const obs = comp.observado || {};
     const isObs = obs.estado === 'observado';
@@ -1503,8 +1750,8 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
       <div class="harness-hero">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
           <div style="display:grid;gap:6px;max-width:780px">
-            <span class="focus-eyebrow">COMO O HARNESS DESTE PROJETO FUNCIONA</span>
-            <h2 style="font-size:20px">${esc(H.nome)}</h2>
+            <span style="font-size:11.5px;font-weight:800;letter-spacing:.06em;color:var(--accent)">COMO O HARNESS DESTE PROJETO FUNCIONA</span>
+            <h2 style="font-size:21px">${esc(H.nome)}</h2>
             <p class="muted" style="font-size:13.5px;line-height:1.5">${esc(H.descricao)}</p>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -1549,7 +1796,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
 
       ${show('scripts') ? `<section class="entity-section">
         <div class="entity-head">
-          <div><h3>🛠 Scripts e Ferramentas Locais</h3><p class="muted" style="font-size:12.5px">Programas determinísticos (Python, GROMACS, verificadores) usados para calcular sem alucinação.</p></div>
+          <div><h3>🛠 Scripts e Ferramentas Locais</h3><p class="muted" style="font-size:12.5px">Programas determinísticos (Python, simuladores, verificadores) usados para calcular sem alucinação.</p></div>
           <span class="st-pill st-em_curso nob">${(H.scripts || []).length} ferramenta(s)</span>
         </div>
         ${(H.scripts || []).length
@@ -1829,9 +2076,175 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     svg.innerHTML = out;
   }
 
+  // ==================== ABA 4: BUGS & MELHORIAS (CONECTADA AOS AGENTES VIA MCP) ====================
+  function renderBugs(){
+    const bugs = getEffectiveBugs();
+    const nAb = bugs.filter(b => b.status === 'aberto').length;
+    const nAn = bugs.filter(b => b.status === 'em_analise').length;
+    const nRes = bugs.filter(b => b.status === 'resolvido').length;
+    const filtered = UI.bugFilter === 'todos' ? bugs : bugs.filter(b => b.status === UI.bugFilter);
+    const stages = allStages();
+    const w = canWrite();
+
+    return `<div class="main full-bleed">
+      <div class="harness-hero">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+          <div style="display:grid;gap:6px;max-width:760px">
+            <span style="font-size:11.5px;font-weight:800;letter-spacing:.06em;color:var(--exe)">FEEDBACK ESTRUTURADO PARA SEUS AGENTES</span>
+            <h2 style="font-size:21px">🐞 Bugs, UX & Sugestões de Melhoria</h2>
+            <p class="muted" style="font-size:13.5px;line-height:1.5">
+              Todo relato salvo aqui fica em <code>.specboard/bugs.jsonl</code> com contexto automático (tela, etapa, tema e resolução).
+              Seus agentes (Claude, Codex ou Antigravity) podem ler tudo com a ferramenta MCP <code>specboard_bugs</code> e registrar correções via <code>specboard_bug_update</code>.
+            </p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn btn-accent btn-sm" id="btn-copy-bugs-prompt">📋 Copiar prompt para o agente</button>
+            <a class="btn btn-sm" href="https://github.com/fatioleg/specboard/issues/new/choose" target="_blank" rel="noopener">↗ Abrir Issue no GitHub</a>
+          </div>
+        </div>
+        <div class="stat-pills">
+          <button type="button" class="stat-chip ${UI.bugFilter === 'todos' ? 'is-active' : ''}" data-bug-filter="todos">Todos (${bugs.length})</button>
+          <button type="button" class="stat-chip ${UI.bugFilter === 'aberto' ? 'is-active' : ''}" data-bug-filter="aberto">🔴 Abertos (${nAb})</button>
+          <button type="button" class="stat-chip ${UI.bugFilter === 'em_analise' ? 'is-active' : ''}" data-bug-filter="em_analise">🟡 Em análise (${nAn})</button>
+          <button type="button" class="stat-chip ${UI.bugFilter === 'resolvido' ? 'is-active' : ''}" data-bug-filter="resolvido">🟢 Resolvidos (${nRes})</button>
+        </div>
+      </div>
+
+      <div class="bugs-grid">
+        <div class="card" style="position:sticky;top:74px">
+          <h3>+ Registrar novo relato</h3>
+          <p class="muted" style="font-size:12.5px">Simples e direto — o contexto técnico (tema e resolução) é capturado sozinho.</p>
+          ${UI.bugError ? `<div class="alert-strip">${esc(UI.bugError)}</div>` : ''}
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="field-lbl">Categoria
+              <select id="bf-tipo" class="select">
+                <option value="bug">🐞 Bug / Erro</option>
+                <option value="ux">🎨 Visual / Leitura</option>
+                <option value="melhoria">✨ Melhoria</option>
+              </select>
+            </label>
+            <label class="field-lbl">Prioridade
+              <select id="bf-sev" class="select">
+                <option value="medio">Médio</option>
+                <option value="alto">Alto</option>
+                <option value="critico">Crítico</option>
+                <option value="baixo">Baixo</option>
+              </select>
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="field-lbl">Tela onde ocorreu
+              <select id="bf-tela" class="select">
+                <option value="agora">Home (Agora)</option>
+                <option value="projeto">Mapa do Projeto</option>
+                <option value="revisao">Revisão de Evidências</option>
+                <option value="agente">Agente & Harness</option>
+                <option value="geral">Geral / Servidor</option>
+              </select>
+            </label>
+            <label class="field-lbl">Etapa (opcional)
+              <select id="bf-etapa" class="select">
+                <option value="">Nenhuma específica</option>
+                ${stages.map(s => `<option value="${esc(s.e.id)}">${esc(s.e.id)} — ${esc(s.e.titulo.slice(0, 34))}</option>`).join('')}
+              </select>
+            </label>
+          </div>
+          <label class="field-lbl">Título curto *
+            <input id="bf-titulo" class="input" type="text" placeholder="Ex.: Texto da caixa de critérios ficou apertado">
+          </label>
+          <label class="field-lbl">O que aconteceu / o que melhorar?
+            <textarea id="bf-desc" class="textarea" placeholder="Explique com suas palavras o que viu ou o que gostaria de melhorar..."></textarea>
+          </label>
+          <label class="field-lbl">Como reproduzir (opcional)
+            <textarea id="bf-passos" class="textarea" style="min-height:56px" placeholder="Ex.: Cliquei em M1.1 no modo claro..."></textarea>
+          </label>
+          <label class="field-lbl">Seu nome (opcional)
+            <input id="bf-autor" class="input" type="text" value="${esc(getReviewer())}" placeholder="Ex.: Ana Silva ou AS">
+          </label>
+          <button type="button" class="btn btn-ok" id="btn-submit-bug-inline" ${UI.bugBusy ? 'disabled' : ''}>${UI.bugBusy ? 'Salvando...' : '✓ Salvar relato para os agentes'}</button>
+        </div>
+
+        <div style="display:grid;gap:12px">
+          ${filtered.length ? filtered.map(b => `<article class="bug-card sev-${esc(b.severidade)}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+                <span class="code-tag">${esc(b.id)}</span>
+                <span class="st-pill st-${esc(b.status)}">${esc(BUG_ST_LBL[b.status] || b.status)}</span>
+                <span class="st-pill st-accent nob">${esc(BUG_TIPO_LBL[b.tipo] || b.tipo)}</span>
+                <span class="code-tag">Prioridade: ${esc(BUG_SEV_LBL[b.severidade] || b.severidade)}</span>
+              </div>
+              <span class="muted" style="font-size:12px">${esc(b.reportado_por || 'Usuário')} · ${esc(b.criado_em || '')}</span>
+            </div>
+            <h3 style="font-size:16px">${esc(b.titulo)}</h3>
+            ${b.descricao ? `<p style="font-size:13.5px;line-height:1.5">${esc(b.descricao)}</p>` : ''}
+            ${b.passos ? `<div class="ins-box" style="font-size:12.5px"><b>Passos para reproduzir:</b> ${esc(b.passos)}</div>` : ''}
+            <div class="chip-row">
+              ${b.tela_origem ? `<span class="file-chip">🖥 Tela: ${esc(b.tela_origem)}</span>` : ''}
+              ${b.etapa_id ? `<span class="file-chip">📌 Etapa: ${esc(b.etapa_id)}</span>` : ''}
+              ${b.tema ? `<span class="file-chip">◐ Tema: ${esc(b.tema)}</span>` : ''}
+              ${b.viewport ? `<span class="file-chip">📐 ${esc(b.viewport)}</span>` : ''}
+            </div>
+            ${b.analise_agente ? `<div class="bug-agent-box"><b>🤖 Análise / correção registrada pelo agente:</b><span>${esc(b.analise_agente)}</span></div>` : ''}
+            ${w ? `<div class="action-bar" style="padding-top:4px">
+              ${b.status !== 'em_analise' ? `<button type="button" class="btn btn-soft-warn btn-xs" data-bug-st="em_analise" data-bug-id="${esc(b.id)}">🔍 Em análise</button>` : ''}
+              ${b.status !== 'resolvido' ? `<button type="button" class="btn btn-soft-ok btn-xs" data-bug-st="resolvido" data-bug-id="${esc(b.id)}">✓ Marcar resolvido</button>` : ''}
+              ${b.status !== 'aberto' ? `<button type="button" class="btn btn-xs" data-bug-st="aberto" data-bug-id="${esc(b.id)}">↺ Reabrir</button>` : ''}
+            </div>` : ''}
+          </article>`).join('') : `<div class="card" style="text-align:center;padding:36px 20px">
+            <h3>Nenhum relato nesta visualização</h3>
+            <p class="muted">Use o formulário ao lado ou o botão <b>🐞 Reportar</b> no topo de qualquer tela para registrar bugs e ideias.</p>
+          </div>`}
+        </div>
+      </div>
+    </div>`;
+  }
+
   // ==================== MODAIS ====================
   function renderModals(){
     let html = '';
+    if (UI.bugModal) {
+      const telaAuto = UI.reviewStageId ? 'revisao' : UI.tab;
+      const etapaAuto = UI.reviewStageId || UI.selectedStageId || '';
+      html += `<div class="modal-bg"><div class="modal-box" role="dialog" aria-modal="true">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3>🐞 Reportar bug ou melhoria</h3>
+          <button type="button" class="icon-btn" id="btn-close-bug">×</button>
+        </div>
+        <div class="chip-row">
+          <span class="file-chip">🖥 Tela: <b>${esc(telaAuto)}</b></span>
+          ${etapaAuto ? `<span class="file-chip">📌 Etapa: <b>${esc(etapaAuto)}</b></span>` : ''}
+          <span class="file-chip">◐ Tema: <b>${esc(getCurrentTheme())}</b></span>
+        </div>
+        ${UI.bugError ? `<div class="alert-strip">${esc(UI.bugError)}</div>` : ''}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <label class="field-lbl">Categoria
+            <select id="bm-tipo" class="select">
+              <option value="bug">🐞 Bug / Erro</option>
+              <option value="ux">🎨 Visual / Leitura</option>
+              <option value="melhoria">✨ Melhoria</option>
+            </select>
+          </label>
+          <label class="field-lbl">Prioridade
+            <select id="bm-sev" class="select">
+              <option value="medio">Médio</option>
+              <option value="alto">Alto</option>
+              <option value="critico">Crítico</option>
+              <option value="baixo">Baixo</option>
+            </select>
+          </label>
+        </div>
+        <label class="field-lbl">Título curto *
+          <input id="bm-titulo" class="input" type="text" placeholder="O que aconteceu ou o que melhorar?">
+        </label>
+        <label class="field-lbl">Detalhes
+          <textarea id="bm-desc" class="textarea" placeholder="Explique brevemente para que seus agentes entendam e corrijam rápido..."></textarea>
+        </label>
+        <div style="display:flex;justify-content:flex-end;gap:8px">
+          <button type="button" class="btn" id="btn-cancel-bug">Cancelar</button>
+          <button type="button" class="btn btn-ok" id="btn-save-bug-modal" ${UI.bugBusy ? 'disabled' : ''}>${UI.bugBusy ? 'Salvando...' : '✓ Salvar relato'}</button>
+        </div>
+      </div></div>`;
+    }
     if (UI.actionModal) {
       const m = UI.actionModal;
       const meta = ACAO_META[m.acao];
@@ -1884,6 +2297,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     if (UI.reviewStageId) body = renderRevisao();
     else if (UI.tab === 'agora') body = renderAgora();
     else if (UI.tab === 'projeto') body = renderProjeto();
+    else if (UI.tab === 'bugs') body = renderBugs();
     else body = renderAgente();
 
     document.getElementById('app').innerHTML = renderNav() + body + renderModals();
@@ -1909,12 +2323,38 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const bKW = document.getElementById('btn-kpi-where'); if (bKW) bKW.addEventListener('click', () => focusWhereAmI());
     const bWI = document.getElementById('btn-where-am-i'); if (bWI) bWI.addEventListener('click', () => focusWhereAmI());
 
+    // Bugs quick modal & inline form
+    const openBugModal = () => { UI.bugModal = true; UI.bugError = ''; render(); setTimeout(() => { const el = document.getElementById('bm-titulo'); if (el) el.focus(); }, 20); };
+    const bQB = document.getElementById('btn-quick-bug'); if (bQB) bQB.addEventListener('click', openBugModal);
+    const bHB = document.getElementById('btn-home-bug'); if (bHB) bHB.addEventListener('click', openBugModal);
+    const bCB = document.getElementById('btn-close-bug'); if (bCB) bCB.addEventListener('click', () => { UI.bugModal = false; render(); });
+    const bCnB = document.getElementById('btn-cancel-bug'); if (bCnB) bCnB.addEventListener('click', () => { UI.bugModal = false; render(); });
+    const bSBM = document.getElementById('btn-save-bug-modal');
+    if (bSBM) bSBM.addEventListener('click', () => submitBugReport({
+      tipo: document.getElementById('bm-tipo').value,
+      severidade: document.getElementById('bm-sev').value,
+      titulo: document.getElementById('bm-titulo').value,
+      descricao: document.getElementById('bm-desc').value
+    }));
+    const bSBI = document.getElementById('btn-submit-bug-inline');
+    if (bSBI) bSBI.addEventListener('click', () => submitBugReport({
+      tipo: document.getElementById('bf-tipo').value,
+      severidade: document.getElementById('bf-sev').value,
+      tela_origem: document.getElementById('bf-tela').value,
+      etapa_id: document.getElementById('bf-etapa').value,
+      titulo: document.getElementById('bf-titulo').value,
+      descricao: document.getElementById('bf-desc').value,
+      passos: document.getElementById('bf-passos').value,
+      reportado_por: document.getElementById('bf-autor').value
+    }));
+    document.querySelectorAll('[data-bug-filter]').forEach(b => b.addEventListener('click', () => { UI.bugFilter = b.dataset.bugFilter; render(); }));
+    document.querySelectorAll('[data-bug-st]').forEach(b => b.addEventListener('click', () => updateBugStatusNow(b.dataset.bugId, b.dataset.bugSt)));
+    const bCBP = document.getElementById('btn-copy-bugs-prompt'); if (bCBP) bCBP.addEventListener('click', copyBugsPromptForAgent);
+
     const qBtn = document.getElementById('btn-toggle-q'); if (qBtn) qBtn.addEventListener('click', () => { UI.showQuestion = !UI.showQuestion; render(); });
     const btnTheme = document.getElementById('btn-theme');
     if (btnTheme) btnTheme.addEventListener('click', () => {
-      const cur = document.documentElement.getAttribute('data-theme');
-      const isDark = cur ? cur === 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      const next = isDark ? 'light' : 'dark';
+      const next = getCurrentTheme() === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       try { localStorage.setItem('specboard.theme', next); } catch(e) {}
     });
@@ -2051,7 +2491,6 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
     const bDR = document.getElementById('btn-dec-revisado'); if (bDR) bDR.addEventListener('click', () => revAction('revisado', false));
     const bDD = document.getElementById('btn-dec-depois'); if (bDD) bDD.addEventListener('click', closeReview);
 
-    // Eventos da aba Harness & Agente
     document.querySelectorAll('[data-agent-view]').forEach(b => b.addEventListener('click', () => { UI.agentView = b.dataset.agentView; render(); }));
     document.querySelectorAll('[data-harness-focus]').forEach(b => b.addEventListener('click', () => { UI.harnessFocus = b.dataset.harnessFocus; render(); }));
     const bMS = document.getElementById('btn-mode-stage'); if (bMS) bMS.addEventListener('click', () => { UI.agentView = 'etapa'; render(); });
@@ -2087,6 +2526,7 @@ let D = {"versao_schema": 2, "modo_servidor": false, "estado": {"projeto": {"nom
   document.addEventListener('keydown', ev => {
     if (ev.key === 'Escape') {
       if (UI.lightboxSrc) { UI.lightboxSrc = ''; render(); }
+      else if (UI.bugModal) { UI.bugModal = false; render(); }
       else if (UI.actionModal) { UI.actionModal = null; render(); }
       else if (UI.reviewerModal) { UI.reviewerModal = false; render(); }
       else if (UI.showPolicyModal) { UI.showPolicyModal = false; render(); }

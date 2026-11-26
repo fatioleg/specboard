@@ -48,6 +48,7 @@ def paths(base: str | Path) -> dict[str, Path]:
         "estado": d / "estado.json",
         "verificacoes": d / "verificacoes.jsonl",
         "execucoes": d / "execucoes.jsonl",
+        "bugs": d / "bugs.jsonl",
         "visita": d / "visita.json",
         "hash_cache": d / ".hash_cache.json",
         "painel": d / "painel.html",
@@ -1821,6 +1822,7 @@ def construir_payload(
         "resumo": resumo_obj,
         "situacao_atual": situacao_atual,
         "harness_resumo": harness_resumo,
+        "bugs": listar_bugs(base),
         "fila": fila_principal,
         "fila_todos": fila_lista,
         "fila_opcional": fila_opcional,
@@ -2098,3 +2100,136 @@ def registrar_alteracao_politica(
     }
     ps = paths(base)
     return append_jsonl(ps["verificacoes"], reg)
+
+
+# ---------------------------------------------------------------------------
+# Reporte de Bugs & Melhorias (append-only em .specboard/bugs.jsonl)
+# ---------------------------------------------------------------------------
+
+BUG_TIPOS = {"bug", "ux", "melhoria"}
+BUG_SEVERIDADES = {"critico", "alto", "medio", "baixo"}
+BUG_STATUS = {"aberto", "em_analise", "resolvido", "descartado"}
+
+
+def listar_bugs(base: str | Path) -> list[dict[str, Any]]:
+    """Reconstrói o estado atual dos bugs/melhorias a partir do log append-only bugs.jsonl."""
+    ps = paths(base)
+    raw = _ler_jsonl(ps["bugs"])
+    por_id: dict[str, dict[str, Any]] = {}
+    ordem: list[str] = []
+    for ev in raw:
+        bid = str(ev.get("id") or "").strip()
+        if not bid:
+            continue
+        if ev.get("evento") == "atualizacao" and bid in por_id:
+            item = por_id[bid]
+            if ev.get("status") in BUG_STATUS:
+                item["status"] = ev["status"]
+            if ev.get("analise_agente"):
+                item["analise_agente"] = ev["analise_agente"]
+            if ev.get("atualizado_por"):
+                item["atualizado_por"] = ev["atualizado_por"]
+            item["atualizado_em"] = ev.get("data") or item.get("atualizado_em") or ""
+            item.setdefault("historico", []).append({
+                "data": ev.get("data") or "",
+                "status": item["status"],
+                "por": ev.get("atualizado_por") or "agente",
+                "nota": ev.get("analise_agente") or "",
+            })
+        else:
+            item = {
+                "id": bid,
+                "tipo": ev.get("tipo") if ev.get("tipo") in BUG_TIPOS else "bug",
+                "severidade": ev.get("severidade") if ev.get("severidade") in BUG_SEVERIDADES else "medio",
+                "status": ev.get("status") if ev.get("status") in BUG_STATUS else "aberto",
+                "titulo": str(ev.get("titulo") or "").strip(),
+                "descricao": str(ev.get("descricao") or "").strip(),
+                "passos": str(ev.get("passos") or "").strip(),
+                "tela_origem": str(ev.get("tela_origem") or ""),
+                "etapa_id": str(ev.get("etapa_id") or ""),
+                "tema": str(ev.get("tema") or ""),
+                "viewport": str(ev.get("viewport") or ""),
+                "reportado_por": str(ev.get("reportado_por") or "Usuário"),
+                "criado_em": str(ev.get("criado_em") or ev.get("data") or ""),
+                "atualizado_em": str(ev.get("criado_em") or ev.get("data") or ""),
+                "analise_agente": str(ev.get("analise_agente") or ""),
+                "historico": [],
+            }
+            por_id[bid] = item
+            if bid not in ordem:
+                ordem.append(bid)
+    # Mais recentes primeiro
+    return [por_id[bid] for bid in reversed(ordem)]
+
+
+def registrar_bug(
+    base: str | Path,
+    *,
+    titulo: str,
+    descricao: str = "",
+    passos: str = "",
+    tipo: str = "bug",
+    severidade: str = "medio",
+    tela_origem: str = "",
+    etapa_id: str = "",
+    tema: str = "",
+    viewport: str = "",
+    reportado_por: str = "",
+) -> dict[str, Any]:
+    titulo = (titulo or "").strip()
+    if not titulo:
+        raise ValueError("Informe um título curto para o problema ou sugestão.")
+    tipo = tipo if tipo in BUG_TIPOS else "bug"
+    severidade = severidade if severidade in BUG_SEVERIDADES else "medio"
+    existentes = listar_bugs(base)
+    max_num = 0
+    for it in existentes:
+        m = re.match(r"^BUG-(\d+)$", it.get("id", ""))
+        if m:
+            max_num = max(max_num, int(m.group(1)))
+    bid = f"BUG-{max_num + 1:03d}"
+    agora = agora_str(com_segundos=True)
+    rec = {
+        "evento": "criacao",
+        "id": bid,
+        "tipo": tipo,
+        "severidade": severidade,
+        "status": "aberto",
+        "titulo": titulo,
+        "descricao": (descricao or "").strip(),
+        "passos": (passos or "").strip(),
+        "tela_origem": (tela_origem or "").strip(),
+        "etapa_id": (etapa_id or "").strip(),
+        "tema": (tema or "").strip(),
+        "viewport": (viewport or "").strip(),
+        "reportado_por": (reportado_por or "").strip() or "Usuário",
+        "criado_em": agora,
+    }
+    ps = paths(base)
+    return append_jsonl(ps["bugs"], rec)
+
+
+def atualizar_bug(
+    base: str | Path,
+    *,
+    bug_id: str,
+    status: str,
+    analise_agente: str = "",
+    atualizado_por: str = "agente",
+) -> dict[str, Any]:
+    bug_id = (bug_id or "").strip()
+    if status not in BUG_STATUS:
+        raise ValueError(f"Status inválido: {status}. Use: {', '.join(sorted(BUG_STATUS))}")
+    existentes = {b["id"]: b for b in listar_bugs(base)}
+    if bug_id not in existentes:
+        raise KeyError(f"Bug {bug_id} não encontrado.")
+    rec = {
+        "evento": "atualizacao",
+        "id": bug_id,
+        "status": status,
+        "analise_agente": (analise_agente or "").strip(),
+        "atualizado_por": (atualizado_por or "").strip() or "agente",
+        "data": agora_str(com_segundos=True),
+    }
+    ps = paths(base)
+    return append_jsonl(ps["bugs"], rec)

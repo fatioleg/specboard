@@ -338,6 +338,24 @@ def cmd_context(a) -> None:
             print(f"  - [{b['tipo']}] {b['motivo']}")
 
 
+def cmd_bugs(a) -> None:
+    bugs = core.listar_bugs(a.dir)
+    if a.status:
+        bugs = [b for b in bugs if b.get("status") == a.status]
+    if a.json:
+        print(json.dumps({"total": len(bugs), "bugs": bugs}, ensure_ascii=False, indent=2))
+        return
+    if not bugs:
+        print("Nenhum bug ou sugestão registrado em .specboard/bugs.jsonl.")
+        return
+    print(f"Bugs & Melhorias ({len(bugs)}):")
+    for b in bugs:
+        ctx = f" [{b['tela_origem']}{'/' + b['etapa_id'] if b.get('etapa_id') else ''}]" if b.get("tela_origem") else ""
+        print(f"  - {b['id']} ({b['status']} · {b['severidade']} · {b['tipo']}){ctx}: {b['titulo']}")
+        if b.get("analise_agente"):
+            print(f"      Análise: {b['analise_agente']}")
+
+
 def cmd_trace_tool(a) -> None:
     ps = core.paths(a.dir)
     if not ps["estado"].exists():
@@ -466,6 +484,10 @@ def main() -> None:
     p_tr.add_argument("--sessao", default="")
     p_tr.add_argument("--observado-por", default="wrapper")
 
+    p_bg = sub.add_parser("bugs")
+    p_bg.add_argument("--status", choices=sorted(core.BUG_STATUS), default=None)
+    p_bg.add_argument("--json", action="store_true")
+
     a = p.parse_args()
     handlers = {
         "init": cmd_init,
@@ -478,6 +500,7 @@ def main() -> None:
         "gate": cmd_gate,
         "context": cmd_context,
         "trace-tool": cmd_trace_tool,
+        "bugs": cmd_bugs,
         "policy": cmd_policy,
         "review": lambda args: cmd_humano(args, "revisado"),
         "verify": lambda args: cmd_humano(args, "verificado"),

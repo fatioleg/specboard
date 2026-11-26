@@ -137,6 +137,46 @@ TOOLS: list[dict[str, Any]] = [
             },
         },
     },
+    {
+        "name": "specboard_bugs",
+        "description": (
+            "Lista bugs, problemas de UX e sugestões de melhoria reportados pelos usuários em .specboard/bugs.jsonl "
+            "para que o agente possa diagnosticar e corrigir o projeto ou o painel."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "dir": {"type": "string", "description": "Diretório raiz do projeto. Padrão: diretório atual."},
+                "status": {
+                    "type": "string",
+                    "enum": ["aberto", "em_analise", "resolvido", "descartado"],
+                    "description": "Filtrar opcionalmente por status.",
+                },
+            },
+        },
+    },
+    {
+        "name": "specboard_bug_update",
+        "description": (
+            "Atualiza o status e registra o diagnóstico/solução de um agente em um bug reportado (em .specboard/bugs.jsonl). "
+            "Não altera aprovações humanas nem verificacoes.jsonl."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "required": ["bug_id", "status"],
+            "properties": {
+                "dir": {"type": "string", "description": "Diretório raiz do projeto. Padrão: diretório atual."},
+                "bug_id": {"type": "string", "description": "ID do bug (ex.: BUG-001)."},
+                "status": {
+                    "type": "string",
+                    "enum": ["aberto", "em_analise", "resolvido", "descartado"],
+                    "description": "Novo status do bug.",
+                },
+                "analise_agente": {"type": "string", "description": "Diagnóstico, causa raiz ou resumo da correção feita pelo agente."},
+                "atualizado_por": {"type": "string", "description": "Identificação do agente (padrão: agente)."},
+            },
+        },
+    },
 ]
 
 
@@ -227,6 +267,21 @@ def call_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
             raise FileNotFoundError(f"Não encontrei {ps['estado']}.")
         core.append_jsonl(ps["execucoes"], rec)
         return {"registrado": True, "arquivo": str(ps["execucoes"]), "evento": rec}
+    if name == "specboard_bugs":
+        bugs = core.listar_bugs(base)
+        st_filter = (args.get("status") or "").strip()
+        if st_filter:
+            bugs = [b for b in bugs if b.get("status") == st_filter]
+        return {"total": len(bugs), "bugs": bugs}
+    if name == "specboard_bug_update":
+        upd = core.atualizar_bug(
+            base,
+            bug_id=str(args.get("bug_id") or ""),
+            status=str(args.get("status") or ""),
+            analise_agente=str(args.get("analise_agente") or ""),
+            atualizado_por=str(args.get("atualizado_por") or "agente"),
+        )
+        return {"atualizado": True, "evento": upd}
 
     raise KeyError(f"Ferramenta desconhecida: {name}")
 

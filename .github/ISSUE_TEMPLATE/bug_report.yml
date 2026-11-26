@@ -1,0 +1,50 @@
+name: Reportar Bug ou Problema Visual
+description: Relate um erro, problema de leitura ou comportamento inesperado no SpecBoard (pronto para análise por agentes).
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: dropdown
+    id: tela
+    attributes:
+      label: Onde o problema aconteceu?
+      options:
+        - Home (Agora)
+        - Mapa do Projeto
+        - Revisão de Evidências
+        - Aba Agente & Harness
+        - Aba Bugs & Melhorias
+        - Servidor MCP / Plugin Marketplace
+        - CLI (specboard.py)
+    validations:
+      required: true
+  - type: dropdown
+    id: severidade
+    attributes:
+      label: Severidade
+      options:
+        - Crítico (impede uso)
+        - Alto (atrapalha muito)
+        - Médio (incômodo)
+        - Baixo (ajuste estético)
+    validations:
+      required: true
+  - type: dropdown
+    id: tema
+    attributes:
+      label: Tema / Ambiente
+      options:
+        - Modo Escuro (Dark)
+        - Modo Claro (Light)
+        - Ambos / Terminal
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu?
+      description: Descreva de forma simples o problema observado (pode colar prints aqui!).
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir (opcional)
+      placeholder: "1. Abri a tela...\n2. Cliquei em...\n3. Aconteceu..."

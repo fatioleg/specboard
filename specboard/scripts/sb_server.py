@@ -241,6 +241,10 @@ class SpecboardHandler(BaseHTTPRequestHandler):
                 self._send_json(HTTPStatus.OK, ctx)
                 return
 
+            if path == "/api/bugs":
+                self._send_json(HTTPStatus.OK, {"bugs": core.listar_bugs(self.server.base_dir)})
+                return
+
             self._send_json(HTTPStatus.NOT_FOUND, {"erro": "Rota não encontrada."})
         except FileNotFoundError as exc:
             self._send_json(HTTPStatus.NOT_FOUND, {"erro": str(exc)})
@@ -366,6 +370,60 @@ class SpecboardHandler(BaseHTTPRequestHandler):
                         "token": self.server.session_token,
                     }
                     self._send_json(HTTPStatus.OK, {"ok": True, "lock": res_lock, "payload": payload})
+                    return
+
+                if path == "/api/bug":
+                    bug = core.registrar_bug(
+                        self.server.base_dir,
+                        titulo=str(body.get("titulo") or ""),
+                        descricao=str(body.get("descricao") or ""),
+                        passos=str(body.get("passos") or ""),
+                        tipo=str(body.get("tipo") or "bug"),
+                        severidade=str(body.get("severidade") or "medio"),
+                        tela_origem=str(body.get("tela_origem") or ""),
+                        etapa_id=str(body.get("etapa_id") or ""),
+                        tema=str(body.get("tema") or ""),
+                        viewport=str(body.get("viewport") or ""),
+                        reportado_por=str(body.get("reportado_por") or ""),
+                    )
+                    estado, regs, execs, visita = core.load_all(self.server.base_dir)
+                    payload = core.construir_payload(
+                        self.server.base_dir,
+                        estado,
+                        regs,
+                        execs,
+                        visita,
+                        modo_servidor=True,
+                    )
+                    payload["servidor"] = {
+                        "readonly": self.server.readonly,
+                        "token": self.server.session_token,
+                    }
+                    self._send_json(HTTPStatus.OK, {"ok": True, "bug": bug, "payload": payload})
+                    return
+
+                if path == "/api/bug/status":
+                    upd = core.atualizar_bug(
+                        self.server.base_dir,
+                        bug_id=str(body.get("bug_id") or ""),
+                        status=str(body.get("status") or ""),
+                        analise_agente=str(body.get("analise_agente") or ""),
+                        atualizado_por=str(body.get("atualizado_por") or "Usuário"),
+                    )
+                    estado, regs, execs, visita = core.load_all(self.server.base_dir)
+                    payload = core.construir_payload(
+                        self.server.base_dir,
+                        estado,
+                        regs,
+                        execs,
+                        visita,
+                        modo_servidor=True,
+                    )
+                    payload["servidor"] = {
+                        "readonly": self.server.readonly,
+                        "token": self.server.session_token,
+                    }
+                    self._send_json(HTTPStatus.OK, {"ok": True, "atualizacao": upd, "payload": payload})
                     return
 
                 self._send_json(HTTPStatus.NOT_FOUND, {"erro": "Rota não encontrada."})

@@ -1,0 +1,16 @@
+name: Sugerir Melhoria
+description: Proponha uma melhoria de interface, usabilidade ou integração para o SpecBoard.
+title: "[Melhoria]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: ideia
+    attributes:
+      label: Qual melhoria você gostaria de ver?
+      description: Explique o que tornaria o painel ainda mais agradável ou útil no dia a dia.
+    validations:
+      required: true
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Em qual fluxo você sentiu falta disso? (opcional)
