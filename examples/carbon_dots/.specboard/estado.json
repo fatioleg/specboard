@@ -275,7 +275,8 @@
             "M2.2"
           ],
           "data": "2026-11-26",
-          "afirmacao": "Núcleo grafítico permanece estável a 400 K (RMSD médio 0.425 Å, máx 0.440 Å <= 0.80 Å) sem ruptura de anel.",
+          "afirmacao": "O núcleo grafítico manteve estabilidade estrutural a 400 K na janela equilibrada (desvio médio de 0,425 Å e máximo de 0,440 Å, bem abaixo do limite de 0,80 Å), sem ruptura de anel.",
+          "detalhes_tecnicos": "Cálculo via scripts/calc_rmsd.py (RMSD 5–10 ns em Å), tabela data/rmsd_cd_400k.csv e gráfico figs/estabilidade_cd_400k.png.",
           "verificacao": "Revisar a figura figs/estabilidade_cd_400k.png, a tabela data/rmsd_cd_400k.csv e reports/relatorio_m2.md antes de liberar a Fase 3.",
           "evidencia": [
             {

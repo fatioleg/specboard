@@ -46,8 +46,10 @@ Leia este arquivo ao criar ou atualizar o estado de um projeto. Todos os campos 
 | `revisao` | `completa` (padrão), `amostragem` (impacto baixo) ou `isenta`. |
 | `marco` | (opcional, booleano) **Granularidade de marco:** `true` exige aprovação humana nesta etapa específica na política `so_marcos` para liberar dependentes. |
 | `depende_de` | (opcional) Lista de IDs de etapas ou módulos dos quais esta etapa depende diretamente. |
-| `afirmacao` | O que a etapa estabeleceu. Obrigatório para `executado`. |
-| `verificacao` | Como o humano confere em poucos minutos. Obrigatório para `executado`. |
+| `afirmacao` | **Resumo didático da entrega** (obrigatório para `executado`). Escreva em 1–3 frases claras para o revisor humano explicando *o que foi feito, por que importa e qual resultado prático foi obtido*. **Não** liste nomes de arquivos `.py/.yaml`, flags CLI (`--flag`), símbolos `snake_case` ou códigos internos (`D28`, `doc 13`) aqui — mova-os para `detalhes_tecnicos` e `evidencia`. |
+| `resumo_didatico` | (opcional) Sobrescreve a exibição principal de `afirmacao` quando um projeto legado mantém texto técnico em `afirmacao` (o painel move a `afirmacao` técnica para o bloco recolhível *Detalhes técnicos*). |
+| `detalhes_tecnicos` | (opcional, string ou lista) Nomes de scripts, comandos de verificação, flags CLI, identificadores internos e metadados técnicos exibidos de forma recolhível (*Detalhes técnicos*) sem poluir o resumo principal. |
+| `verificacao` | Como o humano confere em poucos minutos, em linguagem direta. Obrigatório para `executado`. |
 | `evidencia` | Lista de strings (legado) ou objetos `{id, caminho, tipo, descricao, versao, sha256_esperado, obrigatoria}`. Arquivos locais têm o SHA-256 dos bytes verificado em disco. |
 | `criterios` | (opcional) Critérios específicos da etapa vinculados ao hash de decisão. |
 | `arquitetura_agente` | (opcional) Configuração técnica da etapa para a aba **Agente** (ver [arquitetura-agente.md](arquitetura-agente.md)). |

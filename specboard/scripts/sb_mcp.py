@@ -26,7 +26,7 @@ import sb_core as core  # noqa: E402
 
 SERVER_INFO = {
     "name": "specboard",
-    "version": "2.1.0",
+    "version": "2.3.0",
 }
 SUPPORTED_PROTOCOL = "2024-11-05"
 TEMPLATE_PATH = SCRIPTS_DIR.parent / "assets" / "painel_template.html"
@@ -85,11 +85,18 @@ TOOLS: list[dict[str, Any]] = [
     },
     {
         "name": "specboard_validate",
-        "description": "Valida .specboard/estado.json, contratos travados e presença dos arquivos de evidência.",
+        "description": (
+            "Valida .specboard/estado.json, contratos travados, presença das evidências e a regra de "
+            "resumo didático (evitando resumos carregados de scripts, flags CLI ou códigos internos)."
+        ),
         "inputSchema": {
             "type": "object",
             "properties": {
                 "dir": {"type": "string", "description": "Diretório raiz do projeto. Padrão: diretório atual."},
+                "estrito": {
+                    "type": "boolean",
+                    "description": "Se true, reprova (valido=false) etapas cujo resumo da entrega esteja pouco didático.",
+                },
             },
         },
     },
@@ -196,6 +203,7 @@ def call_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
             "resumo": pay["resumo"],
             "situacao_atual": pay["situacao_atual"],
             "fila_pendentes": len(pay["fila"]),
+            "resumos_pouco_didaticos": pay["resumos_pouco_didaticos"],
             "erros": pay["erros"],
             "avisos": pay["avisos"],
         }
@@ -220,11 +228,16 @@ def call_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
         return core.construir_contexto_limpo(base, etapa_id)
     if name == "specboard_validate":
         estado, regs, execs, visita = core.load_all(base)
+        estrito = bool(args.get("estrito", False))
+        erros, avisos = core.validar(base, estado, regs, estrito_didatico=estrito)
         pay = core.construir_payload(base, estado, regs, execs, visita)
         return {
-            "valido": len(pay["erros"]) == 0,
-            "erros": pay["erros"],
-            "avisos": pay["avisos"],
+            "valido": len(erros) == 0,
+            "estrito_didatico": estrito,
+            "erros": erros,
+            "avisos": avisos,
+            "resumos_pouco_didaticos": pay["resumos_pouco_didaticos"],
+            "regra_resumo_didatico": core.REGRA_RESUMO_DIDATICO,
         }
     if name == "specboard_build":
         estado, regs, execs, visita = core.load_all(base)

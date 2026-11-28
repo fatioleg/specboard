@@ -825,6 +825,33 @@ let D = /*__DADOS__*/null;
     }
   }
 
+  function renderDeliverySummary(e, fallback, fontSize){
+    const mainTxt = (e.resumo_didatico || e._resumo_principal || e.afirmacao || e.descricao || fallback || '').trim();
+    const techParts = [];
+    if (Array.isArray(e.detalhes_tecnicos)) {
+      e.detalhes_tecnicos.forEach(x => { if (x) techParts.push(String(x)); });
+    } else if (e.detalhes_tecnicos) {
+      techParts.push(String(e.detalhes_tecnicos));
+    }
+    if (e.resumo_didatico && e.afirmacao && e.afirmacao.trim() !== e.resumo_didatico.trim()) {
+      techParts.push(e.afirmacao.trim());
+    }
+    const clar = e._clareza_resumo;
+    const warnHtml = (clar && clar.didatico === false)
+      ? `<div class="ins-box" style="margin-top:8px;border-color:var(--exe);background:var(--exe-soft);display:grid;gap:6px">
+          <div style="font-size:12.5px;line-height:1.45"><b style="color:var(--exe)">💡 Resumo muito técnico:</b> detectamos ${esc((clar.motivos || []).join(', '))}. O resumo deve explicar o que foi feito e o resultado em linguagem simples.</div>
+          <div><button type="button" class="btn btn-xs" data-copy-didactic="${esc(e.id)}">📋 Pedir explicação didática ao agente</button></div>
+        </div>`
+      : '';
+    const techHtml = techParts.length
+      ? `<details class="clean-fold" style="margin-top:8px">
+          <summary>🔧 Detalhes técnicos (scripts, comandos e códigos) ▾</summary>
+          <div class="muted" style="font-size:12.5px;line-height:1.5;display:grid;gap:4px">${techParts.map(t => `<div class="wrap-any">${esc(t)}</div>`).join('')}</div>
+        </details>`
+      : '';
+    return `<p style="font-size:${fontSize || '13.5px'};line-height:1.55">${esc(mainTxt)}</p>${warnHtml}${techHtml}`;
+  }
+
   function renderRowActions(e, menuKey, qidx){
     const s = e._status;
     const w = canWrite();
@@ -1298,7 +1325,7 @@ let D = /*__DADOS__*/null;
 
         <div class="ins-sec">
           <h4>Resumo da entrega</h4>
-          <p style="font-size:13.5px;line-height:1.5">${esc(e.afirmacao || e.descricao || 'Etapa planejada aguardando execução.')}</p>
+          ${renderDeliverySummary(e, 'Etapa planejada aguardando execução.', '13.5px')}
         </div>
 
         <div class="ins-sec">
@@ -1645,7 +1672,7 @@ let D = /*__DADOS__*/null;
         <div style="display:grid;gap:16px">
           <div class="card">
             <span class="muted" style="font-size:12px;font-weight:700">1. O que foi entregue</span>
-            <p style="font-size:15px">${esc(e.afirmacao || e.descricao || 'Sem resumo registrado.')}</p>
+            ${renderDeliverySummary(e, 'Sem resumo registrado.', '15px')}
             <span class="muted" style="font-size:12.5px">${esc(m.titulo)} · ${esc(m.fase || '')}</span>
           </div>
 
@@ -2399,6 +2426,18 @@ let D = /*__DADOS__*/null;
       if (m) focusWhereAmI(m.fase || '—', m.id, null);
     }));
     document.querySelectorAll('[data-lock-mod]').forEach(b => b.addEventListener('click', () => lockContractNow(b.dataset.lockMod)));
+    document.querySelectorAll('[data-copy-didactic]').forEach(b => b.addEventListener('click', ev => {
+      ev.stopPropagation();
+      const sid = b.dataset.copyDidactic;
+      const pair = findStage(sid);
+      const cur = pair ? (pair.e.afirmacao || '') : '';
+      const prompt = `Reescreva o campo "afirmacao" (ou adicione "resumo_didatico") da etapa ${sid} em .specboard/estado.json em linguagem didática e clara para um humano (1 a 3 frases explicando o que foi feito, por que importa e qual resultado prático foi obtido). Mova nomes de scripts (.py/.yaml), flags de terminal (--flag) e códigos internos para "detalhes_tecnicos" e "evidencia". Resumo atual: "${cur}". Depois rode specboard.py validate --estrito e build.`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(prompt).then(() => showToast('Pedido de resumo didático copiado — cole no chat do agente.'));
+      } else {
+        showToast('Copie o pedido manualmente: reescreva ' + sid + ' em linguagem didática.');
+      }
+    }));
 
     const closeAct = () => { UI.actionModal = null; render(); };
     const bCA = document.getElementById('btn-close-act'); if (bCA) bCA.addEventListener('click', closeAct);

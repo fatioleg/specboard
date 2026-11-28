@@ -41,8 +41,9 @@
           "impacto": "medio",
           "revisao": "completa",
           "marco": false,
-          "afirmacao": "Originais copiados sem alteração.",
-          "verificacao": "Checksums dos originais e cópias coincidem.",
+          "afirmacao": "Os dados originais foram copiados com segurança e sem qualquer alteração, garantindo uma base íntegra para as próximas etapas.",
+          "detalhes_tecnicos": "Cópia verificada com SHA-256 contra o diretório bruto original (E-001).",
+          "verificacao": "Conferir se os códigos de integridade (checksums) dos originais e das cópias coincidem.",
           "evidencia": ["E-001"]
         },
         {

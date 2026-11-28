@@ -46,6 +46,7 @@ O **SpecBoard** transforma o plano do projeto em um painel vivo, legível e audi
 | Difícil lembrar em que fase o projeto parou depois de alguns dias | **Home guiada + 📍 Onde estou:** sidebar das áreas do projeto e botão que destaca exatamente a etapa atual |
 | Arquivo editado depois da aprovação passa despercebido | **Rastreabilidade por SHA-256:** alterou um arquivo no disco, a aprovação anterior expira automaticamente |
 | Impossível enxergar como o agente foi montado no projeto | **Arquitetura do Harness:** separa visualmente Skills, MCPs, Scripts, Hooks em código, Regras e Fluxo de Etapas |
+| Resumos cheios de nomes de `.py`, flags `--doc` e códigos internos (`D28`) que ninguém entende | **Resumo didático obrigatório:** explica em linguagem humana o que foi feito e o resultado; scripts, flags e códigos vão para o bloco recolhível *Detalhes técnicos* (validado com `validate --estrito` e MCP) |
 
 ---
 
@@ -234,7 +235,7 @@ Acesse `http://127.0.0.1:8765/` no seu navegador local para revisar figuras, tab
 | Comando | Quem usa | Para que serve |
 | :--- | :---: | :--- |
 | `python SB init [--politica ...]` | Humano / Agente | Cria `.specboard/estado.json` e `.specboard/.gitignore` |
-| `python SB validate` | Ambos | Valida estrutura, contratos travados e presença das evidências |
+| `python SB validate [--estrito]` | Ambos | Valida estrutura, contratos travados, evidências e a clareza didática dos resumos (`--estrito` reprova jargão excessivo) |
 | `python SB build [--open]` | Ambos | Gera `.specboard/painel.html` (snapshot estático offline) |
 | `python SB serve [--port 8765] [--open]` | **Humano** | Abre o painel interativo local/SSH com revisão e gravação |
 | `python SB queue [--todas]` | Ambos | Lista a fila priorizada de etapas aguardando decisão |

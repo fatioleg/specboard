@@ -72,8 +72,8 @@ def status_efetivo(et, regs, base=None, mod=None):
     return core.status_efetivo(et, regs, base=base, mod=mod)
 
 
-def validar(estado, regs, base="."):
-    return core.validar(base, estado, regs)
+def validar(estado, regs, base=".", estrito_didatico: bool = False):
+    return core.validar(base, estado, regs, estrito_didatico=estrito_didatico)
 
 
 def resumo(estado, regs, base="."):
@@ -120,7 +120,7 @@ def cmd_validate(a) -> None:
         estado, regs, _, _ = core.load_all(a.dir)
     except FileNotFoundError as exc:
         sys.exit(str(exc))
-    erros, avisos = core.validar(a.dir, estado, regs)
+    erros, avisos = core.validar(a.dir, estado, regs, estrito_didatico=bool(getattr(a, "estrito", False)))
     for x in avisos:
         print("AVISO:", x)
     for x in erros:
@@ -215,7 +215,9 @@ def cmd_humano(a, acao: str) -> None:
     snap = core.snapshot_etapa(a.dir, mod, alvo, strict=True)
 
     print(f"\n{alvo['id']} — {alvo['titulo']}")
-    print(f"  Afirmação:   {alvo.get('afirmacao')}")
+    print(f"  Resumo:      {core.resumo_principal_etapa(alvo)}")
+    if alvo.get("detalhes_tecnicos"):
+        print(f"  Técnico:     {alvo.get('detalhes_tecnicos')}")
     print(f"  Verificação: {alvo.get('verificacao')}")
     if snap["evidencias"]:
         print("  Evidências:")
@@ -435,7 +437,12 @@ def main() -> None:
     p_init.add_argument("--politica", choices=sorted(core.POLITICAS), default="so_marcos")
     p_init.add_argument("--canal", choices=sorted(core.CANAIS_REGISTRO), default="painel")
 
-    sub.add_parser("validate")
+    p_val = sub.add_parser("validate")
+    p_val.add_argument(
+        "--estrito",
+        action="store_true",
+        help="trata resumos pouco didáticos (excesso de jargão/scripts/flags) como erro",
+    )
 
     p_q = sub.add_parser("queue")
     p_q.add_argument("--todas", action="store_true", help="inclui etapas não bloqueantes/opcionais")

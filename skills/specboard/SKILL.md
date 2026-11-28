@@ -11,6 +11,9 @@ description: Cria e mantém o painel de validação e arquitetura técnica (Spec
 2. **Política configurável por projeto.** Escolha na criação (`init --politica`): `acompanhamento_livre`, `so_marcos` (com marcos granulares em módulos ou etapas) ou `por_etapa`. Alterações posteriores são explícitas e auditadas.
 3. **Integridade por conteúdo.** Cada decisão vincula-se ao SHA-256 dos bytes dos arquivos locais de evidência, ao critério/contrato e à revisão da etapa. Substituir um arquivo no mesmo caminho expira automaticamente a aprovação.
 4. **Visão unificada sem repetição.** As abas **Agora**, **Projeto** (fluxograma expansível) e **Agente** (Learn/Guard/Review/Score) leem a mesma fonte de dados.
+5. **Resumo da entrega sempre didático.** O campo `afirmacao` (ou `resumo_didatico`) é escrito para o **revisor humano**, não para o terminal: explique em 1–3 frases claras **o que foi feito, por que importa e qual resultado prático foi obtido**. **Nunca** entregue uma lista críptica de arquivos `.py/.yaml`, flags (`--doc`), símbolos `snake_case` ou códigos internos sem contexto (`D28`, `doc 13`) como resumo principal — coloque esses itens em `detalhes_tecnicos` e `evidencia`.
+   - *Evitar:* `"gerador.py, pré-registro params.yaml (D28), doc 13 (check_docs --doc 13 verde) e check_params.py alinhado a base_ff + custom_N (66/66 testes, 0 lacunas)."`
+   - *Preferir:* `"Criamos o gerador dos modelos oxidados e validamos todos os parâmetros necessários para as simulações. As 66 checagens automáticas passaram sem nenhuma lacuna."` *(com scripts/flags/códigos movidos para `detalhes_tecnicos`)*.
 
 ## Arquivos da skill
 

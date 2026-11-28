@@ -31,6 +31,106 @@ TIPOS_COMPONENTE = {"skill", "local_tool", "mcp_tool"}
 NATUREZAS_GUARDRAIL = {"codigo", "instrucao"}
 PREFIXOS_REMOTOS = ("http://", "https://", "s3://", "gs://", "ssh://", "ftp://", "doi:")
 
+REGRA_RESUMO_DIDATICO = (
+    "Escreva 'afirmacao' (ou 'resumo_didatico') em linguagem humana e didática: explique em 1–3 frases "
+    "o que foi construído ou descoberto, por que importa para o projeto e qual resultado prático foi obtido "
+    "(ex.: 'Criamos o gerador de modelos oxidados e validamos todos os parâmetros; as 66 checagens passaram sem lacunas'). "
+    "Evite listar nomes de scripts (.py/.yaml), flags de terminal (--flag), identificadores snake_case ou códigos internos "
+    "sem contexto (ex.: D28, doc 13) no resumo principal — coloque esses itens em 'detalhes_tecnicos' e 'evidencia'."
+)
+
+_RE_ARQUIVO_TEC = re.compile(
+    r"\b[\w-]+(?:/[\w.-]+)*\.(?:py|js|mjs|cjs|ts|tsx|jsx|yaml|yml|json|jsonl|sh|ps1|cmd|bat|toml|ini|cfg|sql|md|mdp|itp|top|gro|xyz|csv|tsv|log|html|css|lock)\b",
+    re.IGNORECASE,
+)
+_RE_FLAG_CLI = re.compile(r"(?:^|[\s(])--[a-zA-Z0-9][\w-]*")
+_RE_SNAKE_ID = re.compile(r"\b[a-z][a-z0-9]*_[a-zA-Z0-9_]+\b")
+_RE_FUNC_CALL = re.compile(r"\b[a-zA-Z_]\w*\(\)|::[a-zA-Z_]\w*")
+_RE_COD_INTERNO = re.compile(r"\b(?:doc\s+\d+|D\d{1,3}[a-z]?|US-\d+|T\d+\.\d+|PR\s*#?\d+|commit\s+[0-9a-f]{6,})\b")
+
+
+def resumo_principal_etapa(et: dict[str, Any]) -> str:
+    """Retorna o resumo visível principal priorizando 'resumo_didatico' quando presente."""
+    rd = str(et.get("resumo_didatico") or "").strip()
+    if rd:
+        return rd
+    return str(et.get("afirmacao") or et.get("descricao") or "").strip()
+
+
+def avaliar_clareza_resumo(et: dict[str, Any]) -> dict[str, Any]:
+    """Avalia deterministicamente se o resumo da entrega está didático ou carregado de jargão técnico."""
+    rd = str(et.get("resumo_didatico") or "").strip()
+    af = str(et.get("afirmacao") or "").strip()
+    texto = rd or af
+    if not texto:
+        return {
+            "didatico": True,
+            "vazio": True,
+            "texto_avaliado": "",
+            "usa_resumo_didatico": False,
+            "pontuacao_jargao": 0.0,
+            "sinais": {"arquivos": [], "flags": [], "identificadores": [], "codigos": []},
+            "motivos": [],
+            "dica": "",
+        }
+
+    arquivos = list(dict.fromkeys(_RE_ARQUIVO_TEC.findall(texto)))
+    texto_sem_arqs = _RE_ARQUIVO_TEC.sub(" ", texto)
+    flags = list(dict.fromkeys(m.strip().lstrip("(") for m in _RE_FLAG_CLI.findall(texto_sem_arqs)))
+    identificadores = list(dict.fromkeys(
+        _RE_SNAKE_ID.findall(texto_sem_arqs) + _RE_FUNC_CALL.findall(texto_sem_arqs)
+    ))
+    codigos = list(dict.fromkeys(_RE_COD_INTERNO.findall(texto_sem_arqs)))
+
+    inicio_tecnico = bool(
+        re.match(r"^\s*(?:[\w-]+\.(?:py|js|ts|yaml|yml|json|sh|ps1|md|csv)|[a-z][a-z0-9]*_[a-zA-Z0-9_]+)", texto)
+    )
+
+    pontos = (
+        len(arquivos) * 2.0
+        + len(flags) * 2.0
+        + len(identificadores) * 1.5
+        + len(codigos) * 1.5
+        + (2.0 if inicio_tecnico else 0.0)
+    )
+
+    nao_didatico = (
+        pontos >= 4.0
+        or len(arquivos) >= 2
+        or (len(flags) >= 1 and (len(arquivos) + len(identificadores)) >= 2)
+    )
+
+    motivos: list[str] = []
+    if arquivos:
+        amostra = ", ".join(arquivos[:3]) + ("..." if len(arquivos) > 3 else "")
+        motivos.append(f"{len(arquivos)} nome(s) de arquivo ({amostra})")
+    if flags:
+        motivos.append(f"flag de comando ({', '.join(flags[:3])})")
+    if identificadores:
+        amostra = ", ".join(identificadores[:3]) + ("..." if len(identificadores) > 3 else "")
+        motivos.append(f"identificadores de código ({amostra})")
+    if codigos:
+        motivos.append(f"códigos internos sem explicação ({', '.join(codigos[:3])})")
+
+    return {
+        "didatico": not nao_didatico,
+        "vazio": False,
+        "texto_avaliado": texto,
+        "usa_resumo_didatico": bool(rd),
+        "pontuacao_jargao": round(pontos, 1),
+        "sinais": {
+            "arquivos": arquivos,
+            "flags": flags,
+            "identificadores": identificadores,
+            "codigos": codigos,
+        },
+        "motivos": motivos,
+        "dica": (
+            "Explique em português claro o que foi feito, por que importa e qual resultado foi obtido; "
+            "mova nomes de scripts, flags e códigos internos para 'detalhes_tecnicos' ou 'evidencia'."
+        ) if nao_didatico else "",
+    }
+
 _CHUNK_SIZE = 65536
 
 
@@ -365,6 +465,8 @@ def snapshot_etapa(
         "evidencia": et.get("evidencia"),
         "revisao_etapa": et.get("revisao_etapa"),
     }
+    if et.get("resumo_didatico"):
+        meta_obj["resumo_didatico"] = et.get("resumo_didatico")
     etapa_meta_hash = h(meta_obj, 16)
     contrato_norm = {k: v for k, v in (mod.get("contrato") or {}).items() if k not in ("travado_em", "hash")}
     criterio_obj = {
@@ -737,7 +839,13 @@ def status_efetivo(
 # Validação
 # ---------------------------------------------------------------------------
 
-def validar(base: str | Path, estado: dict[str, Any], regs: list[dict[str, Any]]) -> tuple[list[str], list[str]]:
+def validar(
+    base: str | Path,
+    estado: dict[str, Any],
+    regs: list[dict[str, Any]],
+    *,
+    estrito_didatico: bool = False,
+) -> tuple[list[str], list[str]]:
     erros: list[str] = []
     avisos: list[str] = []
     p = estado.get("projeto") or {}
@@ -788,8 +896,20 @@ def validar(base: str | Path, estado: dict[str, Any], regs: list[dict[str, Any]]
             for dep in e.get("depende_de", []):
                 if dep not in todos_ids_etapa and dep not in ids_mod:
                     erros.append(f"{eid}: depende de etapa/módulo inexistente '{dep}'.")
-            if st == "executado" and not (e.get("afirmacao") and e.get("verificacao")):
+            if st == "executado" and not (e.get("afirmacao") or e.get("resumo_didatico")) or (st == "executado" and not e.get("verificacao")):
                 erros.append(f"{eid}: executado sem 'afirmacao' e 'verificacao' — nada a validar.")
+            if st == "executado" or e.get("afirmacao") or e.get("resumo_didatico"):
+                clareza = avaliar_clareza_resumo(e)
+                if not clareza["didatico"]:
+                    msg_did = (
+                        f"{eid}: resumo da entrega pouco didático ({'; '.join(clareza['motivos'])}) — "
+                        "escreva 'afirmacao' (ou 'resumo_didatico') em linguagem clara para o revisor "
+                        "e mova scripts, flags e códigos internos para 'detalhes_tecnicos' ou 'evidencia'."
+                    )
+                    if estrito_didatico:
+                        erros.append(msg_did)
+                    else:
+                        avisos.append(msg_did)
             if st == "executado" and not e.get("evidencia"):
                 avisos.append(f"{eid}: executado sem evidência apontada.")
             if st == "executado" and e.get("evidencia"):
@@ -1037,6 +1157,8 @@ def construir_payload(
             e["_snapshot"] = det["snapshot"]
             e["_eh_marco"] = eh_marco_etapa(m, e)
             e["_modulo_id"] = m["id"]
+            e["_clareza_resumo"] = avaliar_clareza_resumo(e)
+            e["_resumo_principal"] = resumo_principal_etapa(e)
             e["_agente"] = _merge_arquitetura_agente(m, e, execs, estado, root, regs, cache)
             etapa_index[e["id"]] = (m, e)
 
@@ -1814,6 +1936,17 @@ def construir_payload(
         },
     }
 
+    resumos_pouco_didaticos = [
+        {
+            "etapa": e["id"],
+            "titulo": e.get("titulo", e["id"]),
+            "motivos": e["_clareza_resumo"]["motivos"],
+            "resumo_atual": e["_clareza_resumo"]["texto_avaliado"],
+        }
+        for _, e in iter_etapas(estado)
+        if not e["_clareza_resumo"]["didatico"]
+    ]
+
     return {
         "versao_schema": 2,
         "modo_servidor": modo_servidor,
@@ -1829,6 +1962,7 @@ def construir_payload(
         "relacoes_mapa": relacoes_mapa,
         "eventos": eventos,
         "mudancas": mudancas,
+        "resumos_pouco_didaticos": resumos_pouco_didaticos,
         "erros": erros,
         "avisos": avisos,
         "gerado_em": agora_str(com_segundos=True),
@@ -1951,6 +2085,7 @@ def construir_contexto_limpo(base: str | Path, etapa_id: str) -> dict[str, Any]:
         ],
         "guardrails_ativos": arq.get("guardrails") or [],
         "bloqueios_atuais": e.get("_bloqueios_sistema") or [],
+        "regra_resumo_didatico": REGRA_RESUMO_DIDATICO,
         "ultima_correcao": (
             e["_ultima_decisao"]
             if (e.get("_ultima_decisao") or {}).get("acao") == "pedir_correcao"
