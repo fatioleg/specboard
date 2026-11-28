@@ -46,7 +46,7 @@ O **SpecBoard** transforma o plano do projeto em um painel vivo, legível e audi
 | Difícil lembrar em que fase o projeto parou depois de alguns dias | **Home guiada + 📍 Onde estou:** sidebar das áreas do projeto e botão que destaca exatamente a etapa atual |
 | Arquivo editado depois da aprovação passa despercebido | **Rastreabilidade por SHA-256:** alterou um arquivo no disco, a aprovação anterior expira automaticamente |
 | Impossível enxergar como o agente foi montado no projeto | **Arquitetura do Harness:** separa visualmente Skills, MCPs, Scripts, Hooks em código, Regras e Fluxo de Etapas |
-| Resumos cheios de nomes de `.py`, flags `--doc` e códigos internos (`D28`) que ninguém entende | **Resumo didático obrigatório:** explica em linguagem humana o que foi feito e o resultado; scripts, flags e códigos vão para o bloco recolhível *Detalhes técnicos* (validado com `validate --estrito` e MCP) |
+| Cards cheios de scripts `.py`, hashes Git (`3dba70d`), `commits`, flags `--doc` e apelidos internos (`D50`, `Frente C`) | **Texto didático obrigatório em todos os cards:** títulos, resumos, *Como conferir*, blocos e Home explicam em linguagem humana *o quê*, *qual o resultado/regra* e *como conferir*; scripts, commits e códigos ficam no bloco recolhível *Detalhes técnicos* (validado por `validate --estrito` e MCP) |
 
 ---
 

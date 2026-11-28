@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "specboard",
-  "version": "2.1.0",
+  "version": "2.4.0",
   "description": "Painel interativo de validação humana, controle visual estilo Archify, servidor MCP e arquitetura de Harness para projetos com agentes de IA (CEMOL / UEG).",
   "author": {
     "name": "CEMOL — Centro de Bioestabilidade Molecular do Cerrado (fatioleg)",

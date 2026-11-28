@@ -32,21 +32,56 @@ NATUREZAS_GUARDRAIL = {"codigo", "instrucao"}
 PREFIXOS_REMOTOS = ("http://", "https://", "s3://", "gs://", "ssh://", "ftp://", "doi:")
 
 REGRA_RESUMO_DIDATICO = (
-    "Escreva 'afirmacao' (ou 'resumo_didatico') em linguagem humana e didática: explique em 1–3 frases "
-    "o que foi construído ou descoberto, por que importa para o projeto e qual resultado prático foi obtido "
-    "(ex.: 'Criamos o gerador de modelos oxidados e validamos todos os parâmetros; as 66 checagens passaram sem lacunas'). "
-    "Evite listar nomes de scripts (.py/.yaml), flags de terminal (--flag), identificadores snake_case ou códigos internos "
-    "sem contexto (ex.: D28, doc 13) no resumo principal — coloque esses itens em 'detalhes_tecnicos' e 'evidencia'."
+    "REGRA DE TEXTO DIDÁTICO OBRIGATÓRIO EM TODOS OS CARDS (Home, Blocos/Módulos, Etapas e Revisão): "
+    "1) Títulos ('titulo'): nomeie claramente o objetivo ou entrega em português simples, sem apelidos internos "
+    "não explicados (ex.: 'Frente C', 'Ciclo 1', 'Gate A', 'Fase III') nem códigos crípticos ('D50', 'D28', 'doc 13'). "
+    "Use sempre os IDs do próprio SpecBoard (ex.: M4.5) quando precisar referenciar outro card. "
+    "2) Resumo da entrega ('afirmacao' ou 'resumo_didatico'): explique em 1–3 frases claras usando os 3 Pilares — "
+    "(a) O quê foi definido/construído/analisado, (b) Qual é a regra ou resultado concreto obtido (números, critério ou conclusão), "
+    "e (c) Por que importa / o que destrava no projeto. "
+    "3) Como conferir ('verificacao'): diga ao revisor humano o que abrir e qual fato concreto confirma a aprovação — "
+    "nunca mande conferir hashes/commits Git ou rodar scripts brutos como instrução principal. "
+    "4) Bloco ('objetivo'/'responde') e Home ('projeto.atividade_agente.resumo'): mesma linguagem humana direta. "
+    "PROIBIDO em todos os cards visíveis: nomes de scripts/configs (.py/.yaml/.json/.sh), hashes Git (ex.: 3dba70d), "
+    "jargão Git ('commit', 'commits', 'PR #...'), flags de terminal (--flag), identificadores snake_case e códigos/apelidos "
+    "internos sem explicação ('D50', 'doc 13', 'Frente C'). Mova toda a rastreabilidade técnica para 'detalhes_tecnicos' e 'evidencia'."
 )
 
-_RE_ARQUIVO_TEC = re.compile(
-    r"\b[\w-]+(?:/[\w.-]+)*\.(?:py|js|mjs|cjs|ts|tsx|jsx|yaml|yml|json|jsonl|sh|ps1|cmd|bat|toml|ini|cfg|sql|md|mdp|itp|top|gro|xyz|csv|tsv|log|html|css|lock)\b",
+_RE_ARQUIVO_CODIGO = re.compile(
+    r"\b[\w-]+(?:/[\w.-]+)*\.(?:py|js|mjs|cjs|ts|tsx|jsx|yaml|yml|json|jsonl|sh|ps1|cmd|bat|toml|ini|cfg|sql|lock|ipynb|cpp|hpp|f90|go|rs|java|kt|rb|php)\b",
+    re.IGNORECASE,
+)
+_RE_ARQUIVO_EVIDENCIA = re.compile(
+    r"\b[\w-]+(?:/[\w.-]+)*\.(?:md|mdp|itp|top|gro|xyz|csv|tsv|log|html|css|png|svg|jpg|jpeg|pdf|xlsx|docx|pptx)\b",
+    re.IGNORECASE,
+)
+_RE_HASH_GIT = re.compile(
+    r"\b(?:commit\s+[0-9a-f]{6,40}|(?=[0-9a-f]*[a-f])(?=[0-9a-f]*\d)[0-9a-f]{7,40})\b"
+)
+_RE_TERMO_GIT = re.compile(
+    r"\b(?:commits?|git\s+(?:log|diff|show|blame|status|checkout|tag|branch|merge|rebase)|pull\s+request|PR\s*#?\d+|HEAD~?\d*|cherry-pick|rebase)\b",
     re.IGNORECASE,
 )
 _RE_FLAG_CLI = re.compile(r"(?:^|[\s(])--[a-zA-Z0-9][\w-]*")
 _RE_SNAKE_ID = re.compile(r"\b[a-z][a-z0-9]*_[a-zA-Z0-9_]+\b")
 _RE_FUNC_CALL = re.compile(r"\b[a-zA-Z_]\w*\(\)|::[a-zA-Z_]\w*")
-_RE_COD_INTERNO = re.compile(r"\b(?:doc\s+\d+|D\d{1,3}[a-z]?|US-\d+|T\d+\.\d+|PR\s*#?\d+|commit\s+[0-9a-f]{6,})\b")
+_RE_COD_INTERNO = re.compile(
+    r"\b(?:doc\s+\d+|D-?\d{1,3}[a-z]?|US-\d+|T\d+\.\d+|"
+    r"Frente\s+[A-Z](?![a-zÀ-ÿ])|Ciclo\s+\d+|Gate\s+[A-Z0-9]+|Fase\s+[IVX]+(?![a-zÀ-ÿ]))\b"
+)
+_RE_TELEGR_IMPL = re.compile(
+    r"\b(?:implementad[oa]s?\s+em|codificad[oa]s?\s+em|commitad[oa]s?\s+em)\b",
+    re.IGNORECASE,
+)
+
+_ROTULO_CAMPO_DIDATICO = {
+    "titulo": "título",
+    "resumo": "resumo da entrega",
+    "verificacao": "como conferir",
+    "objetivo": "objetivo do bloco",
+    "responde": "contexto do bloco",
+    "atividade": "resumo da atividade (Home)",
+}
 
 
 def resumo_principal_etapa(et: dict[str, Any]) -> str:
@@ -57,79 +92,250 @@ def resumo_principal_etapa(et: dict[str, Any]) -> str:
     return str(et.get("afirmacao") or et.get("descricao") or "").strip()
 
 
-def avaliar_clareza_resumo(et: dict[str, Any]) -> dict[str, Any]:
-    """Avalia deterministicamente se o resumo da entrega está didático ou carregado de jargão técnico."""
-    rd = str(et.get("resumo_didatico") or "").strip()
-    af = str(et.get("afirmacao") or "").strip()
-    texto = rd or af
-    if not texto:
+def avaliar_clareza_texto(texto: str, *, papel: str = "resumo_entrega") -> dict[str, Any]:
+    """Avalia deterministicamente se um texto visível em card está didático ou carregado de jargão técnico.
+
+    Papéis suportados:
+      - 'resumo_entrega': campo afirmacao / resumo_didatico da etapa (mais estrito)
+      - 'como_conferir': campo verificacao da etapa (permite citar arquivos de evidência humana PNG/CSV/MD, mas barra scripts/Git/códigos)
+      - 'titulo': título de etapa ou módulo
+      - 'modulo': objetivo / responde do bloco/módulo
+      - 'atividade_agente': projeto.atividade_agente.resumo (card da Home)
+    """
+    txt = str(texto or "").strip()
+    sinais_vazios = {
+        "arquivos": [],
+        "arquivos_codigo": [],
+        "arquivos_evidencia": [],
+        "hashes_git": [],
+        "termos_git": [],
+        "flags": [],
+        "identificadores": [],
+        "codigos": [],
+    }
+    if not txt:
         return {
             "didatico": True,
             "vazio": True,
+            "papel": papel,
             "texto_avaliado": "",
-            "usa_resumo_didatico": False,
             "pontuacao_jargao": 0.0,
-            "sinais": {"arquivos": [], "flags": [], "identificadores": [], "codigos": []},
+            "sinais": sinais_vazios,
             "motivos": [],
             "dica": "",
         }
 
-    arquivos = list(dict.fromkeys(_RE_ARQUIVO_TEC.findall(texto)))
-    texto_sem_arqs = _RE_ARQUIVO_TEC.sub(" ", texto)
-    flags = list(dict.fromkeys(m.strip().lstrip("(") for m in _RE_FLAG_CLI.findall(texto_sem_arqs)))
+    arquivos_codigo = list(dict.fromkeys(_RE_ARQUIVO_CODIGO.findall(txt)))
+    sem_cod = _RE_ARQUIVO_CODIGO.sub(" ", txt)
+    arquivos_evidencia = list(dict.fromkeys(_RE_ARQUIVO_EVIDENCIA.findall(sem_cod)))
+    arquivos = list(dict.fromkeys(arquivos_codigo + arquivos_evidencia))
+    sem_arqs = _RE_ARQUIVO_EVIDENCIA.sub(" ", sem_cod)
+
+    hashes_git = list(dict.fromkeys(_RE_HASH_GIT.findall(sem_arqs)))
+    sem_hash = _RE_HASH_GIT.sub(" ", sem_arqs)
+    termos_git = list(dict.fromkeys(_RE_TERMO_GIT.findall(sem_hash)))
+    flags = list(dict.fromkeys(m.strip().lstrip("(") for m in _RE_FLAG_CLI.findall(sem_hash)))
     identificadores = list(dict.fromkeys(
-        _RE_SNAKE_ID.findall(texto_sem_arqs) + _RE_FUNC_CALL.findall(texto_sem_arqs)
+        _RE_SNAKE_ID.findall(sem_hash) + _RE_FUNC_CALL.findall(sem_hash)
     ))
-    codigos = list(dict.fromkeys(_RE_COD_INTERNO.findall(texto_sem_arqs)))
+    codigos = list(dict.fromkeys(_RE_COD_INTERNO.findall(sem_hash)))
+    telegrafico_impl = bool(_RE_TELEGR_IMPL.search(txt)) and len(txt.split()) <= 16
 
     inicio_tecnico = bool(
-        re.match(r"^\s*(?:[\w-]+\.(?:py|js|ts|yaml|yml|json|sh|ps1|md|csv)|[a-z][a-z0-9]*_[a-zA-Z0-9_]+)", texto)
+        re.match(r"^\s*(?:[\w-]+\.(?:py|js|ts|yaml|yml|json|sh|ps1|md|csv)|[a-z][a-z0-9]*_[a-zA-Z0-9_]+)", txt)
     )
 
+    ev_peso = 0.0 if papel == "como_conferir" else (1.5 if papel in ("resumo_entrega", "atividade_agente") else 0.5)
     pontos = (
-        len(arquivos) * 2.0
-        + len(flags) * 2.0
-        + len(identificadores) * 1.5
-        + len(codigos) * 1.5
-        + (2.0 if inicio_tecnico else 0.0)
+        len(arquivos_codigo) * 3.0
+        + len(arquivos_evidencia) * ev_peso
+        + len(hashes_git) * 3.0
+        + len(termos_git) * 2.5
+        + len(flags) * 2.5
+        + len(identificadores) * 2.0
+        + len(codigos) * 2.0
+        + (2.0 if inicio_tecnico and papel != "como_conferir" else 0.0)
+        + (1.5 if telegrafico_impl and papel in ("resumo_entrega", "atividade_agente") else 0.0)
     )
 
-    nao_didatico = (
-        pontos >= 4.0
-        or len(arquivos) >= 2
-        or (len(flags) >= 1 and (len(arquivos) + len(identificadores)) >= 2)
+    hard_jargon = (
+        len(arquivos_codigo) >= 1
+        or len(hashes_git) >= 1
+        or len(termos_git) >= 1
+        or len(flags) >= 1
+        or len(identificadores) >= 1
+        or len(codigos) >= 1
     )
+
+    if papel in ("resumo_entrega", "atividade_agente"):
+        nao_didatico = (
+            hard_jargon
+            or len(arquivos_evidencia) >= 2
+            or (len(arquivos_evidencia) >= 1 and inicio_tecnico)
+            or (telegrafico_impl and pontos >= 1.5)
+            or pontos >= 3.0
+        )
+    elif papel == "como_conferir":
+        nao_didatico = hard_jargon or pontos >= 2.5
+    elif papel == "titulo":
+        nao_didatico = hard_jargon or pontos >= 2.5
+    else:  # modulo
+        nao_didatico = hard_jargon or len(arquivos_evidencia) >= 2 or pontos >= 3.0
 
     motivos: list[str] = []
-    if arquivos:
-        amostra = ", ".join(arquivos[:3]) + ("..." if len(arquivos) > 3 else "")
-        motivos.append(f"{len(arquivos)} nome(s) de arquivo ({amostra})")
+    if arquivos_codigo:
+        amostra = ", ".join(arquivos_codigo[:3]) + ("..." if len(arquivos_codigo) > 3 else "")
+        motivos.append(f"arquivo(s) de código ({amostra})")
+    if arquivos_evidencia and papel in ("resumo_entrega", "atividade_agente", "modulo") and (len(arquivos_evidencia) >= 2 or inicio_tecnico or hard_jargon):
+        amostra = ", ".join(arquivos_evidencia[:3]) + ("..." if len(arquivos_evidencia) > 3 else "")
+        motivos.append(f"nome(s) de arquivo técnico ({amostra})")
+    if hashes_git:
+        motivos.append(f"hash Git ({', '.join(hashes_git[:3])})")
+    if termos_git:
+        motivos.append(f"jargão Git ({', '.join(termos_git[:3])})")
     if flags:
         motivos.append(f"flag de comando ({', '.join(flags[:3])})")
     if identificadores:
         amostra = ", ".join(identificadores[:3]) + ("..." if len(identificadores) > 3 else "")
-        motivos.append(f"identificadores de código ({amostra})")
+        motivos.append(f"identificador(es) de código ({amostra})")
     if codigos:
-        motivos.append(f"códigos internos sem explicação ({', '.join(codigos[:3])})")
+        motivos.append(f"código(s)/apelido(s) interno(s) sem explicação ({', '.join(codigos[:3])})")
+    if telegrafico_impl and papel in ("resumo_entrega", "atividade_agente"):
+        motivos.append("cita onde foi implementado sem explicar a regra ou resultado concreto")
+
+    dicas = {
+        "resumo_entrega": (
+            "Explique em português claro (1–3 frases) o quê foi definido/feito, qual é a regra ou resultado concreto "
+            "e por que importa; mova scripts, hashes Git e códigos internos para 'detalhes_tecnicos' ou 'evidencia'."
+        ),
+        "como_conferir": (
+            "Diga ao revisor humano qual documento/figura/tabela abrir e o que observar para confirmar a aprovação — "
+            "evite instruir comparação de commits Git, execução de scripts brutos ou siglas internas sem explicação."
+        ),
+        "titulo": (
+            "Use um título descritivo em português claro sem apelidos internos ('Frente C', 'Ciclo 1') nem códigos ('D50', 'doc 13')."
+        ),
+        "modulo": (
+            "Descreva o objetivo do bloco em linguagem clara para humanos, sem nomes de scripts, commits ou códigos internos."
+        ),
+        "atividade_agente": (
+            "Explique em 1 frase simples o que o agente está fazendo agora e qual entrega está preparando, sem jargão técnico."
+        ),
+    }
 
     return {
         "didatico": not nao_didatico,
         "vazio": False,
-        "texto_avaliado": texto,
-        "usa_resumo_didatico": bool(rd),
+        "papel": papel,
+        "texto_avaliado": txt,
         "pontuacao_jargao": round(pontos, 1),
         "sinais": {
             "arquivos": arquivos,
+            "arquivos_codigo": arquivos_codigo,
+            "arquivos_evidencia": arquivos_evidencia,
+            "hashes_git": hashes_git,
+            "termos_git": termos_git,
             "flags": flags,
             "identificadores": identificadores,
             "codigos": codigos,
         },
         "motivos": motivos,
-        "dica": (
-            "Explique em português claro o que foi feito, por que importa e qual resultado foi obtido; "
-            "mova nomes de scripts, flags e códigos internos para 'detalhes_tecnicos' ou 'evidencia'."
-        ) if nao_didatico else "",
+        "dica": dicas.get(papel, dicas["resumo_entrega"]) if nao_didatico else "",
     }
+
+
+def _combinar_sinais(itens: list[dict[str, Any]]) -> dict[str, list[str]]:
+    chaves = (
+        "arquivos",
+        "arquivos_codigo",
+        "arquivos_evidencia",
+        "hashes_git",
+        "termos_git",
+        "flags",
+        "identificadores",
+        "codigos",
+    )
+    out: dict[str, list[str]] = {}
+    for k in chaves:
+        vals: list[str] = []
+        for it in itens:
+            vals.extend((it.get("sinais") or {}).get(k) or [])
+        out[k] = list(dict.fromkeys(vals))
+    return out
+
+
+def avaliar_clareza_resumo(et: dict[str, Any]) -> dict[str, Any]:
+    """Avalia deterministicamente TODOS os campos visíveis do card de etapa (título, resumo e como conferir)."""
+    rd = str(et.get("resumo_didatico") or "").strip()
+    af = str(et.get("afirmacao") or "").strip()
+    texto_resumo = rd or af
+    texto_titulo = str(et.get("titulo") or "").strip()
+    texto_verif = str(et.get("verificacao") or "").strip()
+
+    cl_resumo = avaliar_clareza_texto(texto_resumo, papel="resumo_entrega")
+    cl_titulo = avaliar_clareza_texto(texto_titulo, papel="titulo")
+    cl_verif = avaliar_clareza_texto(texto_verif, papel="como_conferir")
+
+    campos = {
+        "titulo": cl_titulo,
+        "resumo": cl_resumo,
+        "verificacao": cl_verif,
+    }
+    campos_nao_didaticos = [k for k in ("titulo", "resumo", "verificacao") if not campos[k]["didatico"]]
+    didatico = len(campos_nao_didaticos) == 0
+
+    motivos: list[str] = []
+    if not cl_resumo["didatico"]:
+        motivos.extend(cl_resumo["motivos"])
+    if not cl_titulo["didatico"]:
+        motivos.append("título: " + ", ".join(cl_titulo["motivos"]))
+    if not cl_verif["didatico"]:
+        motivos.append("como conferir: " + ", ".join(cl_verif["motivos"]))
+
+    dicas_ativas = [campos[k]["dica"] for k in campos_nao_didaticos if campos[k]["dica"]]
+    return {
+        "didatico": didatico,
+        "vazio": cl_resumo["vazio"] and cl_titulo["vazio"] and cl_verif["vazio"],
+        "texto_avaliado": texto_resumo,
+        "usa_resumo_didatico": bool(rd),
+        "pontuacao_jargao": round(
+            cl_resumo["pontuacao_jargao"] + cl_titulo["pontuacao_jargao"] + cl_verif["pontuacao_jargao"], 1
+        ),
+        "sinais": _combinar_sinais([cl_resumo, cl_titulo, cl_verif]),
+        "campos": campos,
+        "campos_nao_didaticos": campos_nao_didaticos,
+        "motivos": motivos,
+        "dica": " ".join(dict.fromkeys(dicas_ativas)) if not didatico else "",
+    }
+
+
+def avaliar_clareza_modulo(mod: dict[str, Any]) -> dict[str, Any]:
+    """Avalia deterministicamente os campos visíveis do card de bloco/módulo (título, objetivo e responde)."""
+    cl_tit = avaliar_clareza_texto(str(mod.get("titulo") or ""), papel="titulo")
+    cl_obj = avaliar_clareza_texto(str(mod.get("objetivo") or ""), papel="modulo")
+    cl_resp = avaliar_clareza_texto(str(mod.get("responde") or ""), papel="modulo")
+    campos = {"titulo": cl_tit, "objetivo": cl_obj, "responde": cl_resp}
+    campos_nao_didaticos = [k for k in ("titulo", "objetivo", "responde") if not campos[k]["didatico"]]
+    motivos: list[str] = []
+    for k in campos_nao_didaticos:
+        motivos.append(f"{_ROTULO_CAMPO_DIDATICO[k]}: " + ", ".join(campos[k]["motivos"]))
+    return {
+        "didatico": len(campos_nao_didaticos) == 0,
+        "campos": campos,
+        "campos_nao_didaticos": campos_nao_didaticos,
+        "sinais": _combinar_sinais([cl_tit, cl_obj, cl_resp]),
+        "motivos": motivos,
+        "dica": (
+            "Escreva título e objetivo do bloco em linguagem clara para humanos, sem nomes de scripts, "
+            "commits Git ou códigos/apelidos internos sem explicação."
+        ) if campos_nao_didaticos else "",
+    }
+
+
+def avaliar_clareza_atividade(ativ: dict[str, Any] | None) -> dict[str, Any]:
+    """Avalia a clareza do card '1. Agente executa' na Home (projeto.atividade_agente.resumo)."""
+    resumo = str((ativ or {}).get("resumo") or "").strip()
+    return avaliar_clareza_texto(resumo, papel="atividade_agente")
 
 _CHUNK_SIZE = 65536
 
@@ -871,6 +1077,19 @@ def validar(
     vistos: set[str] = set()
     cache = _load_hash_cache(base)
 
+    ativ_proj = p.get("atividade_agente")
+    if isinstance(ativ_proj, dict) and ativ_proj.get("resumo"):
+        cl_at = avaliar_clareza_atividade(ativ_proj)
+        if not cl_at["didatico"]:
+            msg_at = (
+                f"projeto.atividade_agente: card da Home pouco didático ({'; '.join(cl_at['motivos'])}) — "
+                "explique em linguagem humana o que o agente está fazendo e mova scripts, commits e códigos internos para 'detalhes_tecnicos'."
+            )
+            if estrito_didatico:
+                erros.append(msg_at)
+            else:
+                avisos.append(msg_at)
+
     for m in estado.get("modulos", []):
         for dep in m.get("depende_de", []):
             if dep not in ids_mod:
@@ -880,6 +1099,16 @@ def validar(
             erros.append(f"{m['id']}: contrato travado foi alterado sem emenda. Rode: amend {m['id']} -j \"motivo\"")
         if not m.get("etapas") and not m.get("etapas_estimadas"):
             avisos.append(f"{m['id']}: sem etapas nem etapas_estimadas; fica fora do denominador.")
+        cl_mod = avaliar_clareza_modulo(m)
+        if not cl_mod["didatico"]:
+            msg_mod = (
+                f"{m['id']}: card de módulo pouco didático ({'; '.join(cl_mod['motivos'])}) — "
+                "use título e objetivo em português claro sem nomes de scripts, commits ou códigos internos."
+            )
+            if estrito_didatico:
+                erros.append(msg_mod)
+            else:
+                avisos.append(msg_mod)
         for e in m.get("etapas", []):
             eid = e["id"]
             if eid in vistos:
@@ -898,18 +1127,18 @@ def validar(
                     erros.append(f"{eid}: depende de etapa/módulo inexistente '{dep}'.")
             if st == "executado" and not (e.get("afirmacao") or e.get("resumo_didatico")) or (st == "executado" and not e.get("verificacao")):
                 erros.append(f"{eid}: executado sem 'afirmacao' e 'verificacao' — nada a validar.")
-            if st == "executado" or e.get("afirmacao") or e.get("resumo_didatico"):
-                clareza = avaliar_clareza_resumo(e)
-                if not clareza["didatico"]:
-                    msg_did = (
-                        f"{eid}: resumo da entrega pouco didático ({'; '.join(clareza['motivos'])}) — "
-                        "escreva 'afirmacao' (ou 'resumo_didatico') em linguagem clara para o revisor "
-                        "e mova scripts, flags e códigos internos para 'detalhes_tecnicos' ou 'evidencia'."
-                    )
-                    if estrito_didatico:
-                        erros.append(msg_did)
-                    else:
-                        avisos.append(msg_did)
+            clareza = avaliar_clareza_resumo(e)
+            if not clareza["didatico"]:
+                campos_lbl = ", ".join(_ROTULO_CAMPO_DIDATICO.get(k, k) for k in clareza["campos_nao_didaticos"])
+                msg_did = (
+                    f"{eid}: card pouco didático em [{campos_lbl}] ({'; '.join(clareza['motivos'])}) — "
+                    "reescreva em linguagem humana clara (o quê, regra/resultado concreto e por que importa) "
+                    "e mova scripts, hashes/commits Git, flags e códigos internos para 'detalhes_tecnicos' ou 'evidencia'."
+                )
+                if estrito_didatico:
+                    erros.append(msg_did)
+                else:
+                    avisos.append(msg_did)
             if st == "executado" and not e.get("evidencia"):
                 avisos.append(f"{eid}: executado sem evidência apontada.")
             if st == "executado" and e.get("evidencia"):
@@ -1143,6 +1372,7 @@ def construir_payload(
         m["_contrato_ok"] = not (c.get("hash") and c["hash"] != hash_contrato(m))
         m["_na_rota"] = m["id"] in na_rota
         m["_eh_marco"] = eh_marco_modulo(m)
+        m["_clareza_modulo"] = avaliar_clareza_modulo(m)
         for e in m.get("etapas", []):
             det = status_efetivo_detalhado(root, m, e, regs, cache=cache)
             e["_status"] = det["status"]
@@ -1721,6 +1951,8 @@ def construir_payload(
             "contrato_travado": bool((mod_foco.get("contrato") or {}).get("hash")),
         }
 
+    atividade_agente["clareza"] = avaliar_clareza_atividade(atividade_agente)
+
     situacao_atual = {
         "fase_atual": mod_foco.get("fase") if mod_foco else "—",
         "modulo_atual_id": mod_foco["id"] if mod_foco else None,
@@ -1940,12 +2172,43 @@ def construir_payload(
         {
             "etapa": e["id"],
             "titulo": e.get("titulo", e["id"]),
+            "campos_nao_didaticos": e["_clareza_resumo"]["campos_nao_didaticos"],
             "motivos": e["_clareza_resumo"]["motivos"],
             "resumo_atual": e["_clareza_resumo"]["texto_avaliado"],
         }
         for _, e in iter_etapas(estado)
         if not e["_clareza_resumo"]["didatico"]
     ]
+
+    cards_pouco_didaticos: list[dict[str, Any]] = []
+    if not atividade_agente["clareza"]["didatico"]:
+        cards_pouco_didaticos.append({
+            "tipo": "atividade_home",
+            "id": "projeto.atividade_agente",
+            "titulo": "Card 1. Agente executa (Home)",
+            "campos_nao_didaticos": ["atividade"],
+            "motivos": atividade_agente["clareza"]["motivos"],
+            "texto_atual": atividade_agente["clareza"]["texto_avaliado"],
+        })
+    for m in mods:
+        if not m["_clareza_modulo"]["didatico"]:
+            cards_pouco_didaticos.append({
+                "tipo": "modulo",
+                "id": m["id"],
+                "titulo": m.get("titulo", m["id"]),
+                "campos_nao_didaticos": m["_clareza_modulo"]["campos_nao_didaticos"],
+                "motivos": m["_clareza_modulo"]["motivos"],
+                "texto_atual": m.get("objetivo", ""),
+            })
+    for item in resumos_pouco_didaticos:
+        cards_pouco_didaticos.append({
+            "tipo": "etapa",
+            "id": item["etapa"],
+            "titulo": item["titulo"],
+            "campos_nao_didaticos": item["campos_nao_didaticos"],
+            "motivos": item["motivos"],
+            "texto_atual": item["resumo_atual"],
+        })
 
     return {
         "versao_schema": 2,
@@ -1963,6 +2226,7 @@ def construir_payload(
         "eventos": eventos,
         "mudancas": mudancas,
         "resumos_pouco_didaticos": resumos_pouco_didaticos,
+        "cards_pouco_didaticos": cards_pouco_didaticos,
         "erros": erros,
         "avisos": avisos,
         "gerado_em": agora_str(com_segundos=True),

@@ -144,12 +144,99 @@ class TestDidacticSummaryRule(unittest.TestCase):
             self.assertIn("regra_resumo_didatico", ctx)
             self.assertIn("detalhes_tecnicos", ctx["regra_resumo_didatico"])
 
+    def test_detects_m45_real_card_across_title_summary_and_verification(self):
+        """Caso real M4.5: detecta jargão em título (Frente C/D50), resumo (3dba70d/analyze_md_d47.py) e como conferir (commits)."""
+        etapa_ruim = {
+            "id": "M4.5",
+            "titulo": "Frente C: critério de esfoliação pré-registrado (D50)",
+            "afirmacao": "Critério D50 registrado (3dba70d) antes da análise; implementado em analyze_md_d47.py com testes.",
+            "verificacao": "Comparar a data/commit de D50 com os commits das análises da Frente C (todos posteriores).",
+        }
+        res = core.avaliar_clareza_resumo(etapa_ruim)
+        self.assertFalse(res["didatico"])
+        self.assertEqual(res["campos_nao_didaticos"], ["titulo", "resumo", "verificacao"])
+        self.assertIn("analyze_md_d47.py", res["sinais"]["arquivos_codigo"])
+        self.assertIn("3dba70d", res["sinais"]["hashes_git"])
+        self.assertTrue(any(t.lower().startswith("commit") for t in res["sinais"]["termos_git"]))
+        self.assertIn("D50", res["sinais"]["codigos"])
+        self.assertIn("Frente C", res["sinais"]["codigos"])
+
+        with tempfile.TemporaryDirectory() as td:
+            proj = _make_project(Path(td), etapa_ruim)
+            estado, regs, _, _ = core.load_all(proj)
+            erros_s, _ = core.validar(proj, estado, regs, estrito_didatico=True)
+            self.assertTrue(any("título, resumo da entrega, como conferir" in e for e in erros_s), erros_s)
+
+        etapa_boa = {
+            "id": "M4.5",
+            "titulo": "Critério objetivo de esfoliação pré-registrado antes das análises",
+            "afirmacao": (
+                "Definimos e travamos previamente a regra numérica que identifica separação entre camadas "
+                "nas simulações, antes de abrir qualquer trajetória. Os testes automáticos confirmam que "
+                "o cálculo aplica exatamente essa regra, evitando viés na interpretação."
+            ),
+            "verificacao": (
+                "Abrir o documento de decisões (relatorio.md) e conferir se a regra de esfoliação "
+                "(limiar e tempo mínimo) está registrada com data anterior às análises."
+            ),
+            "detalhes_tecnicos": "Pré-registro D50 (commit 3dba70d, Frente C); implementação e testes em analyze_md_d47.py.",
+        }
+        res_ok = core.avaliar_clareza_resumo(etapa_boa)
+        self.assertTrue(res_ok["didatico"], res_ok)
+        self.assertEqual(res_ok["campos_nao_didaticos"], [])
+
+        with tempfile.TemporaryDirectory() as td:
+            proj = _make_project(Path(td), etapa_boa)
+            estado, regs, _, _ = core.load_all(proj)
+            erros_ok, avisos_ok = core.validar(proj, estado, regs, estrito_didatico=True)
+            self.assertEqual(erros_ok, [], erros_ok)
+            self.assertFalse(any("pouco didático" in a for a in avisos_ok), avisos_ok)
+
+    def test_detects_non_didactic_module_and_home_activity_cards(self):
+        """Valida que a regra cobre também cards de bloco/módulo e o card da Home (atividade_agente)."""
+        with tempfile.TemporaryDirectory() as td:
+            proj = _make_project(Path(td), {
+                "afirmacao": "Validamos os parâmetros do modelo e todas as 66 verificações passaram sem falhas.",
+            })
+            est_p = proj / ".specboard" / "estado.json"
+            est = json.loads(est_p.read_text(encoding="utf-8"))
+            est["projeto"]["atividade_agente"] = {
+                "estado": "executando",
+                "etapa_id": "M1.1",
+                "resumo": "Rodando analyze_md_d47.py no commit 3dba70d para Gate A.",
+            }
+            est["modulos"][0]["titulo"] = "Frente C — Fase III (Ciclo 2)"
+            est["modulos"][0]["objetivo"] = "Executar script_check.py e validar D50."
+            est_p.write_text(json.dumps(est, ensure_ascii=False, indent=2), encoding="utf-8")
+
+            estado, regs, _, _ = core.load_all(proj)
+            erros_s, _ = core.validar(proj, estado, regs, estrito_didatico=True)
+            self.assertTrue(any("projeto.atividade_agente" in e for e in erros_s), erros_s)
+            self.assertTrue(any("M1: card de módulo pouco didático" in e for e in erros_s), erros_s)
+
+            pay = core.construir_payload(proj, estado, regs)
+            tipos = {c["tipo"] for c in pay["cards_pouco_didaticos"]}
+            self.assertIn("atividade_home", tipos)
+            self.assertIn("modulo", tipos)
+            self.assertFalse(pay["situacao_atual"]["atividade_agente"]["clareza"]["didatico"])
+            self.assertFalse(pay["estado"]["modulos"][0]["_clareza_modulo"]["didatico"])
+
+            out_mcp = mcp.call_tool("specboard_validate", {"dir": str(proj), "estrito": True})
+            self.assertFalse(out_mcp["valido"])
+            self.assertGreaterEqual(len(out_mcp["cards_pouco_didaticos"]), 2)
+
     def test_carbon_dots_example_passes_strict_didactic_validation(self):
         cd_dir = ROOT / "examples" / "carbon_dots"
         estado, regs, _, _ = core.load_all(cd_dir)
         erros, avisos = core.validar(cd_dir, estado, regs, estrito_didatico=True)
         self.assertEqual(erros, [], f"Erros inesperados em carbon_dots: {erros}")
         self.assertFalse(any("pouco didático" in a for a in avisos), f"Avisos didáticos em carbon_dots: {avisos}")
+        pay = core.construir_payload(cd_dir, estado, regs)
+        self.assertEqual(pay["cards_pouco_didaticos"], [])
+        # Garante que M1.1 manteve sua verificação intacta (sem expirar hash)
+        m11 = pay["estado"]["modulos"][0]["etapas"][0]
+        self.assertEqual(m11["_status"], "verificado")
+        self.assertIsNone(m11["_exp"])
 
     def test_html_template_renders_didactic_controls_and_technical_fold(self):
         cryptic = "cd_ox.py, cd_ox.yaml (D28), check_docs --doc 13 e opls_base + custom_N."
@@ -160,9 +247,13 @@ class TestDidacticSummaryRule(unittest.TestCase):
             self.assertEqual(p.returncode, 0, p.stderr)
             html = (proj / ".specboard" / "painel.html").read_text(encoding="utf-8")
             self.assertIn("renderDeliverySummary", html)
+            self.assertIn("renderHowToVerify", html)
+            self.assertIn("renderDidacticBadge", html)
             self.assertIn("Resumo muito técnico", html)
             self.assertIn("Detalhes técnicos", html)
             self.assertIn("data-copy-didactic", html)
+            self.assertIn("data-copy-didactic-mod", html)
+            self.assertIn("data-copy-didactic-home", html)
 
 
 if __name__ == "__main__":

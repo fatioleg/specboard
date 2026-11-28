@@ -103,7 +103,8 @@
           "marco": false,
           "data": "2026-11-25",
           "afirmacao": "Máscara do núcleo grafítico separada dos grupos funcionais de borda; janela equilibrada definida em 5–10 ns.",
-          "verificacao": "Conferir script scripts/calc_rmsd.py e máscara em data/core_ref.xyz.",
+          "detalhes_tecnicos": "Seleção da máscara e janela de equilíbrio implementadas em scripts/calc_rmsd.py com referência em data/core_ref.xyz.",
+          "verificacao": "Conferir na estrutura de referência (data/core_ref.xyz) que apenas os átomos do núcleo grafítico entram no cálculo e que a análise considera a janela equilibrada (5–10 ns).",
           "evidencia": [
             "data/core_ref.xyz",
             "scripts/calc_rmsd.py"
@@ -118,7 +119,8 @@
           "marco": false,
           "data": "2026-11-26",
           "afirmacao": "RMSD do núcleo calculado em 0.425 Å (máximo 0.440 Å) na janela 5–10 ns; checagens determinísticas de unidades e integridade aprovadas.",
-          "verificacao": "Conferir série temporal em data/rmsd_cd_400k.csv e executar scripts/calc_rmsd.py.",
+          "detalhes_tecnicos": "Cálculo determinístico executado via scripts/calc_rmsd.py (unidades em Å, saída tabular em data/rmsd_cd_400k.csv).",
+          "verificacao": "Abrir a tabela de desvio estrutural (data/rmsd_cd_400k.csv) e conferir se os valores entre 5 e 10 ns permanecem próximos de 0,425 Å e sempre abaixo de 0,80 Å.",
           "evidencia": [
             "data/rmsd_cd_400k.csv",
             "scripts/calc_rmsd.py"

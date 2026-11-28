@@ -1,6 +1,6 @@
 {
   "name": "specboard",
-  "version": "2.1.0",
+  "version": "2.4.0",
   "description": "Painel interativo de validação humana, servidor MCP (8 ferramentas seguras) e arquitetura de Harness para projetos com agentes de IA.",
   "author": {
     "name": "CEMOL (fatioleg)"

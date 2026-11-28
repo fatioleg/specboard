@@ -11,9 +11,21 @@ description: Cria e mantém o painel de validação e arquitetura técnica (Spec
 2. **Política configurável por projeto.** Escolha na criação (`init --politica`): `acompanhamento_livre`, `so_marcos` (com marcos granulares em módulos ou etapas) ou `por_etapa`. Alterações posteriores são explícitas e auditadas.
 3. **Integridade por conteúdo.** Cada decisão vincula-se ao SHA-256 dos bytes dos arquivos locais de evidência, ao critério/contrato e à revisão da etapa. Substituir um arquivo no mesmo caminho expira automaticamente a aprovação.
 4. **Visão unificada sem repetição.** As abas **Agora**, **Projeto** (fluxograma expansível) e **Agente** (Learn/Guard/Review/Score) leem a mesma fonte de dados.
-5. **Resumo da entrega sempre didático.** O campo `afirmacao` (ou `resumo_didatico`) é escrito para o **revisor humano**, não para o terminal: explique em 1–3 frases claras **o que foi feito, por que importa e qual resultado prático foi obtido**. **Nunca** entregue uma lista críptica de arquivos `.py/.yaml`, flags (`--doc`), símbolos `snake_case` ou códigos internos sem contexto (`D28`, `doc 13`) como resumo principal — coloque esses itens em `detalhes_tecnicos` e `evidencia`.
-   - *Evitar:* `"gerador.py, pré-registro params.yaml (D28), doc 13 (check_docs --doc 13 verde) e check_params.py alinhado a base_ff + custom_N (66/66 testes, 0 lacunas)."`
-   - *Preferir:* `"Criamos o gerador dos modelos oxidados e validamos todos os parâmetros necessários para as simulações. As 66 checagens automáticas passaram sem nenhuma lacuna."` *(com scripts/flags/códigos movidos para `detalhes_tecnicos`)*.
+5. **Regra de Texto Didático Obrigatório em TODOS os cards (Home, Blocos/Módulos, Etapas e Revisão).** Todo texto visível no painel é escrito para o **revisor humano**, não para o terminal nem para o `git log`:
+   - **Títulos (`titulo` de módulos e etapas):** nomeie claramente o objetivo ou entrega em português simples. **Proibido** usar apelidos internos não explicados (`Frente C`, `Ciclo 1`, `Gate A`, `Fase III`) ou códigos crípticos (`D50`, `D28`, `doc 13`). Para referenciar outro item, use sempre o ID do próprio SpecBoard (ex.: `M4.5`).
+   - **Resumo da entrega (`afirmacao` / `resumo_didatico`):** siga os **3 Pilares** em 1–3 frases claras: **(1) O quê** foi definido/construído/analisado, **(2) Qual é a regra ou resultado concreto** (números, critério ou conclusão compreensível sem abrir código) e **(3) Por que importa / o que destrava**.
+   - **Como conferir (`verificacao`):** diga ao humano **qual documento, figura ou tabela abrir** e **qual fato concreto confirma a aprovação**. **Nunca** instrua o revisor a comparar hashes/commits Git ou executar scripts `.py` como instrução principal.
+   - **Objetivo do bloco (`objetivo`/`responde`) e card da Home (`projeto.atividade_agente.resumo`):** mesma linguagem humana direta, sem jargão técnico.
+   - **Proibido em todos os cards visíveis:** nomes de scripts/configs (`.py`, `.yaml`, `.json`, `.sh`), hashes Git (`3dba70d`), termos Git (`commit`, `commits`, `PR #...`), flags CLI (`--doc`), identificadores `snake_case` e códigos/apelidos internos sem explicação (`D50`, `D28`, `doc 13`, `Frente C`). **Mova toda a rastreabilidade técnica para `detalhes_tecnicos` e `evidencia`.**
+   - *Exemplo RUIM (reprovado em `validate --estrito`):*
+     - `titulo`: `"Frente C: critério de esfoliação pré-registrado (D50)"`
+     - `afirmacao`: `"Critério D50 registrado (3dba70d) antes da análise; implementado em analyze_md_d47.py com testes."`
+     - `verificacao`: `"Comparar a data/commit de D50 com os commits das análises da Frente C (todos posteriores)."`
+   - *Exemplo BOM (aprovado em `validate --estrito`):*
+     - `titulo`: `"Critério objetivo de esfoliação pré-registrado antes das análises"`
+     - `afirmacao`: `"Definimos e travamos previamente a regra numérica que identifica separação entre camadas nas simulações, antes de analisar qualquer trajetória. Os testes automáticos confirmaram que o cálculo aplica exatamente essa regra, evitando viés na leitura dos resultados."`
+     - `verificacao`: `"Abrir o documento de decisões (DECISOES.md) e conferir se a regra de esfoliação (limiar e tempo mínimo) está registrada com data anterior ao início das análises."`
+     - `detalhes_tecnicos`: `"Pré-registro D50 (commit 3dba70d, Frente C); cálculo e testes implementados em analyze_md_d47.py."`
 
 ## Arquivos da skill
 
@@ -58,7 +70,7 @@ Adicione ao `.claude/settings.json` do projeto (ou equivalente do agente em uso)
 - Em sessão limpa ou troca de agente, reconstrua o contexto mínimo: `python SB context <ETAPA>`.
 - Atualize `projeto.atividade_agente` e marque a etapa `em_curso` → `executado` com `afirmacao`, `verificacao` e `evidencia` (caminhos reais de figuras, tabelas e relatórios).
 - Quando houver wrapper/telemetria de ferramentas, registre em `.specboard/execucoes.jsonl` com `python SB trace-tool ...` (nunca invente telemetria; sem registro deve permanecer `"sem registro"`).
-- Rode `python SB validate && python SB build`.
+- Rode `python SB validate --estrito && python SB build` (garante 0 erros e 0 cards pouco didáticos).
 - **Nunca** execute `review`, `verify`, `request-changes`, `policy`, `serve` (sem `--readonly`), nem toque em `.specboard/verificacoes.jsonl` ou `/api/decisao`.
 
 ### 4. Contratos e emendas

@@ -11,7 +11,7 @@ Leia este arquivo ao criar ou atualizar o estado de um projeto. Todos os campos 
 | `fases` | não | Fases em ordem no fluxograma do Projeto (ex.: `["Fase 1", "Fase 2", "Fase 3"]`). |
 | `projeto.titulo` / `projeto.subtitulo` | não | Título principal e contexto no cabeçalho. |
 | `projeto.politica_aprovacao` | não | `{ "modo": "so_marcos" \| "por_etapa" \| "acompanhamento_livre", "canal_padrao": "painel" \| "terminal" \| "ambos", "definida_em": "...", "definida_por": "..." }`. Sem ele, assume `por_etapa` (modo legado). |
-| `projeto.atividade_agente` | não | `{ "estado": "executando" \| "aguardando_humano" \| "aguardando_correcao" \| "ocioso" \| "sem_dados", "etapa_id": "M2.2", "resumo": "...", "sessao_id": "...", "atualizado_em": "..." }`. Exibida separadamente dos bloqueios do sistema. |
+| `projeto.atividade_agente` | não | `{ "estado": "executando" \| "aguardando_humano" \| "aguardando_correcao" \| "ocioso" \| "sem_dados", "etapa_id": "M2.2", "resumo": "...", "sessao_id": "...", "atualizado_em": "..." }`. Exibida no card *1. Agente executa* da Home — `resumo` segue a **Regra de Texto Didático** (sem scripts, hashes Git ou códigos internos). |
 | `projeto.voce_esta_aqui` | não | Override opcional do ID da etapa em destaque. |
 | `projeto.pendencias_humanas` | não | Lista `{id, texto, bloqueia, modulo}` de decisões que só o humano pode tomar. |
 | `projeto.comando_humano` | não | Prefixo do comando humano (ex.: com `ssh -t ...`), exibido no modo estático. |
@@ -23,7 +23,7 @@ Leia este arquivo ao criar ou atualizar o estado de um projeto. Todos os campos 
 | Campo | Nota |
 |---|---|
 | `id` | Curto e estável (`M0`, `M1`, `M2-B`). Nunca renumere. |
-| `titulo`, `objetivo`, `fase` | Identificação e fase correspondente em `fases`. |
+| `titulo`, `objetivo`, `fase` | Identificação e fase correspondente em `fases`. **Regra didática:** `titulo`, `objetivo` e `responde` devem estar em português claro, sem scripts `.py`, hashes/commits Git ou apelidos/códigos internos (`Frente C`, `D50`, `Gate A`, `Fase III`). |
 | `depende_de` | Lista de IDs de módulos dos quais este módulo depende. |
 | `relacoes` | (opcional) Lista explícita `{ "para": "M3", "tipo": "bloqueante" \| "sequencia", "motivo": "..." }`. |
 | `marco` | (opcional, booleano) Marca o módulo como ponto de controle na política `so_marcos` quando etapas individuais não declararem `marco`. |
@@ -40,16 +40,16 @@ Leia este arquivo ao criar ou atualizar o estado de um projeto. Todos os campos 
 | Campo | Nota |
 |---|---|
 | `id` | `<modulo>.<n>` (ex.: `M2.3`). Estável. |
-| `titulo` | Nome claro da entrega. |
+| `titulo` | Nome claro da entrega em português simples — sem apelidos internos não explicados (`Frente C`, `Ciclo 1`, `Gate A`) nem códigos (`D50`, `doc 13`). |
 | `status` | Agente só usa: `pendente`, `em_curso`, `executado`, `bloqueado`. Estados humanos (`revisado`, `verificado`, `correcao_solicitada`) vêm exclusivamente de `.specboard/verificacoes.jsonl`. |
 | `impacto` | `alto` / `medio` / `baixo`. |
 | `revisao` | `completa` (padrão), `amostragem` (impacto baixo) ou `isenta`. |
 | `marco` | (opcional, booleano) **Granularidade de marco:** `true` exige aprovação humana nesta etapa específica na política `so_marcos` para liberar dependentes. |
 | `depende_de` | (opcional) Lista de IDs de etapas ou módulos dos quais esta etapa depende diretamente. |
-| `afirmacao` | **Resumo didático da entrega** (obrigatório para `executado`). Escreva em 1–3 frases claras para o revisor humano explicando *o que foi feito, por que importa e qual resultado prático foi obtido*. **Não** liste nomes de arquivos `.py/.yaml`, flags CLI (`--flag`), símbolos `snake_case` ou códigos internos (`D28`, `doc 13`) aqui — mova-os para `detalhes_tecnicos` e `evidencia`. |
+| `afirmacao` | **Resumo didático da entrega** (obrigatório para `executado`). Siga os **3 Pilares** em 1–3 frases para o revisor humano: *(1) O quê foi definido/feito*, *(2) Qual a regra ou resultado concreto* e *(3) Por que importa / o que destrava*. **Proibido** listar scripts (`.py`/`.yaml`/`.json`), hashes/termos Git (`3dba70d`, `commit`), flags CLI (`--flag`), símbolos `snake_case` ou códigos internos (`D50`, `D28`, `doc 13`, `Frente C`) — mova-os para `detalhes_tecnicos` e `evidencia`. |
 | `resumo_didatico` | (opcional) Sobrescreve a exibição principal de `afirmacao` quando um projeto legado mantém texto técnico em `afirmacao` (o painel move a `afirmacao` técnica para o bloco recolhível *Detalhes técnicos*). |
-| `detalhes_tecnicos` | (opcional, string ou lista) Nomes de scripts, comandos de verificação, flags CLI, identificadores internos e metadados técnicos exibidos de forma recolhível (*Detalhes técnicos*) sem poluir o resumo principal. |
-| `verificacao` | Como o humano confere em poucos minutos, em linguagem direta. Obrigatório para `executado`. |
+| `detalhes_tecnicos` | (opcional, string ou lista) Nomes de scripts, hashes/commits Git, comandos de verificação, flags CLI, identificadores e códigos internos exibidos de forma recolhível (*Detalhes técnicos*) sem poluir o card principal. |
+| `verificacao` | **Como conferir** (obrigatório para `executado`): diga ao revisor qual documento, figura ou tabela abrir e qual evidência concreta confirma a aprovação — **não** mande comparar commits Git, ler scripts `.py` nem decifrar siglas internas. |
 | `evidencia` | Lista de strings (legado) ou objetos `{id, caminho, tipo, descricao, versao, sha256_esperado, obrigatoria}`. Arquivos locais têm o SHA-256 dos bytes verificado em disco. |
 | `criterios` | (opcional) Critérios específicos da etapa vinculados ao hash de decisão. |
 | `arquitetura_agente` | (opcional) Configuração técnica da etapa para a aba **Agente** (ver [arquitetura-agente.md](arquitetura-agente.md)). |

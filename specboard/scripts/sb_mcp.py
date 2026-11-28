@@ -26,7 +26,7 @@ import sb_core as core  # noqa: E402
 
 SERVER_INFO = {
     "name": "specboard",
-    "version": "2.3.0",
+    "version": "2.4.0",
 }
 SUPPORTED_PROTOCOL = "2024-11-05"
 TEMPLATE_PATH = SCRIPTS_DIR.parent / "assets" / "painel_template.html"
@@ -86,8 +86,8 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "specboard_validate",
         "description": (
-            "Valida .specboard/estado.json, contratos travados, presença das evidências e a regra de "
-            "resumo didático (evitando resumos carregados de scripts, flags CLI ou códigos internos)."
+            "Valida .specboard/estado.json, contratos travados, presença das evidências e a Regra de Texto Didático "
+            "Obrigatório em TODOS os cards (títulos, resumo da entrega, como conferir, blocos e atividade na Home)."
         ),
         "inputSchema": {
             "type": "object",
@@ -95,7 +95,7 @@ TOOLS: list[dict[str, Any]] = [
                 "dir": {"type": "string", "description": "Diretório raiz do projeto. Padrão: diretório atual."},
                 "estrito": {
                     "type": "boolean",
-                    "description": "Se true, reprova (valido=false) etapas cujo resumo da entrega esteja pouco didático.",
+                    "description": "Se true, reprova (valido=false) qualquer card (Home, módulo ou etapa) com texto técnico pouco didático.",
                 },
             },
         },
@@ -204,6 +204,7 @@ def call_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
             "situacao_atual": pay["situacao_atual"],
             "fila_pendentes": len(pay["fila"]),
             "resumos_pouco_didaticos": pay["resumos_pouco_didaticos"],
+            "cards_pouco_didaticos": pay["cards_pouco_didaticos"],
             "erros": pay["erros"],
             "avisos": pay["avisos"],
         }
@@ -237,6 +238,7 @@ def call_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
             "erros": erros,
             "avisos": avisos,
             "resumos_pouco_didaticos": pay["resumos_pouco_didaticos"],
+            "cards_pouco_didaticos": pay["cards_pouco_didaticos"],
             "regra_resumo_didatico": core.REGRA_RESUMO_DIDATICO,
         }
     if name == "specboard_build":
